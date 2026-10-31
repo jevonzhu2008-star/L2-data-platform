@@ -176,7 +176,6 @@
     }).join("");
     var modelOverview = '<a class="sb-sub-item sb-overview" href="#/model">语义模型总览 →</a>';
     html += sbGroup("model", "语义模型", factTables.length, modelOverview, modelSubs);
-    html += sbItem("#/measures", "度量值", D.stats.measures, "measures");
     html += sbItem("#/pbix", "PBIX 表样", D.stats.pbix, "pbix");
     html += sbItem("#/mappings", "指标映射", D.stats.mappings, "mappings");
     html += sbItem("#/deliverables", "交付成果", "", "deliverables");
@@ -219,7 +218,12 @@
     } else if (section === "deliverables") {
       activateItem("deliverables");
     } else if (section === "measures") {
-      activateItem("measures");
+      // 度量值已并入语义模型：激活语义模型总览
+      var sg = openGroup("model");
+      if (sg) {
+        var sov = sg.querySelector(".sb-overview");
+        if (sov) sov.classList.add("active");
+      }
     } else if (section === "pbix") {
       activateItem("pbix");
     } else if (section === "mappings") {
@@ -520,8 +524,25 @@
       '<span class="mr-arrow">→</span></a>';
   }
 
-  function renderModelOverview() {
+  function renderModelOverview(measureTarget) {
     app.className = "";
+    var measureGroups = {};
+    var measureOrder = [];
+    measures.forEach(function (m, i) {
+      m.__idx = i;
+      var f = m.folder || "未分组";
+      if (!measureGroups[f]) { measureGroups[f] = []; measureOrder.push(f); }
+      measureGroups[f].push(m);
+    });
+    var measureHtml = measureOrder.map(function (folder) {
+      var items = measureGroups[folder].map(function (m) {
+        return '<details class="measure-item" id="m-' + m.__idx + '"><summary><b>' + esc(m.name) + "</b>" +
+          '<span class="fmt">' + esc(m.format || "默认") + '</span><span class="chev">›</span></summary>' +
+          '<div class="measure-body">' + (m.description ? '<p class="measure-desc">' + esc(m.description) + "</p>" : "") +
+          '<pre class="expr">' + esc(m.expression) + "</pre></div></details>";
+      }).join("");
+      return '<div class="measure-group"><h3>' + esc(folder) + "<span>" + measureGroups[folder].length + " 个</span></h3>" + items + "</div>";
+    }).join("");
     var relHtml = D.relationships.map(function (r) {
       return '<div class="rel-row"><span class="rel-from">' + esc(r.fromTable) + "." + esc(r.fromColumn) + "</span>" +
         '<span class="rel-arrow">→</span>' +
@@ -540,7 +561,7 @@
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">SEMANTIC MODEL</span><h1>语义模型</h1>' +
           "<p>" + D.stats.factTables + " 张事实表、" + D.stats.measures + " 个度量值、" + D.stats.relationships + " 条关系、" + D.stats.parameters + " 个取数参数。来源：02.PBIP/L2报表.SemanticModel。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/measures">度量值目录</a><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
+          '<div class="head-actions"><a class="btn" href="#/model" data-jump="model-measures">度量值目录</a><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
 
         '<div class="model-summary">' +
           '<div class="ms-card"><b>' + D.stats.factTables + '</b><span>事实表</span></div>' +
@@ -549,11 +570,16 @@
           '<div class="ms-card"><b>' + D.stats.parameters + '</b><span>参数</span></div>' +
         "</div>" +
 
-        '<section class="section"><div class="section-head"><div><h2>事实表</h2><p>每张表对应一个 L2 报表页</p></div><a class="section-link" href="#/measures">查看度量值 →</a></div>' +
+        '<section class="section"><div class="section-head"><div><h2>事实表</h2><p>每张表对应一个 L2 报表页</p></div><a class="section-link" href="#/model" data-jump="model-measures">查看度量值 →</a></div>' +
           '<div class="list-card">' +
             '<div class="list-head"><span>编号</span><span>事实表</span><span>列</span><span>度量值</span><span>来源</span><span>页</span><span></span></div>' +
             factTables.map(modelRow).join("") +
           "</div>" +
+        "</section>" +
+
+        '<section class="section" id="model-measures">' +
+          '<div class="section-head"><div><h2>度量值</h2><p>' + D.stats.measures + " 个 DAX 度量值，按 displayFolder 分组；金额用 FormatAmount，比率用 FormatRatio</p></div></div>" +
+          (measureHtml || '<div class="empty-state">暂无度量值</div>') +
         "</section>" +
 
         '<div class="two-col">' +
@@ -571,6 +597,25 @@
 
         '<section class="section"><div class="section-head"><div><h2>安全角色</h2><p>行级权限按矿体控制</p></div></div>' + roleHtml + "</section>" +
       "</div>";
+
+    Array.prototype.forEach.call(app.querySelectorAll("[data-jump]"), function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        var target = document.getElementById(el.getAttribute("data-jump"));
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    if (measureTarget) {
+      var hit = measures.filter(function (m) { return m.name === measureTarget; })[0];
+      if (hit) {
+        var mEl = document.getElementById("m-" + hit.__idx);
+        if (mEl) {
+          mEl.open = true;
+          setTimeout(function () { mEl.scrollIntoView({ behavior: "smooth", block: "center" }); }, 60);
+        }
+      }
+    }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>语义模型</b>');
     document.title = "语义模型 · CMOC L2 PBI报表开发平台";
@@ -677,7 +722,7 @@
 
         processHtml +
 
-        (tableMeasures.length ? '<section class="section"><div class="section-head"><div><h2>度量值</h2><p>' + tableMeasures.length + " 个</p></div><a class=\"section-link\" href=\"#/measures\">全部度量值 →</a></div>" + measureHtml + "</section>" : "") +
+        (tableMeasures.length ? '<section class="section"><div class="section-head"><div><h2>度量值</h2><p>' + tableMeasures.length + " 个</p></div><a class=\"section-link\" href=\"#/model\">全部度量值 →</a></div>" + measureHtml + "</section>" : "") +
 
         '<div class="two-col">' +
           '<div class="panel"><h3>关系</h3>' + (relHtml || '<p style="font-size:12px;color:var(--muted)">无关系</p>') + "</div>" +
@@ -697,51 +742,6 @@
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><a href="#/model">语义模型</a><span class="crumb-sep">/</span><b>' + esc(shortName(t.name, t.code) || t.name) + "</b>");
     document.title = (shortName(t.name, t.code) || t.name) + " · 语义模型";
-  }
-
-  /* ---------- 度量值 ---------- */
-  function renderMeasures(target) {
-    app.className = "";
-    var groups = {};
-    var order = [];
-    measures.forEach(function (m, i) {
-      m.__idx = i;
-      var f = m.folder || "未分组";
-      if (!groups[f]) { groups[f] = []; order.push(f); }
-      groups[f].push(m);
-    });
-
-    var html = order.map(function (folder) {
-      var items = groups[folder].map(function (m) {
-        return '<details class="measure-item" id="m-' + m.__idx + '"><summary><b>' + esc(m.name) + "</b>" +
-          '<span class="fmt">' + esc(m.format || "默认") + '</span><span class="chev">›</span></summary>' +
-          '<div class="measure-body">' + (m.description ? '<p class="measure-desc">' + esc(m.description) + "</p>" : "") +
-          '<pre class="expr">' + esc(m.expression) + "</pre></div></details>";
-      }).join("");
-      return '<div class="measure-group"><h3>' + esc(folder) + "<span>" + groups[folder].length + " 个</span></h3>" + items + "</div>";
-    }).join("");
-
-    app.innerHTML =
-      '<div class="page">' +
-        '<div class="page-head"><div><span class="page-kicker">MEASURES</span><h1>度量值</h1>' +
-          "<p>" + D.stats.measures + " 个 DAX 度量值，按 displayFolder 分组；金额用 FormatAmount，比率用 FormatRatio。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/model">返回语义模型</a></div></div>' +
-        html +
-      "</div>";
-
-    if (target) {
-      var hit = measures.filter(function (m) { return m.name === target; })[0];
-      if (hit) {
-        var el = document.getElementById("m-" + hit.__idx);
-        if (el) {
-          el.open = true;
-          setTimeout(function () { el.scrollIntoView({ behavior: "smooth", block: "center" }); }, 60);
-        }
-      }
-    }
-
-    setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><a href="#/model">语义模型</a><span class="crumb-sep">/</span><b>度量值</b>');
-    document.title = "度量值 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 指标映射 ---------- */
@@ -1057,7 +1057,8 @@
       if (info.arg) renderTableDetail(info.arg);
       else renderModelOverview();
     } else if (info.section === "measures") {
-      renderMeasures(info.arg);
+      // 兼容旧的 #/measures 链接：渲染语义模型页并定位到度量值
+      renderModelOverview(info.arg);
     } else if (info.section === "pbix") {
       renderPbix();
     } else if (info.section === "mappings") {
