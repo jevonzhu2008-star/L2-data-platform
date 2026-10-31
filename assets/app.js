@@ -381,7 +381,7 @@
           (svc ? "<dt>Service 报表</dt><dd style=\"font-family:var(--mono);font-size:10.5px\">" + esc(svc.reportId) + "</dd>" : "") +
         "</dl></section>" +
         (svc ? "<section><h3>在线报表</h3><p>" + (preferScreenshot
-          ? "GitHub Pages 公网默认显示截图。点「在线报表（需登录）」并登录 Power BI 后可内嵌查看实时报表；也可点「Service ↗」新标签打开。"
+          ? "GitHub Pages 公网默认加载在线报表，需要登录 Power BI；未登录时会停在登录页，可切到「截图」查看静态内容。"
           : "该页已在 Power BI Service 发布，可在「在线报表 / 截图」之间切换。在线报表需要浏览器已登录 Power BI。") + "</p></section>" : "") +
         "<section><h3>视觉构成</h3>" + visualRows + "</section>" +
         "<section><h3>数据表</h3><div class=\"chips\">" + (tableChips || "—") + "</div></section>" +
@@ -399,7 +399,7 @@
     var svc = pageService(p);
     var hasService = !!svc;
     var hasShot = !!p.screenshot;
-    var mode = hasService ? (preferScreenshot && hasShot ? "shot" : "service") : "shot";
+    var mode = hasService ? "service" : "shot";
     viewMode = mode;
     var idx = pages.indexOf(p);
     var prev = idx > 0 ? pages[idx - 1] : null;
