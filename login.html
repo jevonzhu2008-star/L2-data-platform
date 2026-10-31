@@ -45,7 +45,7 @@ body {
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .logo { display: block; width: auto; height: auto; max-width: 100%; max-height: 34px; margin-bottom: 22px; }
 h1 { font-size: 21px; line-height: 1.35; margin: 0 0 6px; color: #2A1B52; letter-spacing: .01em; }
-.sub { margin: 0 0 24px; font-size: 12.5px; color: var(--muted); }
+.sub { margin: 0 0 18px; font-size: 12.5px; color: var(--muted); }
 label { display: block; font-size: 12px; color: #4A4558; margin-bottom: 14px; }
 input[type=text], input[type=password] {
   width: 100%; height: 42px; margin-top: 6px; padding: 0 12px;
@@ -75,6 +75,11 @@ input[type=text]:focus, input[type=password]:focus {
   background: #FDECEA; color: #B42318; font-size: 12px;
 }
 .error[hidden] { display: none; }
+.ok {
+  margin: 0 0 14px; padding: 9px 11px; border-radius: 7px;
+  background: #EDF5E8; color: #3F6B26; font-size: 12px;
+}
+.ok[hidden] { display: none; }
 .submit {
   width: 100%; height: 44px; border: 0; border-radius: 9px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -89,6 +94,18 @@ input[type=text]:focus, input[type=password]:focus {
   margin-top: 14px; padding: 9px 11px; border-radius: 7px;
   background: #F4F1FA; color: var(--muted); font-size: 10.5px; line-height: 1.55;
 }
+.tabs {
+  display: flex; gap: 4px; margin: 0 0 20px;
+  background: #F4F1FA; padding: 4px; border-radius: 10px;
+}
+.tab {
+  flex: 1; border: 0; background: transparent; color: var(--muted);
+  font: inherit; font-size: 13px; padding: 8px 0; border-radius: 8px; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.tab.on { background: #fff; color: var(--primary); font-weight: 600; box-shadow: 0 1px 3px rgba(31,27,46,.12); }
+.tab[hidden] { display: none; }
+.tabs[hidden] { display: none; }
 @media (max-width: 420px) {
   .login-card { padding: 28px 22px 22px; border-radius: 14px; }
   h1 { font-size: 19px; }
@@ -102,6 +119,12 @@ input[type=text]:focus, input[type=password]:focus {
     <img class="logo" src="assets/brand/cmoc-logo.png" alt="CMOC 洛阳钼业">
     <h1>L2 PBI报表开发平台</h1>
     <p class="sub">集团管理报表工作台 · 请登录后访问</p>
+
+    <div class="tabs" id="tabs" hidden>
+      <button type="button" class="tab on" id="tabLogin" data-tab="login">登录</button>
+      <button type="button" class="tab" id="tabRegister" data-tab="register">注册</button>
+    </div>
+
     <form id="loginForm" novalidate>
       <label>账号
         <input id="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required autofocus>
@@ -114,24 +137,66 @@ input[type=text]:focus, input[type=password]:focus {
       </label>
       <label class="remember"><input id="remember" type="checkbox"> 记住我（7 天）</label>
       <p class="error" id="error" role="alert" hidden></p>
+      <p class="ok" id="ok" role="status" hidden></p>
       <button class="submit" id="submitBtn" type="submit">登 录</button>
     </form>
+
+    <form id="registerForm" novalidate hidden>
+      <label>账号
+        <input id="regUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      </label>
+      <label>显示名（可选）
+        <input id="regDisplayName" type="text" autocomplete="name" maxlength="32">
+      </label>
+      <label>密码
+        <span class="pwd">
+          <input id="regPassword" type="password" autocomplete="new-password" required>
+          <button type="button" id="regTogglePwd" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label>确认密码
+        <input id="regPassword2" type="password" autocomplete="new-password" required>
+      </label>
+      <p class="error" id="regError" role="alert" hidden></p>
+      <p class="ok" id="regOk" role="status" hidden></p>
+      <button class="submit" id="regBtn" type="submit">注册并登录</button>
+    </form>
+
     <p class="foot">仅限授权人员访问 · 请勿共享账号</p>
-    <p class="tip">本页面为前端访问门禁，无法阻止直接下载静态文件。请勿在公开环境放置敏感数据。</p>
+    <p class="tip" id="modeTip">本页面为前端访问门禁，无法阻止直接下载静态文件。请勿在公开环境放置敏感数据。</p>
   </section>
 </main>
 
-<script src="assets/auth.config.js?v=20261031i"></script>
-<script src="assets/auth.js?v=20261031i"></script>
+<script src="assets/auth.config.js?v=20261101a"></script>
+<script src="assets/auth.js?v=20261101a"></script>
 <script>
 (function () {
-  var form = document.getElementById("loginForm");
+  "use strict";
+
+  var tabs = document.getElementById("tabs");
+  var tabLogin = document.getElementById("tabLogin");
+  var tabRegister = document.getElementById("tabRegister");
+  var loginForm = document.getElementById("loginForm");
+  var registerForm = document.getElementById("registerForm");
   var username = document.getElementById("username");
   var password = document.getElementById("password");
   var remember = document.getElementById("remember");
   var error = document.getElementById("error");
+  var okMsg = document.getElementById("ok");
   var submitBtn = document.getElementById("submitBtn");
   var toggle = document.getElementById("togglePwd");
+  var modeTip = document.getElementById("modeTip");
+
+  var regUsername = document.getElementById("regUsername");
+  var regDisplayName = document.getElementById("regDisplayName");
+  var regPassword = document.getElementById("regPassword");
+  var regPassword2 = document.getElementById("regPassword2");
+  var regError = document.getElementById("regError");
+  var regOk = document.getElementById("regOk");
+  var regBtn = document.getElementById("regBtn");
+  var regToggle = document.getElementById("regTogglePwd");
+
+  var isApi = !!(window.L2Auth && L2Auth.mode === "api");
 
   function nextUrl() {
     var next = new URLSearchParams(location.search).get("next") || "index.html";
@@ -141,34 +206,95 @@ input[type=text]:focus, input[type=password]:focus {
     }
     return next;
   }
-  function showError(msg) { error.textContent = msg; error.hidden = false; }
-  function clearError() { error.hidden = true; }
+  function showError(el, msg) { el.textContent = msg; el.hidden = false; }
+  function clearError(el) { el.hidden = true; }
+  function setBusy(btn, busy, idleText, busyText) {
+    btn.disabled = busy;
+    btn.textContent = busy ? busyText : idleText;
+  }
 
   if (window.L2Auth && L2Auth.isAuthed()) {
     location.replace(nextUrl());
     return;
   }
 
-  toggle.addEventListener("click", function () {
-    var show = password.type === "password";
-    password.type = show ? "text" : "password";
-    toggle.textContent = show ? "隐藏" : "显示";
-    toggle.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
-  });
+  /* ---------- 模式提示 ---------- */
+  if (isApi) {
+    tabs.hidden = false;
+    modeTip.textContent = "内网账号由平台统一管理：可自助注册、登录后修改密码；忘记密码请联系管理员重置。";
+    L2Auth.health().then(function (info) {
+      if (info && info.firstRun) {
+        regOk.textContent = "首次初始化：第一个注册的账号将成为管理员，请确认由平台负责人注册。";
+        regOk.hidden = false;
+      }
+      if (info && info.registrationOpen === false) {
+        tabRegister.hidden = true;
+        showTab("login");
+      }
+    });
+  } else if (L2Auth && L2Auth.serverOnly) {
+    modeTip.textContent = "当前无法连接账号服务，请确认内网地址或稍后重试。";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "服务暂不可用";
+  } else {
+    modeTip.textContent = "当前离线版本：账号由管理员分配，如需新增账号或修改密码请联系管理员。";
+    tabs.hidden = true;
+  }
 
-  form.addEventListener("submit", function (e) {
+  /* ---------- 页签 ---------- */
+  function showTab(name) {
+    var isLogin = name === "login";
+    loginForm.hidden = !isLogin;
+    registerForm.hidden = isLogin;
+    tabLogin.className = isLogin ? "tab on" : "tab";
+    tabRegister.className = isLogin ? "tab" : "tab on";
+    clearError(error);
+    clearError(regError);
+    setTimeout(function () {
+      (isLogin ? username : regUsername).focus();
+    }, 30);
+  }
+  if (isApi) {
+    tabLogin.addEventListener("click", function () { showTab("login"); });
+    tabRegister.addEventListener("click", function () { showTab("register"); });
+  }
+
+  function bindToggle(button, input) {
+    button.addEventListener("click", function () {
+      var show = input.type === "password";
+      input.type = show ? "text" : "password";
+      button.textContent = show ? "隐藏" : "显示";
+      button.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
+    });
+  }
+  bindToggle(toggle, password);
+  bindToggle(regToggle, regPassword);
+
+  /* ---------- 登录 ---------- */
+  loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    clearError();
+    clearError(error);
     var u = username.value.trim();
     var p = password.value;
-    if (!u || !p) { showError("请输入账号和密码"); return; }
-    submitBtn.disabled = true;
-    submitBtn.textContent = "登录中…";
+    if (!u || !p) { showError(error, "请输入账号和密码"); return; }
+    setBusy(submitBtn, true, "登 录", "登录中…");
+
+    if (isApi) {
+      L2Auth.login(u, p, remember.checked).then(function () {
+        location.replace(nextUrl());
+      }).catch(function (err) {
+        showError(error, friendly(err, "账号或密码不正确"));
+        setBusy(submitBtn, false, "登 录", "登录中…");
+        password.value = "";
+        password.focus();
+      });
+      return;
+    }
+
     L2Auth.verify(u, p).then(function (user) {
       if (!user) {
-        showError("账号或密码不正确");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "登 录";
+        showError(error, "账号或密码不正确");
+        setBusy(submitBtn, false, "登 录", "登录中…");
         password.value = "";
         password.focus();
         return;
@@ -176,14 +302,48 @@ input[type=text]:focus, input[type=password]:focus {
       L2Auth.saveToken(user, remember.checked);
       location.replace(nextUrl());
     }).catch(function () {
-      showError("登录失败，请刷新页面后重试");
-      submitBtn.disabled = false;
-      submitBtn.textContent = "登 录";
+      showError(error, "登录失败，请刷新页面后重试");
+      setBusy(submitBtn, false, "登 录", "登录中…");
     });
   });
 
+  /* ---------- 注册 ---------- */
+  if (isApi) {
+    registerForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      clearError(regError);
+      var u = regUsername.value.trim();
+      var p = regPassword.value;
+      var p2 = regPassword2.value;
+      if (!u || !p) { showError(regError, "请输入账号和密码"); return; }
+      if (p.length < 8) { showError(regError, "密码至少 8 位"); return; }
+      if (p !== p2) { showError(regError, "两次输入的密码不一致"); return; }
+      setBusy(regBtn, true, "注册并登录", "注册中…");
+
+      L2Auth.register(u, p, regDisplayName.value.trim()).then(function () {
+        location.replace(nextUrl());
+      }).catch(function (err) {
+        showError(regError, friendly(err, "注册失败，请稍后重试"));
+        setBusy(regBtn, false, "注册并登录", "注册中…");
+      });
+    });
+  }
+
+  function friendly(err, fallback) {
+    if (!err) return fallback;
+    if (err.code === "invalid_credentials") return "账号或密码不正确";
+    if (err.code === "account_locked") return err.retryAfter ? ("登录失败次数过多，请 " + Math.ceil(err.retryAfter / 60) + " 分钟后再试") : "登录失败次数过多，请稍后再试";
+    if (err.code === "account_disabled") return "账号已被禁用，请联系管理员";
+    if (err.code === "rate_limited") return "操作过于频繁，请稍后再试";
+    if (err.message) return err.message;
+    return fallback;
+  }
+
   [username, password].forEach(function (el) {
-    el.addEventListener("input", clearError);
+    el.addEventListener("input", function () { clearError(error); });
+  });
+  [regUsername, regPassword, regPassword2].forEach(function (el) {
+    el.addEventListener("input", function () { clearError(regError); });
   });
 })();
 </script>

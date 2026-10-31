@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>账号管理 · CMOC L2 PBI报表开发平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234C3B8C'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EL2%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/portal.css?v=20261101a">
+<script src="assets/auth.config.js?v=20261101a"></script>
+<script src="assets/auth-guard.js?v=20261101a"></script>
+</head>
+<body>
+<header class="admin-top">
+  <span class="brand">
+    <img src="assets/brand/cmoc-logo-white.png" alt="CMOC">
+    账号管理
+  </span>
+  <span class="spacer"></span>
+  <span class="who" id="whoami">—</span>
+  <a href="index.html">返回工作台</a>
+  <a href="#" id="logoutBtn">退出登录</a>
+</header>
+
+<main class="admin-wrap">
+  <div class="tabs">
+    <button type="button" class="tab on" id="tabUsers" data-tab="users">用户管理</button>
+    <button type="button" class="tab" id="tabAudit" data-tab="audit">审计日志</button>
+  </div>
+
+  <section class="panel" id="usersPanel">
+    <div class="panel-head">
+      <h2>账号列表</h2>
+      <span class="spacer"></span>
+      <div class="stat">
+        <span>账号 <b id="statTotal">—</b></span>
+        <span>管理员 <b id="statAdmins">—</b></span>
+        <span>禁用 <b id="statDisabled">—</b></span>
+      </div>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="searchInput" placeholder="搜索账号或显示名…" autocomplete="off">
+      <button class="btn small" type="button" id="refreshBtn">刷新</button>
+      <span class="muted" id="usersHint"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>账号</th><th>显示名</th><th>角色</th><th>状态</th>
+            <th>最近登录</th><th>创建时间</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+    </div>
+    <div class="pager">
+      <span id="pagerText"></span>
+      <button class="btn small" type="button" id="prevPage">上一页</button>
+      <button class="btn small" type="button" id="nextPage">下一页</button>
+    </div>
+  </section>
+
+  <section class="panel" id="auditPanel" hidden>
+    <div class="panel-head">
+      <h2>审计日志</h2>
+      <span class="spacer"></span>
+      <button class="btn small" type="button" id="auditRefresh">刷新</button>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="auditSearch" placeholder="按动作过滤，如 auth.login.fail" autocomplete="off">
+      <span class="muted">最近 200 条</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>时间</th><th>操作人</th><th>动作</th><th>对象</th><th>IP</th><th>详情</th></tr>
+        </thead>
+        <tbody id="auditBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="deniedPanel" hidden>
+    <div class="empty">
+      <p>需要管理员权限才能访问本页面。</p>
+      <p><a class="link" href="index.html">返回工作台</a></p>
+    </div>
+  </section>
+</main>
+
+<div class="modal-mask" id="secretMask" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="secretTitle">
+    <h3 id="secretTitle">临时密码</h3>
+    <p>请把下面的密码交给该用户，并提醒他登录后立即修改。此密码只显示这一次。</p>
+    <code class="secret" id="secretValue"></code>
+    <div class="modal-actions">
+      <button class="btn small" type="button" id="copySecret">复制</button>
+      <button class="btn small primary" type="button" id="closeSecret">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/auth.js?v=20261101a"></script>
+<script src="assets/portal.js?v=20261101a"></script>
+</body>
+</html>

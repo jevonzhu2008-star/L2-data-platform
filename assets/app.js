@@ -1126,7 +1126,25 @@
   buildSearchIndex();
 
   var currentUserEl = document.getElementById("currentUser");
-  if (currentUserEl && window.L2Auth) currentUserEl.textContent = L2Auth.currentUser() || "已登录";
+  var userLinks = document.getElementById("userLinks");
+  var adminLink = document.getElementById("adminLink");
+  if (currentUserEl && window.L2Auth) {
+    currentUserEl.textContent = (L2Auth.currentDisplayName ? L2Auth.currentDisplayName() : L2Auth.currentUser()) || "已登录";
+  }
+  if (userLinks && window.L2Auth && L2Auth.mode === "api") {
+    userLinks.hidden = false;
+    if (adminLink && L2Auth.isAdmin && L2Auth.isAdmin()) adminLink.hidden = false;
+    // 用服务端会话校正显示名与角色；网络异常不打断浏览，只有明确的 401 才回登录页
+    if (L2Auth.session) {
+      L2Auth.session().then(function (info) {
+        if (!info) return;
+        if (currentUserEl) currentUserEl.textContent = info.displayName || info.username;
+        if (adminLink) adminLink.hidden = info.role !== "admin";
+      }).catch(function (err) {
+        if (err && err.status === 401) location.replace("login.html");
+      });
+    }
+  }
   var buildStamp = document.getElementById("buildStamp");
   if (buildStamp && D.meta && D.meta.updated) buildStamp.textContent = "构建 " + D.meta.updated;
   var logoutBtn = document.getElementById("logoutBtn");

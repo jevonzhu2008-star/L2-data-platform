@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>账号设置 · CMOC L2 PBI报表开发平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234C3B8C'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EL2%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/portal.css?v=20261101a">
+<script src="assets/auth.config.js?v=20261101a"></script>
+<script src="assets/auth-guard.js?v=20261101a"></script>
+</head>
+<body>
+<div class="auth-bg" aria-hidden="true"></div>
+<main class="auth-wrap">
+  <section class="auth-card">
+    <img class="logo" src="assets/brand/cmoc-logo.png" alt="CMOC 洛阳钼业">
+    <h1>账号设置</h1>
+    <p class="sub">查看账号信息、修改登录密码</p>
+
+    <div class="user-meta">
+      <span class="avatar" id="avatar">L2</span>
+      <span>
+        <b id="displayName">已登录</b>
+        <small id="accountMeta">账号 —</small>
+      </span>
+    </div>
+
+    <form id="passwordForm" novalidate>
+      <label>当前密码
+        <span class="pwd">
+          <input id="oldPassword" type="password" autocomplete="current-password" required>
+          <button type="button" id="toggleOld" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label>新密码（至少 8 位）
+        <span class="pwd">
+          <input id="newPassword" type="password" autocomplete="new-password" required>
+          <button type="button" id="toggleNew" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label>确认新密码
+        <input id="newPassword2" type="password" autocomplete="new-password" required>
+      </label>
+      <p class="error" id="error" role="alert" hidden></p>
+      <p class="ok" id="ok" role="status" hidden></p>
+      <button class="btn primary block" id="submitBtn" type="submit">修改密码</button>
+    </form>
+
+    <p class="tip" id="modeTip" hidden></p>
+
+    <div class="card-foot">
+      <a class="btn" href="index.html">返回工作台</a>
+      <button class="btn" id="logoutBtn" type="button">退出登录</button>
+    </div>
+  </section>
+</main>
+
+<script src="assets/auth.js?v=20261101a"></script>
+<script src="assets/account.js?v=20261101a"></script>
+</body>
+</html>

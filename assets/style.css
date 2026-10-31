@@ -83,10 +83,14 @@ kbd { font-family: var(--mono); font-size: 10px; border: 1px solid currentColor;
 .sb-sub-item.active { color: #fff; border-left-color: #4FA3E8; background: rgba(15, 108, 189, .14); }
 .sb-foot { flex: 0 0 auto; display: flex; flex-direction: column; gap: 2px; padding: 13px 18px; border-top: 1px solid var(--sidebar-line); font-size: 10px; color: var(--sidebar-muted); }
 .sb-foot-note { color: #526C85; }
-.sb-user { display: flex; align-items: center; gap: 8px; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--sidebar-line); }
+.sb-user { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--sidebar-line); }
 .sb-user-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--sidebar-text); font-size: 10.5px; }
 .sb-logout { flex: 0 0 auto; border: 1px solid rgba(255, 255, 255, .16); background: transparent; color: var(--sidebar-text); font-size: 10px; padding: 3px 8px; border-radius: 5px; cursor: pointer; }
 .sb-logout:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.sb-user-links { display: flex; gap: 6px; width: 100%; margin-top: 6px; }
+.sb-user-link { flex: 1; text-align: center; border: 1px solid rgba(255, 255, 255, .16); background: transparent; color: var(--sidebar-text); font-size: 10px; padding: 3px 6px; border-radius: 5px; text-decoration: none; }
+.sb-user-link:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+.sb-user-links[hidden], .sb-user-link[hidden] { display: none; }
 
 /* ---------- 顶栏 ---------- */
 .topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 14px; height: var(--topbar-h); padding: 0 24px; background: rgba(255, 255, 255, .94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
