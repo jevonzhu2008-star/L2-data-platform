@@ -380,7 +380,9 @@
           "<dt>数据来源</dt><dd>" + esc(sourceLabel(p)) + "</dd>" +
           (svc ? "<dt>Service 报表</dt><dd style=\"font-family:var(--mono);font-size:10.5px\">" + esc(svc.reportId) + "</dd>" : "") +
         "</dl></section>" +
-        (svc ? "<section><h3>在线报表</h3><p>该页已在 Power BI Service 发布，登录后可在「在线报表 / 截图」之间切换。GitHub Pages 匿名访问无法登录 Power BI，默认显示截图；需要实时数据请点「Service ↗」。</p></section>" : "") +
+        (svc ? "<section><h3>在线报表</h3><p>" + (preferScreenshot
+          ? "GitHub Pages 公网访问无法内嵌 Power BI 在线报表，当前显示截图。需要实时数据请点「Service ↗」登录后查看。"
+          : "该页已在 Power BI Service 发布，可在「在线报表 / 截图」之间切换。在线报表需要浏览器已登录 Power BI。") + "</p></section>" : "") +
         "<section><h3>视觉构成</h3>" + visualRows + "</section>" +
         "<section><h3>数据表</h3><div class=\"chips\">" + (tableChips || "—") + "</div></section>" +
         "<section><h3>度量值</h3><div class=\"chips\">" + (measureChips || "—") + "</div></section>" +
@@ -404,7 +406,7 @@
     var next = idx < pages.length - 1 ? pages[idx + 1] : null;
     var prevBtn = prev ? '<a class="btn small" href="#/page/' + prev.code + '" title="上一页 (←)">←</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">←</span>';
     var nextBtn = next ? '<a class="btn small" href="#/page/' + next.code + '" title="下一页 (→)">→</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">→</span>';
-    var viewSeg = hasService && hasShot
+    var viewSeg = hasService && hasShot && !preferScreenshot
       ? '<div class="seg" id="viewSeg">' +
           '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表</button>' +
           '<button type="button" data-view="shot" class="' + (mode === "shot" ? "on" : "") + '">截图</button>' +
@@ -430,7 +432,7 @@
         "</div>" +
       "</div>" +
       '<div class="report-view' + (mode === "service" ? " service-mode" : "") + '" id="reportView">' +
-        (hasService
+        (hasService && !preferScreenshot
           ? '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p) : "") + '" data-src="' + embedUrl(p) + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
         (hasShot
@@ -442,7 +444,7 @@
     closeDrawer();
     var drawerBtn = document.getElementById("drawerBtn");
     if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
-    if (hasService && hasShot) {
+    if (hasService && hasShot && !preferScreenshot) {
       Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
         btn.addEventListener("click", function () {
           viewMode = btn.getAttribute("data-view");
