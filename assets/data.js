@@ -289,9 +289,9 @@ window.L2_DATA = {
     "度量值.预算达成率",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-01-02.png",
+   "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-01-02",
     "name": "L2-01-02 集团合并利润汇总表",
@@ -308,10 +308,10 @@ window.L2_DATA = {
      "pivotTable",
      "textbox"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-01-02.png",
+    "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
     "pbipPage": "50df5dd79c9c19213b42",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-01-02",
@@ -441,9 +441,9 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-01-03.png",
+   "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-01-03",
     "name": "L2-01-03 快报-金融投资业务专属",
@@ -459,10 +459,10 @@ window.L2_DATA = {
      "slicer",
      "card"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-01-03.png",
+    "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
     "pbipPage": "020a059bfd06b6347883",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-01-03",
@@ -1060,9 +1060,9 @@ window.L2_DATA = {
     "度量值.累计预算",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-03-01.png",
+   "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-03-01",
     "name": "L2-03-01 销售管理费用预算执行汇总表",
@@ -1078,10 +1078,10 @@ window.L2_DATA = {
      "textbox",
      "card"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-03-01.png",
+    "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
     "pbipPage": "e16279b10e3df23fa8cb",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-03-01",
@@ -1223,9 +1223,9 @@ window.L2_DATA = {
     "度量值.指标值",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-03-02.png",
+   "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-03-02",
     "name": "L2-03-02 财务费用汇总表",
@@ -1241,10 +1241,10 @@ window.L2_DATA = {
      "slicer",
      "card"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-03-02.png",
+    "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
     "pbipPage": "4effe47efe2ace12b72b",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-03-02",
@@ -1518,9 +1518,9 @@ window.L2_DATA = {
     "度量值.金额(原币)",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-04-01.png",
+   "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-04-01",
     "name": "L2-04-01库存汇总表",
@@ -1537,10 +1537,10 @@ window.L2_DATA = {
      "slicer",
      "card"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-04-01.png",
+    "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
     "pbipPage": "72b8f9de0e30717743ca",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-04-01",
@@ -1678,9 +1678,9 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "",
-   "thumb": "",
-   "screenshotSource": "",
+   "screenshot": "assets/screens/service/L2-05-01.png",
+   "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
+   "screenshotSource": "service",
    "pbix": {
     "code": "L2-05-01",
     "name": "L2-05-01 硫磺及硫酸价格分析月报",
@@ -1696,10 +1696,10 @@ window.L2_DATA = {
      "slicer",
      "card"
     ],
-    "screenshot": "",
-    "thumb": "",
+    "screenshot": "assets/screens/service/L2-05-01.png",
+    "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
     "pbipPage": "4782da4e728bfbbefc8c",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
    },
    "mapping": {
     "code": "L2-05-01",
@@ -3666,10 +3666,10 @@ window.L2_DATA = {
     "pivotTable",
     "textbox"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-01-02.png",
+   "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
    "pbipPage": "50df5dd79c9c19213b42",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   },
   {
    "code": "L2-01-03",
@@ -3686,10 +3686,10 @@ window.L2_DATA = {
     "slicer",
     "card"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-01-03.png",
+   "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
    "pbipPage": "020a059bfd06b6347883",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   },
   {
    "code": "L2-03-01",
@@ -3706,10 +3706,10 @@ window.L2_DATA = {
     "textbox",
     "card"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-03-01.png",
+   "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
    "pbipPage": "e16279b10e3df23fa8cb",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   },
   {
    "code": "L2-03-02",
@@ -3726,10 +3726,10 @@ window.L2_DATA = {
     "slicer",
     "card"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-03-02.png",
+   "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
    "pbipPage": "4effe47efe2ace12b72b",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   },
   {
    "code": "L2-04-01",
@@ -3747,10 +3747,10 @@ window.L2_DATA = {
     "slicer",
     "card"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-04-01.png",
+   "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
    "pbipPage": "72b8f9de0e30717743ca",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   },
   {
    "code": "L2-05-01",
@@ -3767,10 +3767,10 @@ window.L2_DATA = {
     "slicer",
     "card"
    ],
-   "screenshot": "",
-   "thumb": "",
+   "screenshot": "assets/screens/service/L2-05-01.png",
+   "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
    "pbipPage": "4782da4e728bfbbefc8c",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；该表样已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。"
+   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
   }
  ],
  "mappings": [
