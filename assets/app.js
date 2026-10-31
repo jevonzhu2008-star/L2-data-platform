@@ -13,8 +13,6 @@
   var drawerBackdrop = document.getElementById("drawerBackdrop");
   var mobileBackdrop = document.getElementById("mobileBackdrop");
   var menuBtn = document.getElementById("menuBtn");
-  var presentBtn = document.getElementById("presentBtn");
-  var presentExit = document.getElementById("presentExit");
   var body = document.body;
 
   var pages = D.pages.filter(function (p) { return p.code; });
@@ -28,8 +26,6 @@
   var measures = D.measures;
   var mappings = D.mappings;
   var service = D.service || {};
-  var viewMode = "service";
-  var pendingPresent = false;
 
   var VISUAL_LABEL = {
     pivotTable: "矩阵",
@@ -99,6 +95,15 @@
     var host = service.host || "https://app.powerbi.com";
     if (ws) return host + "/groups/" + encodeURIComponent(ws) + "/reports/" + encodeURIComponent(r.reportId);
     return host + "/reports/" + encodeURIComponent(r.reportId);
+  }
+
+  /* 有在线报表的页面不再使用截图，统一显示在线入口。 */
+  function onlineTile(compact) {
+    return '<div class="rc-online">' +
+      '<span class="rc-online-icon">◉</span>' +
+      "<b>" + (compact ? "在线报表" : "Power BI 在线报表") + "</b>" +
+      "<small>Service 实时嵌入</small>" +
+      "</div>";
   }
 
   function routeInfo() {
@@ -243,11 +248,12 @@
 
   /* ---------- 首页 ---------- */
   function reportCard(p) {
-    return '<a class="report-card" href="#/page/' + p.code + '">' +
-      '<div class="rc-thumb">' +
-        (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : "") +
+    var online = !!pageService(p);
+    return '<a class="report-card' + (online ? " is-online" : "") + '" href="#/page/' + p.code + '">' +
+      '<div class="rc-thumb' + (online ? " is-online" : "") + '">' +
+        (online ? onlineTile(false) : (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : "")) +
         '<span class="rc-badge">' + p.visualCount + " 视觉</span>" +
-        (pageService(p) ? '<span class="rc-badge svc">Report · 在线</span>' : '<span class="rc-badge pbip">PBIP 页面 · 仅截图</span>') +
+        (online ? '<span class="rc-badge svc">Report · 在线</span>' : '<span class="rc-badge pbip">PBIP 页面 · 截图</span>') +
       "</div>" +
       '<div class="rc-body">' +
         '<span class="code">' + esc(p.code) + "</span>" +
@@ -315,8 +321,8 @@
         "</div>" +
 
         '<section class="section">' +
-          '<div class="section-head"><div><h2>报表页</h2><p>11 个内容页 · ' + onlineCount + ' 个 Report · 在线 · ' + shotCount + ' 个 PBIP 页面 · 仅截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
-          '<div class="report-legend"><span><i class="dot online"></i>Report · 在线 <b>' + onlineCount + '</b></span><span><i class="dot shot"></i>PBIP 页面 · 仅截图 <b>' + shotCount + '</b></span></div>' +
+          '<div class="section-head"><div><h2>报表页</h2><p>11 个内容页 · ' + onlineCount + ' 个 Report · 在线（不截图） · ' + shotCount + ' 个 PBIP 页面 · 截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
+          '<div class="report-legend"><span><i class="dot online"></i>Report · 在线 <b>' + onlineCount + '</b></span><span><i class="dot shot"></i>PBIP 页面 · 截图 <b>' + shotCount + '</b></span></div>' +
           groupsHtml +
         "</section>" +
 
@@ -350,8 +356,8 @@
     var measureChips = p.measures.map(function (m) { return '<span class="chip src">' + esc(m) + "</span>"; }).join("");
 
     var deliver = [];
-    if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service 报表</span><a href="' + serviceUrl(p) + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service 在线报表</span><a href="' + serviceUrl(p) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (!svc && p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · PBIP</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.pbix) deliver.push('<div class="deliver-row"><span class="badge pbix">PBIX</span><span class="dr-name" title="' + esc(p.pbix.file) + '">' + esc(p.pbix.file.split("/").pop()) + '</span><a href="' + url(p.pbix.file) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="' + url(p.mapping.file) + '" target="_blank" rel="noopener">打开</a></div>');
 
@@ -368,7 +374,7 @@
           "<dt>数据来源</dt><dd>" + esc(sourceLabel(p)) + "</dd>" +
           (svc ? "<dt>Service 报表</dt><dd style=\"font-family:var(--mono);font-size:10.5px\">" + esc(svc.reportId) + "</dd>" : "") +
         "</dl></section>" +
-        (svc ? "<section><h3>在线报表</h3><p>通过 Power BI 安全嵌入加载，需要浏览器已登录 Power BI。若未加载，请切换到工具栏“截图”，或点“打开 Service”。</p></section>" : "") +
+        (svc ? "<section><h3>在线报表</h3><p>该页已发布在 Power BI Service，平台直接在线嵌入，不再另行截图。需要浏览器已登录 Power BI；若未加载，请点「Service ↗」在 Service 中打开。</p></section>" : "") +
         "<section><h3>视觉构成</h3>" + visualRows + "</section>" +
         "<section><h3>数据表</h3><div class=\"chips\">" + (tableChips || "—") + "</div></section>" +
         "<section><h3>度量值</h3><div class=\"chips\">" + (measureChips || "—") + "</div></section>" +
@@ -384,18 +390,11 @@
     if (!p) return notFound(code);
     var svc = pageService(p);
     var hasService = !!svc;
-    var mode = hasService ? viewMode : "shot";
     var idx = pages.indexOf(p);
     var prev = idx > 0 ? pages[idx - 1] : null;
     var next = idx < pages.length - 1 ? pages[idx + 1] : null;
     var prevBtn = prev ? '<a class="btn small" href="#/page/' + prev.code + '" title="上一页 (←)">←</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">←</span>';
     var nextBtn = next ? '<a class="btn small" href="#/page/' + next.code + '" title="下一页 (→)">→</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">→</span>';
-    var viewSeg = hasService
-      ? '<div class="seg" id="viewSeg">' +
-          '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表</button>' +
-          '<button type="button" data-view="shot" class="' + (mode === "shot" ? "on" : "") + '">截图</button>' +
-        "</div>"
-      : "";
 
     app.className = "detail-mode";
     app.innerHTML =
@@ -404,44 +403,29 @@
         '<div class="db-title">' +
           '<span class="code">' + esc(p.code) + "</span>" +
           "<h1>" + esc(shortName(p.name, p.code)) + "</h1>" +
-          '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 仅截图") + "</span>" +
+          '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 截图") + "</span>" +
           '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span></div>" +
         "</div>" +
         '<div class="db-actions">' +
           prevBtn + nextBtn +
-          viewSeg +
           '<button class="btn" type="button" id="drawerBtn">详情</button>' +
-          '<button class="btn" type="button" id="presentBtnDetail">▣ 演示</button>' +
-          (hasService ? '<a class="btn" href="' + serviceUrl(p) + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>' : "") +
-          (p.screenshot ? '<a class="btn" href="' + url(p.screenshot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
+          (hasService
+            ? '<a class="btn" href="' + serviceUrl(p) + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>'
+            : (p.screenshot ? '<a class="btn" href="' + url(p.screenshot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "")) +
         "</div>" +
       "</div>" +
-      '<div class="report-view' + (mode === "service" ? " service-mode" : "") + '" id="reportView">' +
+      '<div class="report-view' + (hasService ? " service-mode" : "") + '" id="reportView">' +
         (hasService
           ? '<iframe class="service-frame" id="serviceFrame" src="' + embedUrl(p) + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
-          : "") +
-        (p.screenshot
-          ? '<img class="report-shot" id="reportShot" src="' + url(p.screenshot) + '" alt="' + esc(p.name) + ' 报表截图">'
-          : '<div class="report-note">暂无报表截图</div>') +
+          : (p.screenshot
+            ? '<img class="report-shot" id="reportShot" src="' + url(p.screenshot) + '" alt="' + esc(p.name) + ' 报表截图">'
+            : '<div class="report-note">暂无报表截图</div>')) +
       "</div>";
 
     renderPageDrawer(p);
     closeDrawer();
     var drawerBtn = document.getElementById("drawerBtn");
     if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
-    var presentBtnDetail = document.getElementById("presentBtnDetail");
-    if (presentBtnDetail) presentBtnDetail.addEventListener("click", enterPresentation);
-    if (hasService) {
-      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
-        btn.addEventListener("click", function () {
-          viewMode = btn.getAttribute("data-view");
-          var rv = document.getElementById("reportView");
-          if (rv) rv.classList.toggle("service-mode", viewMode === "service");
-          Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (b) { b.classList.remove("on"); });
-          btn.classList.add("on");
-        });
-      });
-    }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>' + esc(shortName(p.name, p.code)) + "</b>");
     document.title = shortName(p.name, p.code) + " · CMOC L2 数据平台";
@@ -479,10 +463,10 @@
         '<div class="status-strip" style="margin-top:14px">' +
           '<span class="status-pill"><b>' + ps.length + "</b> 报表页</span>" +
           '<span class="status-pill"><span class="dot green"></span><b>' + online + "</b> Report · 在线</span>" +
-          '<span class="status-pill"><span class="dot"></span><b>' + shots + "</b> PBIP 页面 · 仅截图</span>" +
+          '<span class="status-pill"><span class="dot"></span><b>' + shots + "</b> PBIP 页面 · 截图</span>" +
         "</div>" +
         '<section class="section">' +
-          '<div class="section-head"><div><h2>报表页</h2><p>按状态标注：Report · 在线 / PBIP 页面 · 仅截图</p></div></div>' +
+          '<div class="section-head"><div><h2>报表页</h2><p>按状态标注：Report · 在线（不截图） / PBIP 页面 · 截图</p></div></div>' +
           (ps.length ? '<div class="report-grid">' + ps.map(reportCard).join("") + "</div>" : '<div class="empty-state">该主题暂无报表页</div>') +
         "</section>" +
       "</div>";
@@ -721,13 +705,13 @@
       var page = pageByCode[p.code];
       var svc = pageService(page);
       return '<article class="pbix-card">' +
-        '<a class="pbix-thumb" href="#/page/' + p.code + '">' +
-          (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : "") +
+        '<a class="pbix-thumb' + (svc ? " is-online" : "") + '" href="#/page/' + p.code + '">' +
+          (svc ? onlineTile(true) : (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : "")) +
         "</a>" +
         '<div class="pbix-body">' +
           '<span class="code">' + esc(p.code) + "</span>" +
           "<h3>" + esc(shortName(p.name, p.code)) + "</h3>" +
-          '<div class="pbix-meta">' + esc(p.size) + " · " + esc(p.date) + " · " + p.pageCount + " 页 · " + esc(p.visualTypes.length) + " 个视觉" + (svc ? " · Service 实时" : " · PBIP 截图") + "</div>" +
+          '<div class="pbix-meta">' + esc(p.size) + " · " + esc(p.date) + " · " + p.pageCount + " 页 · " + esc(p.visualTypes.length) + " 个视觉 · " + (svc ? "在线报表" : "PBIP 截图") + "</div>" +
           '<div class="pbix-actions">' +
             '<a class="btn small primary" href="#/page/' + p.code + '">查看报表页</a>' +
             (svc ? '<a class="btn small" href="' + serviceUrl(page) + '" target="_blank" rel="noopener">Service ↗</a>' : "") +
@@ -740,7 +724,7 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">PBIX</span><h1>PBIX 表样</h1>' +
-          "<p>06.表样POC 下的 " + D.stats.pbix + " 个 PBIX。它们都是 Power BI Service 实时连接报表，本地打开需要登录对应数据集；缩略图使用对应 Service 报表的真实截图。</p></div>" +
+          "<p>06.表样POC 下的 " + D.stats.pbix + " 个 PBIX。它们都是 Power BI Service 实时连接报表，且都已在 Service 发布在线报表，平台直接在线嵌入，不另做截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
         '<div class="hint">pbiServiceLive 报表不包含本地数据模型，浏览器不能直接渲染；如需真实交互请发布到 Power BI Service 或打开 PBIX 后登录。</div>' +
         '<div class="pbix-grid">' + cards + "</div>" +
@@ -780,7 +764,7 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">DELIVERABLES</span><h1>交付成果</h1>' +
-          "<p>PBIP 报表工程、11 页报表截图与 6 个 PBIX 表样。所有截图由 Power BI Desktop 从 02.PBIP 直接导出。</p></div>" +
+          "<p>PBIP 报表工程、11 页报表与 6 个 PBIX 表样。6 个已在 Service 发布在线报表的页面直接在线嵌入，其余 5 页保留 Power BI Desktop 导出的截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/pbix">PBIX</a></div></div>' +
 
         '<section class="section"><div class="pbip-panel">' +
@@ -817,7 +801,7 @@
     document.title = "交付成果 · CMOC L2 数据平台";
   }
 
-  /* ---------- 抽屉 / 演示 ---------- */
+  /* ---------- 抽屉 ---------- */
   function openDrawer() {
     if (routeInfo().section !== "page") return;
     body.classList.add("drawer-open");
@@ -832,21 +816,6 @@
     else openDrawer();
   }
 
-  function enterPresentation() {
-    if (routeInfo().section !== "page") {
-      pendingPresent = true;
-      location.hash = "#/page/L2-01-02";
-      return;
-    }
-    closeDrawer();
-    closeMobileNav();
-    body.classList.add("presenting");
-  }
-  function exitPresentation() { body.classList.remove("presenting"); }
-  function togglePresentation() {
-    if (body.classList.contains("presenting")) exitPresentation();
-    else enterPresentation();
-  }
   function closeMobileNav() { body.classList.remove("nav-open"); }
 
   /* ---------- 键盘 ---------- */
@@ -866,7 +835,6 @@
 
     if (e.key === "Escape") {
       if (typing) { searchInput.blur(); closeSearch(); return; }
-      if (body.classList.contains("presenting")) { exitPresentation(); return; }
       if (body.classList.contains("drawer-open")) { closeDrawer(); return; }
       if (body.classList.contains("nav-open")) { closeMobileNav(); return; }
       return;
@@ -875,7 +843,6 @@
     if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); searchInput.focus(); return; }
     if (e.key === "ArrowLeft" && !e.ctrlKey && !e.metaKey) { if (routeInfo().section === "page") { e.preventDefault(); goRelative(-1); } return; }
     if (e.key === "ArrowRight" && !e.ctrlKey && !e.metaKey) { if (routeInfo().section === "page") { e.preventDefault(); goRelative(1); } return; }
-    if ((e.key === "p" || e.key === "P") && !e.ctrlKey && !e.metaKey && !e.altKey) togglePresentation();
     if ((e.key === "d" || e.key === "D") && !e.ctrlKey && !e.metaKey && !e.altKey && routeInfo().section === "page") toggleDrawer();
   });
 
@@ -981,15 +948,12 @@
   });
   mobileBackdrop.addEventListener("click", closeMobileNav);
   drawerBackdrop.addEventListener("click", closeDrawer);
-  presentBtn.addEventListener("click", enterPresentation);
-  presentExit.addEventListener("click", exitPresentation);
 
   /* ---------- 路由 ---------- */
   function router() {
     var info = routeInfo();
     closeSearch();
     closeMobileNav();
-    if (info.section !== "page") exitPresentation();
 
     app.className = "";
     if (info.section === "home") {
@@ -1016,11 +980,6 @@
     updateSidebar(info.section, info.arg);
     window.scrollTo(0, 0);
     closeDrawer();
-
-    if (pendingPresent && info.section === "page") {
-      pendingPresent = false;
-      enterPresentation();
-    }
   }
 
   buildSidebar();
