@@ -223,11 +223,22 @@ input[type=text]:focus, input[type=password]:focus {
     tabs.hidden = false;
     modeTip.textContent = "内网账号由平台统一管理：可自助注册、登录后修改密码；忘记密码请联系管理员重置。";
     L2Auth.health().then(function (info) {
-      if (info && info.firstRun) {
+      if (!info) {
+        // 内网包里禁用了本地回退：连不上账号服务就不能假装能登录
+        if (L2Auth.serverOnly) {
+          modeTip.textContent = "当前无法连接账号服务，请确认访问地址正确或稍后重试；如持续失败请联系管理员。";
+          submitBtn.disabled = true;
+          submitBtn.textContent = "服务暂不可用";
+          tabRegister.hidden = true;
+          showTab("login");
+        }
+        return;
+      }
+      if (info.firstRun) {
         regOk.textContent = "首次初始化：第一个注册的账号将成为管理员，请确认由平台负责人注册。";
         regOk.hidden = false;
       }
-      if (info && info.registrationOpen === false) {
+      if (info.registrationOpen === false) {
         tabRegister.hidden = true;
         showTab("login");
       }
