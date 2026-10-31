@@ -419,7 +419,8 @@
           '<span class="code">' + esc(p.code) + "</span>" +
           "<h1>" + esc(shortName(p.name, p.code)) + "</h1>" +
           '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 截图") + "</span>" +
-          '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span></div>" +
+          '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span>" +
+            (preferScreenshot && hasService && mode === "shot" ? '<span class="sep">·</span><span>公网显示截图</span>' : "") + "</div>" +
         "</div>" +
         '<div class="db-actions">' +
           prevBtn + nextBtn + viewSeg +
