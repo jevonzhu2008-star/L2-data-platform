@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>登录 · CMOC L2 PBI报表开发平台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234C3B8C'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EL2%3C/text%3E%3C/svg%3E">
+<style>
+:root {
+  --primary: #4C3B8C;
+  --primary-dark: #372770;
+  --ink: #1F1B2E;
+  --muted: #6B6778;
+  --line: #DDD8EA;
+  --font: "Source Han Sans CN", "思源黑体", "Noto Sans SC", "Microsoft YaHei", "微软雅黑", "PingFang SC", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: #1B1038; color: var(--ink);
+  font-family: var(--font); font-size: 13.5px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.login-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: url("assets/brand/cmoc-hero.jpg") center/cover no-repeat;
+}
+.login-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(27,16,56,.94), rgba(76,59,140,.76) 55%, rgba(42,27,82,.92));
+}
+.login-wrap {
+  position: relative; z-index: 1; min-height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 30px 20px;
+}
+.login-card {
+  width: 100%; max-width: 392px; background: #fff;
+  border-radius: 16px; padding: 34px 34px 26px;
+  box-shadow: 0 24px 70px rgba(10,6,25,.45);
+  animation: rise .4s ease-out both;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.logo { display: block; width: auto; height: auto; max-width: 100%; max-height: 34px; margin-bottom: 22px; }
+h1 { font-size: 21px; line-height: 1.35; margin: 0 0 6px; color: #2A1B52; letter-spacing: .01em; }
+.sub { margin: 0 0 24px; font-size: 12.5px; color: var(--muted); }
+label { display: block; font-size: 12px; color: #4A4558; margin-bottom: 14px; }
+input[type=text], input[type=password] {
+  width: 100%; height: 42px; margin-top: 6px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 8px;
+  font: inherit; font-size: 13.5px; background: #FBFAFE; color: var(--ink);
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+input[type=text]:focus, input[type=password]:focus {
+  outline: none; border-color: var(--primary); background: #fff;
+  box-shadow: 0 0 0 3px rgba(76,59,140,.12);
+}
+.pwd { position: relative; display: block; }
+.pwd input { padding-right: 58px; }
+.pwd button {
+  position: absolute; right: 6px; top: calc(50% + 3px); transform: translateY(-50%);
+  border: 0; background: transparent; color: var(--primary);
+  font-size: 11.5px; cursor: pointer; padding: 6px 8px; border-radius: 6px;
+}
+.pwd button:hover { background: #F1EEFA; }
+.remember {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted); margin: 0 0 16px;
+}
+.remember input { width: 15px; height: 15px; margin: 0; accent-color: var(--primary); }
+.error {
+  margin: 0 0 14px; padding: 9px 11px; border-radius: 7px;
+  background: #FDECEA; color: #B42318; font-size: 12px;
+}
+.error[hidden] { display: none; }
+.submit {
+  width: 100%; height: 44px; border: 0; border-radius: 9px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff; font-size: 14px; font-weight: 600; letter-spacing: .14em;
+  cursor: pointer; transition: box-shadow .15s, transform .12s;
+}
+.submit:hover { box-shadow: 0 8px 20px rgba(76,59,140,.28); }
+.submit:active { transform: translateY(1px); }
+.submit[disabled] { opacity: .6; cursor: wait; }
+.foot { margin: 20px 0 0; text-align: center; font-size: 10.5px; color: #9A95A8; line-height: 1.6; }
+.tip {
+  margin-top: 14px; padding: 9px 11px; border-radius: 7px;
+  background: #F4F1FA; color: var(--muted); font-size: 10.5px; line-height: 1.55;
+}
+@media (max-width: 420px) {
+  .login-card { padding: 28px 22px 22px; border-radius: 14px; }
+  h1 { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+<div class="login-bg" aria-hidden="true"></div>
+<main class="login-wrap">
+  <section class="login-card">
+    <img class="logo" src="assets/brand/cmoc-logo.png" alt="CMOC 洛阳钼业">
+    <h1>L2 PBI报表开发平台</h1>
+    <p class="sub">集团管理报表工作台 · 请登录后访问</p>
+    <form id="loginForm" novalidate>
+      <label>账号
+        <input id="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required autofocus>
+      </label>
+      <label>密码
+        <span class="pwd">
+          <input id="password" type="password" autocomplete="current-password" required>
+          <button type="button" id="togglePwd" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label class="remember"><input id="remember" type="checkbox"> 记住我（7 天）</label>
+      <p class="error" id="error" role="alert" hidden></p>
+      <button class="submit" id="submitBtn" type="submit">登 录</button>
+    </form>
+    <p class="foot">仅限授权人员访问 · 请勿共享账号</p>
+    <p class="tip">本页面为前端访问门禁，无法阻止直接下载静态文件。请勿在公开环境放置敏感数据。</p>
+  </section>
+</main>
+
+<script src="assets/auth.config.js?v=20261031i"></script>
+<script src="assets/auth.js?v=20261031i"></script>
+<script>
+(function () {
+  var form = document.getElementById("loginForm");
+  var username = document.getElementById("username");
+  var password = document.getElementById("password");
+  var remember = document.getElementById("remember");
+  var error = document.getElementById("error");
+  var submitBtn = document.getElementById("submitBtn");
+  var toggle = document.getElementById("togglePwd");
+
+  function nextUrl() {
+    var next = new URLSearchParams(location.search).get("next") || "index.html";
+    if (!/^[A-Za-z0-9._\/#?=&%-]+$/.test(next) || next.indexOf("//") >= 0 ||
+        next.indexOf("..") >= 0 || next.indexOf(":") >= 0) {
+      next = "index.html";
+    }
+    return next;
+  }
+  function showError(msg) { error.textContent = msg; error.hidden = false; }
+  function clearError() { error.hidden = true; }
+
+  if (window.L2Auth && L2Auth.isAuthed()) {
+    location.replace(nextUrl());
+    return;
+  }
+
+  toggle.addEventListener("click", function () {
+    var show = password.type === "password";
+    password.type = show ? "text" : "password";
+    toggle.textContent = show ? "隐藏" : "显示";
+    toggle.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    clearError();
+    var u = username.value.trim();
+    var p = password.value;
+    if (!u || !p) { showError("请输入账号和密码"); return; }
+    submitBtn.disabled = true;
+    submitBtn.textContent = "登录中…";
+    L2Auth.verify(u, p).then(function (user) {
+      if (!user) {
+        showError("账号或密码不正确");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "登 录";
+        password.value = "";
+        password.focus();
+        return;
+      }
+      L2Auth.saveToken(user, remember.checked);
+      location.replace(nextUrl());
+    }).catch(function () {
+      showError("登录失败，请刷新页面后重试");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "登 录";
+    });
+  });
+
+  [username, password].forEach(function (el) {
+    el.addEventListener("input", clearError);
+  });
+})();
+</script>
+</body>
+</html>

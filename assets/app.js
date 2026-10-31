@@ -1076,6 +1076,20 @@
 
   buildSidebar();
   buildSearchIndex();
+
+  var currentUserEl = document.getElementById("currentUser");
+  if (currentUserEl && window.L2Auth) currentUserEl.textContent = L2Auth.currentUser() || "已登录";
+  var logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+      if (window.L2Auth) L2Auth.logout();
+      location.replace("login.html");
+    });
+  }
+  // 退出后通过浏览器「后退」恢复缓存页面时，再次校验登录状态
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted && window.L2Auth && !L2Auth.isAuthed()) location.replace("login.html");
+  });
   var protocolHint = document.getElementById("protocolHint");
   if (protocolHint) {
     var hasService = Object.keys(service.reports || {}).some(function (code) {
