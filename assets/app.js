@@ -320,7 +320,7 @@
               '<a class="btn" href="#/pbix">PBIX 成果</a>' +
             "</div>" +
           "</div>" +
-          '<div class="hero-meta">洛阳钼业 · 财经数据中心<br>更新 ' + esc(D.meta.updated) + "</div>" +
+          '<div class="hero-meta">洛阳钼业 · 财经数据中心<br>数据更新 ' + esc(D.meta.updated) + "</div>" +
         "</div>" +
 
         '<div class="kpi-strip">' +
@@ -403,7 +403,9 @@
     var svc = pageService(p);
     var hasService = !!svc;
     var hasShot = !!p.screenshot;
-    var mode = hasService ? "service" : "shot";
+    var compact = window.matchMedia("(max-width: 720px)").matches;
+    // 移动端在线报表 iframe 体验差，默认显示截图
+    var mode = hasService ? (compact && hasShot ? "shot" : "service") : "shot";
     viewMode = mode;
     var idx = pages.indexOf(p);
     var prev = idx > 0 ? pages[idx - 1] : null;
@@ -412,7 +414,7 @@
     var nextBtn = next ? '<a class="btn small" href="#/page/' + next.code + '" title="下一页 (→)">→</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">→</span>';
     var viewSeg = hasService && hasShot
       ? '<div class="seg" id="viewSeg">' +
-          '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表' + (preferScreenshot ? "（需登录）" : "") + '</button>' +
+          '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表（需登录）</button>' +
           '<button type="button" data-view="shot" class="' + (mode === "shot" ? "on" : "") + '">截图</button>' +
         "</div>"
       : "";
@@ -426,6 +428,7 @@
           "<h1>" + esc(shortName(p.name, p.code)) + "</h1>" +
           '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 截图") + "</span>" +
           '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span>" +
+            (hasShot && p.screenshotTime ? '<span class="sep">·</span><span>截图 ' + esc(p.screenshotTime) + "</span>" : "") +
             (preferScreenshot && hasService && mode === "shot" ? '<span class="sep">·</span><span>公网显示截图</span>' : "") + "</div>" +
         "</div>" +
         '<div class="db-actions">' +
@@ -437,7 +440,17 @@
       "</div>" +
       '<div class="report-view' + (mode === "service" ? " service-mode" : "") + '" id="reportView">' +
         (hasService
-          ? '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p) : "") + '" data-src="' + embedUrl(p) + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
+          ? '<div class="report-loading" id="reportLoading"' + (mode === "service" ? "" : " hidden") + '>' +
+              '<span class="spinner" aria-hidden="true"></span>' +
+              "<b>正在加载在线报表…</b>" +
+              "<span>首次加载可能需要登录 Power BI</span>" +
+            "</div>" +
+            '<div class="report-timeout" id="reportTimeout" hidden>' +
+              "<b>在线报表加载较慢</b>" +
+              "<span>可能未登录 Power BI。可切换到截图，或点 Service ↗ 打开。</span>" +
+              '<button class="btn small" type="button" id="timeoutShot">查看截图</button>' +
+            "</div>" +
+            '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p) : "") + '" data-src="' + embedUrl(p) + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
         (hasShot
           ? '<img class="report-shot" id="reportShot" src="' + url(p.screenshot) + '" alt="' + esc(p.name) + ' 报表截图">'
@@ -448,21 +461,56 @@
     closeDrawer();
     var drawerBtn = document.getElementById("drawerBtn");
     if (drawerBtn) drawerBtn.addEventListener("click", toggleDrawer);
-    if (hasService && hasShot) {
-      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
-        btn.addEventListener("click", function () {
-          viewMode = btn.getAttribute("data-view");
-          var rv = document.getElementById("reportView");
-          if (rv) rv.classList.toggle("service-mode", viewMode === "service");
-          var frame = document.getElementById("serviceFrame");
-          if (frame && viewMode === "service" && !frame.getAttribute("src")) {
-            frame.setAttribute("src", frame.getAttribute("data-src"));
-          }
-          Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (b) { b.classList.remove("on"); });
-          btn.classList.add("on");
-        });
+    var frame = document.getElementById("serviceFrame");
+    var loading = document.getElementById("reportLoading");
+    var timeoutBox = document.getElementById("reportTimeout");
+    var loadTimer = null;
+    var frameLoaded = false;
+
+    function clearLoadTimer() {
+      if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+    }
+    function startLoadTimer() {
+      clearLoadTimer();
+      if (!hasService || viewMode !== "service" || frameLoaded) return;
+      loadTimer = setTimeout(function () {
+        if (loading) loading.hidden = true;
+        if (timeoutBox) timeoutBox.hidden = false;
+      }, 12000);
+    }
+    function setView(nextMode) {
+      viewMode = nextMode;
+      var rv = document.getElementById("reportView");
+      if (rv) rv.classList.toggle("service-mode", viewMode === "service");
+      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (b) {
+        b.classList.toggle("on", b.getAttribute("data-view") === viewMode);
+      });
+      if (timeoutBox) timeoutBox.hidden = true;
+      if (viewMode === "service") {
+        if (frame && !frame.getAttribute("src")) frame.setAttribute("src", frame.getAttribute("data-src"));
+        if (loading) loading.hidden = frameLoaded;
+        startLoadTimer();
+      } else {
+        if (loading) loading.hidden = true;
+        clearLoadTimer();
+      }
+    }
+    if (frame) {
+      frame.addEventListener("load", function () {
+        if (!frame.getAttribute("src")) return;
+        frameLoaded = true;
+        if (loading) loading.hidden = true;
+        clearLoadTimer();
       });
     }
+    if (hasService && hasShot) {
+      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
+        btn.addEventListener("click", function () { setView(btn.getAttribute("data-view")); });
+      });
+    }
+    var timeoutShot = document.getElementById("timeoutShot");
+    if (timeoutShot) timeoutShot.addEventListener("click", function () { setView("shot"); });
+    if (viewMode === "service") startLoadTimer();
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>' + esc(shortName(p.name, p.code)) + "</b>");
     document.title = shortName(p.name, p.code) + " · CMOC L2 PBI报表开发平台";
@@ -1079,6 +1127,8 @@
 
   var currentUserEl = document.getElementById("currentUser");
   if (currentUserEl && window.L2Auth) currentUserEl.textContent = L2Auth.currentUser() || "已登录";
+  var buildStamp = document.getElementById("buildStamp");
+  if (buildStamp && D.meta && D.meta.updated) buildStamp.textContent = "构建 " + D.meta.updated;
   var logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {

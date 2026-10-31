@@ -2,7 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / PBIX 成果",
-  "updated": "2026-10-31",
+  "updated": "2026-10-31 13:32",
+  "generatedAt": "2026-10-31T13:32:20",
   "sources": [
    "02.PBIP 语义模型与报表",
    "06.表样POC PBIX",
@@ -162,6 +163,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/cover.png",
    "thumb": "assets/screens/pbip/cover-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:39",
    "pbix": null,
    "mapping": {
     "code": "",
@@ -292,6 +294,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-01-02.png",
    "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:39",
    "pbix": {
     "code": "L2-01-02",
     "name": "L2-01-02 集团合并利润汇总表",
@@ -444,6 +447,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-01-03.png",
    "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:39",
    "pbix": {
     "code": "L2-01-03",
     "name": "L2-01-03 快报-金融投资业务专属",
@@ -605,6 +609,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/L2-01-04.png",
    "thumb": "assets/screens/pbip/L2-01-04-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:39",
    "pbix": null,
    "mapping": {
     "code": "L2-01-04",
@@ -747,6 +752,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/L2-01-14.png",
    "thumb": "assets/screens/pbip/L2-01-14-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:39",
    "pbix": null,
    "mapping": {
     "code": "L2-01-14",
@@ -904,6 +910,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/L2-01-25.png",
    "thumb": "assets/screens/pbip/L2-01-25-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:39",
    "pbix": null,
    "mapping": {
     "code": "L2-01-25",
@@ -1063,6 +1070,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-03-01.png",
    "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:39",
    "pbix": {
     "code": "L2-03-01",
     "name": "L2-03-01 销售管理费用预算执行汇总表",
@@ -1226,6 +1234,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-03-02.png",
    "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:39",
    "pbix": {
     "code": "L2-03-02",
     "name": "L2-03-02 财务费用汇总表",
@@ -1369,6 +1378,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/L2-03-06.png",
    "thumb": "assets/screens/pbip/L2-03-06-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:39",
    "pbix": null,
    "mapping": {
     "code": "L2-03-06",
@@ -1521,6 +1531,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-04-01.png",
    "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:40",
    "pbix": {
     "code": "L2-04-01",
     "name": "L2-04-01库存汇总表",
@@ -1681,6 +1692,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-05-01.png",
    "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
    "screenshotSource": "service",
+   "screenshotTime": "2026-10-31 10:40",
    "pbix": {
     "code": "L2-05-01",
     "name": "L2-05-01 硫磺及硫酸价格分析月报",
@@ -1805,6 +1817,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/pbip/L2-06-01.png",
    "thumb": "assets/screens/pbip/L2-06-01-thumb.jpg",
    "screenshotSource": "pbip",
+   "screenshotTime": "2026-10-31 09:40",
    "pbix": null,
    "mapping": {
     "code": "L2-06-01",
