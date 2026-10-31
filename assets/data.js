@@ -1,6 +1,6 @@
 window.L2_DATA = {
  "meta": {
-  "title": "L2 数据平台",
+  "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / PBIX 成果",
   "updated": "2026-10-31",
   "sources": [

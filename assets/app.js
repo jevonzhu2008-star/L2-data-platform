@@ -1,4 +1,4 @@
-/* CMOC L2 数据平台 · 报表页 / 语义模型 / PBIX 工作台 */
+/* CMOC L2 PBI报表开发平台 · 报表页 / 语义模型 / PBIX 工作台 */
 (function () {
   "use strict";
 
@@ -124,7 +124,7 @@
     app.className = "";
     app.innerHTML = '<div class="empty-state"><p>没有找到「' + esc(key) + '」。</p><p style="margin-top:10px;"><a href="#/">返回工作台</a></p></div>';
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>未找到</b>');
-    document.title = "未找到 · CMOC L2 数据平台";
+    document.title = "未找到 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 侧边栏 ---------- */
@@ -308,7 +308,7 @@
             '<img class="hero-logo" src="assets/brand/cmoc-logo-white.png" alt="CMOC 洛阳钼业">' +
             '<div class="hero-rule"></div>' +
             '<span class="page-kicker">CMOC GROUP · L2 MANAGEMENT REPORTING</span>' +
-            "<h1>L2 数据平台</h1>" +
+            "<h1>L2 PBI报表开发平台</h1>" +
             "<p>集团管理报表的报表页、语义模型与 PBIX 成果。11 个报表页、11 张事实表、24 个度量值、6 个 PBIX，数据来自 02.PBIP 与 06.表样POC。</p>" +
             '<div class="hero-actions">' +
               '<a class="btn primary" href="#/page/L2-01-02">浏览报表页</a>' +
@@ -346,7 +346,7 @@
       "</div>";
 
     setCrumb("<b>工作台</b>");
-    document.title = "工作台 · CMOC L2 数据平台";
+    document.title = "工作台 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 报表页详情 ---------- */
@@ -461,7 +461,7 @@
     }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>' + esc(shortName(p.name, p.code)) + "</b>");
-    document.title = shortName(p.name, p.code) + " · CMOC L2 数据平台";
+    document.title = shortName(p.name, p.code) + " · CMOC L2 PBI报表开发平台";
     syncDetailBarHeight();
   }
 
@@ -505,7 +505,7 @@
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>' + esc(group.name) + "</b>");
-    document.title = group.name + " · CMOC L2 数据平台";
+    document.title = group.name + " · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 语义模型 ---------- */
@@ -573,7 +573,7 @@
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>语义模型</b>');
-    document.title = "语义模型 · CMOC L2 数据平台";
+    document.title = "语义模型 · CMOC L2 PBI报表开发平台";
   }
 
   function renderProcess(t) {
@@ -741,7 +741,7 @@
     }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><a href="#/model">语义模型</a><span class="crumb-sep">/</span><b>度量值</b>');
-    document.title = "度量值 · CMOC L2 数据平台";
+    document.title = "度量值 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 指标映射 ---------- */
@@ -786,7 +786,7 @@
     }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>指标映射</b>');
-    document.title = "指标映射 · CMOC L2 数据平台";
+    document.title = "指标映射 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- PBIX ---------- */
@@ -822,7 +822,7 @@
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>PBIX 表样</b>');
-    document.title = "PBIX 表样 · CMOC L2 数据平台";
+    document.title = "PBIX 表样 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 交付成果 ---------- */
@@ -889,7 +889,7 @@
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>交付成果</b>');
-    document.title = "交付成果 · CMOC L2 数据平台";
+    document.title = "交付成果 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 抽屉 ---------- */
