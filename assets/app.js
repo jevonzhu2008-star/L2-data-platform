@@ -576,6 +576,51 @@
     document.title = "语义模型 · CMOC L2 数据平台";
   }
 
+  function renderProcess(t) {
+    var pr = t.process;
+    if (!pr || !pr.mcode) return "";
+    var meta = pr.meta || {};
+    var order = ["查询名称", "对应报表", "BW对象", "Query", "查询组"];
+    var keys = order.filter(function (k) { return meta[k]; });
+    Object.keys(meta).forEach(function (k) { if (keys.indexOf(k) < 0 && k !== "说明") keys.push(k); });
+    var metaRows = keys.map(function (k) {
+      return "<dt>" + esc(k) + "</dt><dd>" + esc(meta[k]) + "</dd>";
+    }).join("");
+    var notes = (pr.notes || []).map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("");
+    var steps = (pr.steps || []).map(function (s) {
+      return "<li><b>" + esc(s.name) + "</b>" + (s.comment ? "<span>" + esc(s.comment) + "</span>" : "") + "</li>";
+    }).join("");
+    var params = (pr.parameters || []).map(function (p) { return '<span class="chip src">' + esc(p) + "</span>"; }).join("");
+    return '<section class="section"><div class="section-head"><div><h2>加工过程</h2>' +
+        "<p>数据源 → 关键步骤 → 加载 · " + esc(pr.mode || "import") + "</p></div></div>" +
+      '<div class="process-grid">' +
+        '<div class="process-card"><h3>取数说明</h3>' +
+          (metaRows ? '<dl class="process-meta">' + metaRows + "</dl>" : "") +
+          (notes ? '<ol class="process-notes">' + notes + "</ol>" : "") +
+          (params ? '<h3 class="process-sub">使用参数</h3><div class="chips">' + params + "</div>" : "") +
+        "</div>" +
+        '<div class="process-card"><h3>关键步骤</h3>' +
+          (steps ? '<ol class="process-steps">' + steps + "</ol>" : '<p class="muted" style="font-size:12px">M 代码未包含步骤注释</p>') +
+        "</div>" +
+      "</div>" +
+      '<details class="mcode-block"><summary><span>查看 M 代码</span>' +
+        '<span class="mcode-meta">' + pr.lines + ' 行 · ' + esc(pr.mode || "import") + '</span><span class="chev">›</span></summary>' +
+        '<div class="mcode-actions"><button class="btn small" type="button" id="copyMcode">复制 M 代码</button></div>' +
+        '<pre class="mcode"><code>' + esc(pr.mcode) + "</code></pre></details>" +
+    "</section>";
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) { /* ignore */ }
+    ta.remove();
+    return Promise.resolve();
+  }
+
   function renderTableDetail(name) {
     var t = tableByName[name];
     if (!t) return notFound(name);
@@ -607,6 +652,7 @@
       return p ? '<a class="chip src" href="#/page/' + code + '">' + esc(code) + " " + esc(shortName(p.name, p.code)) + "</a>" : "";
     }).join("");
     var mapping = mappings.filter(function (m) { return m.code === t.code; })[0];
+    var processHtml = renderProcess(t);
 
     app.className = "";
     app.innerHTML =
@@ -629,6 +675,8 @@
           '<div class="table-wrap"><table class="data-table"><thead><tr><th>列名</th><th>数据类型</th><th>隐藏</th><th>格式</th><th>汇总</th><th>排序</th></tr></thead><tbody>' + (cols || '<tr><td colspan="6" class="muted">无列定义</td></tr>') + "</tbody></table></div>" +
         "</section>" +
 
+        processHtml +
+
         (tableMeasures.length ? '<section class="section"><div class="section-head"><div><h2>度量值</h2><p>' + tableMeasures.length + " 个</p></div><a class=\"section-link\" href=\"#/measures\">全部度量值 →</a></div>" + measureHtml + "</section>" : "") +
 
         '<div class="two-col">' +
@@ -636,6 +684,16 @@
           '<div class="panel"><h3>引用报表页</h3><div class="chips">' + (pageLinks || "—") + "</div></div>" +
         "</div>" +
       "</div>";
+
+    var copyMcode = document.getElementById("copyMcode");
+    if (copyMcode && t.process) {
+      copyMcode.addEventListener("click", function () {
+        copyText(t.process.mcode).then(function () {
+          copyMcode.textContent = "已复制";
+          setTimeout(function () { copyMcode.textContent = "复制 M 代码"; }, 1600);
+        });
+      });
+    }
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><a href="#/model">语义模型</a><span class="crumb-sep">/</span><b>' + esc(shortName(t.name, t.code) || t.name) + "</b>");
     document.title = (shortName(t.name, t.code) || t.name) + " · 语义模型";
