@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / PBIX 成果",
-  "updated": "2026-11-01 10:17",
-  "generatedAt": "2026-11-01T10:17:51",
+  "updated": "2026-11-01 16:48",
+  "generatedAt": "2026-11-01T16:48:07",
   "sources": [
    "02.PBIP 语义模型与报表",
    "06.表样POC PBIX",
@@ -1598,7 +1598,7 @@ window.L2_DATA = {
      },
      {
       "name": "矿体排序",
-      "rows": 5,
+      "rows": 6,
       "cols": 2,
       "samples": [
        [
@@ -1607,11 +1607,11 @@ window.L2_DATA = {
        ],
        [
         "1",
-        "TFM"
+        "合计"
        ],
        [
         "2",
-        "KFM"
+        "TFM"
        ]
       ]
      }
@@ -5669,7 +5669,7 @@ window.L2_DATA = {
     },
     {
      "name": "矿体排序",
-     "rows": 5,
+     "rows": 6,
      "cols": 2,
      "samples": [
       [
@@ -5678,11 +5678,11 @@ window.L2_DATA = {
       ],
       [
        "1",
-       "TFM"
+       "合计"
       ],
       [
        "2",
-       "KFM"
+       "TFM"
       ]
      ]
     }
