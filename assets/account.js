@@ -74,7 +74,6 @@
     var pwd2 = newPassword2.value;
 
     if (!oldPwd || !pwd) { showError("请填写当前密码和新密码"); return; }
-    if (pwd.length < 8) { showError("新密码至少 8 位"); return; }
     if (pwd !== pwd2) { showError("两次输入的新密码不一致"); return; }
 
     submitBtn.disabled = true;

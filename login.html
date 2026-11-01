@@ -173,7 +173,7 @@ input[type=text]:focus, input[type=password]:focus {
       <label>显示名（可选）
         <input id="ghDisplayName" type="text" maxlength="32">
       </label>
-      <label>密码（至少 8 位）
+      <label>密码
         <span class="pwd">
           <input id="ghPassword" type="password" autocomplete="new-password" required>
           <button type="button" id="ghTogglePwd" aria-label="显示密码">显示</button>
@@ -381,7 +381,7 @@ input[type=text]:focus, input[type=password]:focus {
       var p = regPassword.value;
       var p2 = regPassword2.value;
       if (!u || !p) { showError(regError, "请输入账号和密码"); return; }
-      if (p.length < 8) { showError(regError, "密码至少 8 位"); return; }
+      if (p.length < 1) { showError(regError, "请输入密码"); return; }
       if (p !== p2) { showError(regError, "两次输入的密码不一致"); return; }
       setBusy(regBtn, true, "注册并登录", "注册中…");
 
@@ -410,7 +410,7 @@ input[type=text]:focus, input[type=password]:focus {
       var p2 = ghPassword2.value;
       if (!u || !p) { showError(ghError, "请输入账号和密码"); return; }
       if (!/^[A-Za-z0-9._-]{3,32}$/.test(u)) { showError(ghError, "账号需为 3-32 位字母、数字或 . _ -"); return; }
-      if (p.length < 8) { showError(ghError, "密码至少 8 位"); return; }
+      if (p.length < 1) { showError(ghError, "请输入密码"); return; }
       if (p !== p2) { showError(ghError, "两次输入的密码不一致"); return; }
 
       ghBtn.disabled = true;
