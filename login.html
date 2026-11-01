@@ -106,6 +106,19 @@ input[type=text]:focus, input[type=password]:focus {
 .tab.on { background: #fff; color: var(--primary); font-weight: 600; box-shadow: 0 1px 3px rgba(31,27,46,.12); }
 .tab[hidden] { display: none; }
 .tabs[hidden] { display: none; }
+.subtle {
+  width: 100%; height: 38px; margin-top: 8px; border: 1px solid var(--line);
+  border-radius: 9px; background: #fff; color: var(--primary);
+  font: inherit; font-size: 12.5px; cursor: pointer;
+}
+.subtle:hover { background: #F4F1FA; }
+textarea {
+  width: 100%; margin-top: 6px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 8px;
+  font-family: Consolas, "Courier New", monospace; font-size: 11px; line-height: 1.5;
+  background: #FBFAFE; color: var(--ink); resize: vertical;
+}
+textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
 @media (max-width: 420px) {
   .login-card { padding: 28px 22px 22px; border-radius: 14px; }
   h1 { font-size: 19px; }
@@ -162,30 +175,37 @@ input[type=text]:focus, input[type=password]:focus {
       <button class="submit" id="regBtn" type="submit">注册并登录</button>
     </form>
 
-    <form id="ghRegisterForm" novalidate hidden>
+    <form id="codeRegisterForm" novalidate hidden>
       <p class="tip" style="margin:0 0 16px">
-        通过 GitHub 提交注册申请：点击后会打开 GitHub 的新建 Issue 页面（需登录 GitHub 账号），
-        提交后约 1 分钟生效。密码只在本机计算成哈希后提交，不会上传明文。
+        离线版没有服务器：填好后生成一段注册码，发给管理员合入即可使用。
+        密码只在本机算成哈希放进注册码，明文不会离开这台设备。
       </p>
       <label>账号
-        <input id="ghUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+        <input id="codeUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
       </label>
       <label>显示名（可选）
-        <input id="ghDisplayName" type="text" maxlength="32">
+        <input id="codeDisplayName" type="text" maxlength="32">
       </label>
       <label>密码
         <span class="pwd">
-          <input id="ghPassword" type="password" autocomplete="new-password" required>
-          <button type="button" id="ghTogglePwd" aria-label="显示密码">显示</button>
+          <input id="codePassword" type="password" autocomplete="new-password" required>
+          <button type="button" id="codeTogglePwd" aria-label="显示密码">显示</button>
         </span>
       </label>
       <label>确认密码
-        <input id="ghPassword2" type="password" autocomplete="new-password" required>
+        <input id="codePassword2" type="password" autocomplete="new-password" required>
       </label>
-      <p class="error" id="ghError" role="alert" hidden></p>
-      <p class="ok" id="ghOk" role="status" hidden></p>
-      <button class="submit" id="ghBtn" type="submit">提交注册申请</button>
-      <p class="tip" id="ghHint" hidden></p>
+      <p class="error" id="codeError" role="alert" hidden></p>
+      <p class="ok" id="codeOk" role="status" hidden></p>
+      <button class="submit" id="codeBtn" type="submit">生成注册码</button>
+
+      <div id="codeResult" hidden>
+        <label style="margin-top:16px">注册码（复制后发给管理员）
+          <textarea id="codeValue" readonly rows="4" spellcheck="false"></textarea>
+        </label>
+        <button class="subtle" id="codeCopyBtn" type="button">复制注册码</button>
+        <p class="tip">管理员合入后重新打开平台即可用该账号登录。不会操作？把这段发给平台负责人即可。</p>
+      </div>
     </form>
 
     <p class="foot">仅限授权人员访问 · 请勿共享账号</p>
@@ -223,27 +243,28 @@ input[type=text]:focus, input[type=password]:focus {
   var regToggle = document.getElementById("regTogglePwd");
 
   var isApi = !!(window.L2Auth && L2Auth.mode === "api");
-  // GitHub Pages 形态：静态托管 + Issue 工作流注册（桌面版不显示，避免跳外部浏览器）
-  var ghEnabled = !!(
+  // 离线版（GitHub Pages）用申请码注册；桌面版不显示，避免把注册码流程带进离线壳
+  var codeEnabled = !!(
     window.L2Auth && !isApi && !L2Auth.serverOnly &&
-    L2Auth.pagesRepo && L2Auth.pagesRepo() &&
     /^https?:$/.test(location.protocol) &&
     location.hostname !== "l2pbi.local"
   );
 
-  var ghForm = document.getElementById("ghRegisterForm");
-  var ghUsername = document.getElementById("ghUsername");
-  var ghDisplayName = document.getElementById("ghDisplayName");
-  var ghPassword = document.getElementById("ghPassword");
-  var ghPassword2 = document.getElementById("ghPassword2");
-  var ghError = document.getElementById("ghError");
-  var ghOk = document.getElementById("ghOk");
-  var ghBtn = document.getElementById("ghBtn");
-  var ghHint = document.getElementById("ghHint");
-  var ghToggle = document.getElementById("ghTogglePwd");
-  var ghStage = "idle";
-  var ghPollTimer = null;
-  var ghPollTries = 0;
+  var codeForm = document.getElementById("codeRegisterForm");
+  var codeUsername = document.getElementById("codeUsername");
+  var codeDisplayName = document.getElementById("codeDisplayName");
+  var codePassword = document.getElementById("codePassword");
+  var codePassword2 = document.getElementById("codePassword2");
+  var codeError = document.getElementById("codeError");
+  var codeOk = document.getElementById("codeOk");
+  var codeBtn = document.getElementById("codeBtn");
+  var codeToggle = document.getElementById("codeTogglePwd");
+  var codeResult = document.getElementById("codeResult");
+  var codeValue = document.getElementById("codeValue");
+  var codeCopyBtn = document.getElementById("codeCopyBtn");
+  var codeStage = "idle";
+  var codePollTimer = null;
+  var codePollTries = 0;
 
   function nextUrl() {
     var next = new URLSearchParams(location.search).get("next") || "index.html";
@@ -294,9 +315,9 @@ input[type=text]:focus, input[type=password]:focus {
     modeTip.textContent = "当前无法连接账号服务，请确认内网地址或稍后重试。";
     submitBtn.disabled = true;
     submitBtn.textContent = "服务暂不可用";
-  } else if (ghEnabled) {
+  } else if (codeEnabled) {
     tabs.hidden = false;
-    modeTip.textContent = "本站部署在 GitHub Pages 上，注册通过 GitHub 申请完成（约 1 分钟生效）；忘记密码请联系管理员。";
+    modeTip.textContent = "离线版注册：填好后生成一段注册码发给管理员，合入后即可登录；忘记密码请联系管理员。";
   } else {
     modeTip.textContent = "当前离线版本：账号由管理员分配，如需新增账号或修改密码请联系管理员。";
     tabs.hidden = true;
@@ -305,17 +326,17 @@ input[type=text]:focus, input[type=password]:focus {
   /* ---------- 页签 ---------- */
   function showTab(name) {
     var isLogin = name === "login";
-    var useGh = !isLogin && ghEnabled;
+    var useCode = !isLogin && codeEnabled;
     loginForm.hidden = !isLogin;
-    registerForm.hidden = isLogin || useGh;
-    ghForm.hidden = !useGh;
+    registerForm.hidden = isLogin || useCode;
+    codeForm.hidden = !useCode;
     tabLogin.className = isLogin ? "tab on" : "tab";
     tabRegister.className = isLogin ? "tab" : "tab on";
     clearError(error);
     clearError(regError);
-    if (ghError) clearError(ghError);
+    if (codeError) clearError(codeError);
     setTimeout(function () {
-      (isLogin ? username : (useGh ? ghUsername : regUsername)).focus();
+      (isLogin ? username : (useCode ? codeUsername : regUsername)).focus();
     }, 30);
   }
   if (!tabs.hidden) {
@@ -396,74 +417,80 @@ input[type=text]:focus, input[type=password]:focus {
     });
   }
 
-  /* ---------- GitHub Pages 注册 ---------- */
-  var ghPending = null;
+  /* ---------- 离线版：申请码注册 ---------- */
+  var codePending = null;
 
-  if (ghEnabled) {
-    bindToggle(ghToggle, ghPassword);
+  if (codeEnabled) {
+    bindToggle(codeToggle, codePassword);
 
-    ghForm.addEventListener("submit", function (e) {
+    codeForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      clearError(ghError);
-      if (ghStage === "submitted") { checkActivation(true); return; }
+      clearError(codeError);
+      if (codeStage === "submitted") { checkActivation(true); return; }
 
-      var u = ghUsername.value.trim();
-      var p = ghPassword.value;
-      var p2 = ghPassword2.value;
-      if (!u || !p) { showError(ghError, "请输入账号和密码"); return; }
-      var ghNameProblem = usernameProblem(u);
-      if (ghNameProblem) { showError(ghError, ghNameProblem); return; }
-      if (p.length < 1) { showError(ghError, "请输入密码"); return; }
-      if (p !== p2) { showError(ghError, "两次输入的密码不一致"); return; }
+      var u = codeUsername.value.trim();
+      var p = codePassword.value;
+      var p2 = codePassword2.value;
+      if (!u || !p) { showError(codeError, "请输入账号和密码"); return; }
+      var nameProblem = usernameProblem(u);
+      if (nameProblem) { showError(codeError, nameProblem); return; }
+      if (p !== p2) { showError(codeError, "两次输入的密码不一致"); return; }
 
-      ghBtn.disabled = true;
-      ghBtn.textContent = "生成中…";
-      L2Auth.makeRegistration(u, p, ghDisplayName.value.trim()).then(function (payload) {
-        ghPending = { u: u, p: p };
-        var url = L2Auth.registrationUrl(payload);
-        var win = window.open(url, "_blank");
-        ghStage = "submitted";
-        ghBtn.disabled = false;
-        ghBtn.textContent = "我已提交，检查是否生效";
-        ghOk.textContent = "已打开 GitHub 注册页。点击「Submit new issue」提交后，回到这里稍等约 1 分钟，再点上面的按钮完成登录。";
-        ghOk.hidden = false;
-        if (!win) {
-          ghHint.textContent = "浏览器拦截了新窗口，请手动打开：" + url;
-          ghHint.hidden = false;
-        }
+      codeBtn.disabled = true;
+      codeBtn.textContent = "生成中…";
+      L2Auth.makeRegistration(u, p, codeDisplayName.value.trim()).then(function (payload) {
+        codePending = { u: u, p: p };
+        codeValue.value = L2Auth.registrationCode(payload);
+        codeResult.hidden = false;
+        codeStage = "submitted";
+        codeBtn.disabled = false;
+        codeBtn.textContent = "已发给管理员，检查是否生效";
+        codeOk.textContent = "注册码已生成。把它发给平台管理员，管理员合入并重新发布后，点上面的按钮即可完成登录。";
+        codeOk.hidden = false;
         startPolling();
       }).catch(function (err) {
-        showError(ghError, (err && err.message) || "生成注册申请失败");
-        ghBtn.disabled = false;
-        ghBtn.textContent = "提交注册申请";
+        showError(codeError, (err && err.message) || "生成注册码失败");
+        codeBtn.disabled = false;
+        codeBtn.textContent = "生成注册码";
       });
+    });
+
+    codeCopyBtn.addEventListener("click", function () {
+      var text = codeValue.value || "";
+      function done() { codeCopyBtn.textContent = "已复制"; setTimeout(function () { codeCopyBtn.textContent = "复制注册码"; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { codeValue.select(); });
+        return;
+      }
+      codeValue.select();
+      try { document.execCommand("copy"); done(); } catch (e2) { /* 交给用户手动复制 */ }
     });
   }
 
   function startPolling() {
     stopPolling();
-    ghPollTries = 0;
-    ghPollTimer = setInterval(function () {
-      ghPollTries++;
-      if (ghPollTries > 18) { stopPolling(); return; } // 约 3 分钟
+    codePollTries = 0;
+    codePollTimer = setInterval(function () {
+      codePollTries++;
+      if (codePollTries > 18) { stopPolling(); return; } // 约 3 分钟
       checkActivation(false);
     }, 10000);
   }
   function stopPolling() {
-    if (ghPollTimer) { clearInterval(ghPollTimer); ghPollTimer = null; }
+    if (codePollTimer) { clearInterval(codePollTimer); codePollTimer = null; }
   }
 
   function checkActivation(manual) {
-    if (!ghPending) return;
-    L2Auth.accountExists(ghPending.u).then(function (exists) {
+    if (!codePending) return;
+    L2Auth.accountExists(codePending.u).then(function (exists) {
       if (!exists) {
-        if (manual) showError(ghError, "申请还没有生效。GitHub 处理通常需要 1 分钟左右，请稍后再试。");
+        if (manual) showError(codeError, "账号还没生效：管理员可能还没合入注册码，请把注册码发给他并稍后再试。");
         return;
       }
       stopPolling();
-      return L2Auth.verify(ghPending.u, ghPending.p).then(function (user) {
+      return L2Auth.verify(codePending.u, codePending.p).then(function (user) {
         if (!user) {
-          showError(ghError, "账号已生效，但密码校验失败。请确认密码与提交时一致，或联系管理员。");
+          showError(codeError, "账号已生效，但密码校验失败。请确认密码与生成注册码时一致，或联系管理员。");
           return;
         }
         L2Auth.saveToken(user, false, null, "user",
@@ -497,8 +524,8 @@ input[type=text]:focus, input[type=password]:focus {
   [regUsername, regPassword, regPassword2].forEach(function (el) {
     el.addEventListener("input", function () { clearError(regError); });
   });
-  [ghUsername, ghPassword, ghPassword2].forEach(function (el) {
-    el.addEventListener("input", function () { clearError(ghError); });
+  [codeUsername, codePassword, codePassword2].forEach(function (el) {
+    el.addEventListener("input", function () { clearError(codeError); });
   });
 })();
 </script>

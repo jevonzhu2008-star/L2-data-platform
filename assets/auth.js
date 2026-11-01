@@ -214,14 +214,9 @@
     return api("api/health", "GET").catch(function () { return null; });
   }
 
-  /* ------------------------------ GitHub Pages 注册 ------------------------------ */
+  /* ------------------------------ 离线版注册（申请码） ------------------------------ */
 
-  function pagesRepo() {
-    var cfg = window.L2_AUTH || CFG;
-    return cfg.pagesRepo || "";
-  }
-
-  /// 在浏览器本地生成 salt + PBKDF2 哈希，只把哈希提交给 GitHub Issue（不传明文密码）
+  /// 在浏览器本地生成 salt + PBKDF2 哈希，只有哈希进入注册码，密码明文不出本机
   function makeRegistration(username, password, displayName) {
     if (!window.crypto || !crypto.subtle || !window.crypto.getRandomValues) {
       return Promise.reject({ code: "no_crypto", message: "当前浏览器不支持密码加密，请换用较新的浏览器" });
@@ -245,17 +240,13 @@
     });
   }
 
-  /// 注册申请本质是一个预填好的 GitHub Issue
-  function registrationUrl(payload) {
-    var repo = pagesRepo();
-    if (!repo || !payload) return "";
-    var body = "### 注册申请\n\n" +
-      "```json\n" + JSON.stringify(payload) + "\n```\n\n" +
-      "提交后约 1 分钟生效，登录账号密码就是刚才在平台上设置的。\n";
-    return "https://github.com/" + repo + "/issues/new" +
-      "?title=" + encodeURIComponent("[注册] " + payload.username) +
-      "&body=" + encodeURIComponent(body) +
-      "&labels=" + encodeURIComponent("registration");
+  /// 注册码：L2R1.<base64url(JSON)>，管理员用 python tools/set_password.py --import 合入后发布
+  function registrationCode(payload) {
+    if (!payload) return "";
+    var bytes = new TextEncoder().encode(JSON.stringify(payload));
+    var raw = "";
+    for (var i = 0; i < bytes.length; i++) raw += String.fromCharCode(bytes[i]);
+    return "L2R1." + btoa(raw).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   }
 
   /// 重新拉取 auth.config.js（绕过缓存），用于检测注册是否已生效
@@ -287,10 +278,9 @@
     changePassword: changePassword,
     health: health,
     api: api,
-    // GitHub Pages 注册
-    pagesRepo: pagesRepo,
+    // 离线版注册
     makeRegistration: makeRegistration,
-    registrationUrl: registrationUrl,
+    registrationCode: registrationCode,
     reloadConfig: reloadConfig,
     accountExists: accountExists,
     // 缓存
