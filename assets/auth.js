@@ -107,6 +107,12 @@
   function getToken() { var t = read(); return t && t.token ? t.token : ""; }
   function isAdmin() { return currentRole() === "admin"; }
 
+  /// 本地账号表里可能带 displayName（自助注册时保留），取不到就回落为账号名
+  function displayNameOf(username) {
+    var acct = find(username);
+    return acct && acct.displayName ? acct.displayName : (username || "");
+  }
+
   /* ------------------------------ 服务端 API ------------------------------ */
 
   function apiError(status, body) {
@@ -292,6 +298,7 @@
     currentUser: currentUser,
     currentDisplayName: currentDisplayName,
     currentRole: currentRole,
+    displayNameOf: displayNameOf,
     isAdmin: isAdmin,
     getToken: getToken,
     saveToken: saveToken,

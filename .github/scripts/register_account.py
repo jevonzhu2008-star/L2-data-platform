@@ -73,6 +73,10 @@ def write_config(cfg: dict) -> None:
     for account in cfg.get("accounts", []):
         parts = [
             f'"username": {json.dumps(account["username"], ensure_ascii=False)}',
+        ]
+        if account.get("displayName"):
+            parts.append(f'"displayName": {json.dumps(account["displayName"], ensure_ascii=False)}')
+        parts += [
             f'"salt": {json.dumps(account["salt"])}',
             f'"hash": {json.dumps(account["hash"])}',
             f'"iterations": {int(account.get("iterations", 120000))}',
@@ -161,6 +165,7 @@ def main() -> None:
 
     accounts.append({
         "username": username,
+        "displayName": display,
         "salt": salt,
         "hash": digest,
         "iterations": iterations,

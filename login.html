@@ -363,7 +363,8 @@ input[type=text]:focus, input[type=password]:focus {
         password.focus();
         return;
       }
-      L2Auth.saveToken(user, remember.checked);
+      L2Auth.saveToken(user, remember.checked, null, "user",
+        L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
       location.replace(nextUrl());
     }).catch(function () {
       showError(error, "登录失败，请刷新页面后重试");
@@ -462,7 +463,8 @@ input[type=text]:focus, input[type=password]:focus {
           showError(ghError, "账号已生效，但密码校验失败。请确认密码与提交时一致，或联系管理员。");
           return;
         }
-        L2Auth.saveToken(user, false);
+        L2Auth.saveToken(user, false, null, "user",
+          L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
         location.replace(nextUrl());
       });
     });
