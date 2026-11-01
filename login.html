@@ -444,6 +444,7 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
       L2Auth.makeRegistration(u, p, codeDisplayName.value.trim()).then(function (payload) {
         codePending = { u: u, p: p };
         codeValue.value = L2Auth.registrationCode(payload);
+        deliverToConsole(codeValue.value);
         codeResult.hidden = false;
         codeStage = "submitted";
         codeBtn.disabled = false;
@@ -467,6 +468,31 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
       }
       codeValue.select();
       try { document.execCommand("copy"); done(); } catch (e2) { /* 交给用户手动复制 */ }
+    });
+  }
+
+  /// 同机场景：直接把注册码送到本机维护页（没运行维护页时静默失败，走复制）
+  function deliverToConsole(code) {
+    if (!/^https?:$/.test(location.protocol)) return;
+    var base = L2Auth.adminConsoleUrl ? String(L2Auth.adminConsoleUrl() || "").replace(/\/$/, "") : "";
+    if (!base) return;
+    var controller = window.AbortController ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 2500) : null;
+    fetch(base + "/api/submit", {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: code }),
+      signal: controller ? controller.signal : undefined
+    }).then(function (response) { return response.json(); }).then(function (data) {
+      if (timer) clearTimeout(timer);
+      if (data && data.ok) {
+        codeOk.textContent = "注册码已直接送达本机维护页。管理员不在本机时，请复制下面的注册码发给他。";
+        codeOk.hidden = false;
+      }
+    }).catch(function () {
+      if (timer) clearTimeout(timer);
+      // 本机没运行维护页属于正常情况，保持"复制发送"的提示
     });
   }
 
