@@ -381,6 +381,8 @@ input[type=text]:focus, input[type=password]:focus {
       var p = regPassword.value;
       var p2 = regPassword2.value;
       if (!u || !p) { showError(regError, "请输入账号和密码"); return; }
+      var nameProblem = usernameProblem(u);
+      if (nameProblem) { showError(regError, nameProblem); return; }
       if (p.length < 1) { showError(regError, "请输入密码"); return; }
       if (p !== p2) { showError(regError, "两次输入的密码不一致"); return; }
       setBusy(regBtn, true, "注册并登录", "注册中…");
@@ -409,7 +411,8 @@ input[type=text]:focus, input[type=password]:focus {
       var p = ghPassword.value;
       var p2 = ghPassword2.value;
       if (!u || !p) { showError(ghError, "请输入账号和密码"); return; }
-      if (!/^[A-Za-z0-9._-]{3,32}$/.test(u)) { showError(ghError, "账号需为 3-32 位字母、数字或 . _ -"); return; }
+      var ghNameProblem = usernameProblem(u);
+      if (ghNameProblem) { showError(ghError, ghNameProblem); return; }
       if (p.length < 1) { showError(ghError, "请输入密码"); return; }
       if (p !== p2) { showError(ghError, "两次输入的密码不一致"); return; }
 
@@ -468,6 +471,14 @@ input[type=text]:focus, input[type=password]:focus {
         location.replace(nextUrl());
       });
     });
+  }
+
+  /// 账号规则：不限字符集（允许中文），只拦空值、超长和空白
+  function usernameProblem(name) {
+    if (!name) return "请输入账号";
+    if (name.length > 32) return "账号最多 32 个字符";
+    if (/[\s\u0000-\u001F\u007F]/.test(name)) return "账号不能包含空格";
+    return "";
   }
 
   function friendly(err, fallback) {

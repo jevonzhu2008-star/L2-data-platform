@@ -26,7 +26,7 @@ CONFIG = Path("assets/auth.config.js")
 COMMENT = Path(".register_comment.md")
 MESSAGE = Path(".register_message.txt")
 
-USERNAME_RE = re.compile(r"^[A-Za-z0-9._-]{3,32}$")
+USERNAME_MAX = 32
 MAX_ACCOUNTS_PER_USER = 3
 MAX_ACCOUNTS_PER_DAY = 50
 MIN_ITERATIONS = 10_000
@@ -103,8 +103,12 @@ def validate(payload: dict) -> tuple[str, str, int, str, str]:
         raise ValueError("注册块版本不正确（缺少 l2register: 1）")
 
     username = str(payload.get("username", "")).strip()
-    if not USERNAME_RE.match(username):
-        raise ValueError("账号需为 3-32 位字母、数字或 . _ -")
+    if not username:
+        raise ValueError("账号不能为空")
+    if len(username) > USERNAME_MAX:
+        raise ValueError(f"账号最多 {USERNAME_MAX} 个字符")
+    if any(ch.isspace() or ord(ch) < 32 or ord(ch) == 127 for ch in username):
+        raise ValueError("账号不能包含空格或控制字符")
 
     display = "".join(ch for ch in str(payload.get("displayName", "")).strip() if ch.isprintable())
     display = display[:32] or username
