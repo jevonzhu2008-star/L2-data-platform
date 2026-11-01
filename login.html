@@ -376,7 +376,9 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
       return;
     }
 
-    L2Auth.verify(u, p).then(function (user) {
+    // 离线版：账号表在 GitHub Pages 上会被缓存 10 分钟，登录前强制取一次最新的
+    var fresh = L2Auth.reloadConfig ? L2Auth.reloadConfig() : Promise.resolve();
+    fresh.then(function () { return L2Auth.verify(u, p); }).then(function (user) {
       if (!user) {
         showError(error, "账号或密码不正确");
         setBusy(submitBtn, false, "登 录", "登录中…");
