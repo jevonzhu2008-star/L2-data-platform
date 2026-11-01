@@ -7,7 +7,6 @@ window.L2_AUTH = {
   "iterations": 120000,
   "accounts": [
     {"username": "admin", "salt": "XnOA9H16nUEY1OON7mJH9w==", "hash": "89viHsfZKwN5FxOeY5mYEBCeQui++24z6C1Te7zUsjI=", "iterations": 120000, "role": "admin"},
-    {"username": "v-zhujinghong@cmoc.com", "salt": "MyEEQMl4T8DQtqVQv4x4HA==", "hash": "CWlp4p0gUxtFssaKtKo3OsgA8AOSJZz0+rxAgrmHr0A=", "iterations": 120000, "displayName": "v-zhujinghong@cmoc.com", "createdAt": "2026-11-01T00:22:48Z", "createdBy": "jevonzhu2008-star"},
-    {"username": "visitor@cmoc.com", "salt": "N9gTw1u6dDK1ypo1i6SFrQ==", "hash": "AAWL9k5Y/klh7Fqnzm4CKoHZ9XSFegVzGmHoxmjLreQ=", "iterations": 120000, "displayName": "访问者", "createdBy": "manual"}
+    {"username": "v-zhujinghong@cmoc.com", "salt": "MyEEQMl4T8DQtqVQv4x4HA==", "hash": "CWlp4p0gUxtFssaKtKo3OsgA8AOSJZz0+rxAgrmHr0A=", "iterations": 120000, "displayName": "v-zhujinghong@cmoc.com", "createdAt": "2026-11-01T00:22:48Z", "createdBy": "jevonzhu2008-star"}
   ]
 };
