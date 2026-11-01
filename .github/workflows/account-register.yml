@@ -1,0 +1,75 @@
+name: 账号注册
+
+# 用户在平台注册页生成的 Issue 会触发本工作流：
+# 校验注册块 → 写入 assets/auth.config.js → 提交推送 → 回复并关闭 Issue。
+# GitHub Pages 会在推送后 30–60 秒自动重建，注册随即生效。
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+# 串行处理，避免多个注册同时改同一个文件
+concurrency:
+  group: account-register
+  cancel-in-progress: false
+
+jobs:
+  register:
+    if: startsWith(github.event.issue.title, '[注册]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 解析并写入账号
+        id: apply
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: python3 .github/scripts/register_account.py
+
+      - name: 提交账号表
+        if: steps.apply.outputs.status == 'ok'
+        run: |
+          git config user.name "l2-register-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/auth.config.js
+          git commit -F .register_message.txt
+
+      - name: 推送到 main
+        if: steps.apply.outputs.status == 'ok'
+        run: |
+          for i in 1 2 3 4 5; do
+            if ! git pull --rebase origin main; then
+              git rebase --abort || true
+              sleep 3
+              continue
+            fi
+            if git push origin HEAD:main; then
+              echo "已推送，Pages 将自动重建"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "推送失败，请管理员手动处理该 Issue"
+          exit 1
+
+      - name: 回复并关闭 Issue
+        if: always() && steps.apply.outputs.status != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          STATUS: ${{ steps.apply.outputs.status }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body-file .register_comment.md
+          if [ "$STATUS" = "ok" ] || [ "$STATUS" = "skip" ]; then
+            gh issue close "$ISSUE_NUMBER"
+          fi

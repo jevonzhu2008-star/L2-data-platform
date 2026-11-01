@@ -42,7 +42,8 @@
 
   function find(username) {
     var u = String(username || "").trim().toLowerCase();
-    var list = CFG.accounts || [];
+    var cfg = window.L2_AUTH || CFG;
+    var list = cfg.accounts || [];
     for (var i = 0; i < list.length; i++) {
       if (String(list[i].username).toLowerCase() === u) return list[i];
     }
@@ -52,8 +53,9 @@
   function verifyLocal(username, password) {
     if (!window.crypto || !crypto.subtle) return Promise.resolve(null);
     if (SERVER_ONLY) return Promise.resolve(null); // 服务端部署时禁用本地回退
+    var cfg = window.L2_AUTH || CFG;
     var acct = find(username);
-    var iterations = acct ? (acct.iterations || CFG.iterations) : CFG.iterations;
+    var iterations = acct ? (acct.iterations || cfg.iterations) : cfg.iterations;
     // 账号不存在时也计算一次，避免明显的存在性时序差异
     var salt = acct ? acct.salt : "AAAAAAAAAAAAAAAAAAAAAA==";
     return derive(password, salt, iterations).then(function (hash) {
@@ -206,6 +208,66 @@
     return api("api/health", "GET").catch(function () { return null; });
   }
 
+  /* ------------------------------ GitHub Pages 注册 ------------------------------ */
+
+  function pagesRepo() {
+    var cfg = window.L2_AUTH || CFG;
+    return cfg.pagesRepo || "";
+  }
+
+  /// 在浏览器本地生成 salt + PBKDF2 哈希，只把哈希提交给 GitHub Issue（不传明文密码）
+  function makeRegistration(username, password, displayName) {
+    if (!window.crypto || !crypto.subtle || !window.crypto.getRandomValues) {
+      return Promise.reject({ code: "no_crypto", message: "当前浏览器不支持密码加密，请换用较新的浏览器" });
+    }
+    var cfg = window.L2_AUTH || CFG;
+    var iterations = cfg.iterations || 120000;
+    var saltBytes = new Uint8Array(16);
+    crypto.getRandomValues(saltBytes);
+    var saltB64 = bytesToB64(saltBytes);
+    var name = String(username || "").trim();
+    var display = String(displayName || "").trim() || name;
+    return derive(password, saltB64, iterations).then(function (hash) {
+      return {
+        l2register: 1,
+        username: name,
+        displayName: display,
+        iterations: iterations,
+        salt: saltB64,
+        hash: hash
+      };
+    });
+  }
+
+  /// 注册申请本质是一个预填好的 GitHub Issue
+  function registrationUrl(payload) {
+    var repo = pagesRepo();
+    if (!repo || !payload) return "";
+    var body = "### 注册申请\n\n" +
+      "```json\n" + JSON.stringify(payload) + "\n```\n\n" +
+      "提交后约 1 分钟生效，登录账号密码就是刚才在平台上设置的。\n";
+    return "https://github.com/" + repo + "/issues/new" +
+      "?title=" + encodeURIComponent("[注册] " + payload.username) +
+      "&body=" + encodeURIComponent(body) +
+      "&labels=" + encodeURIComponent("registration");
+  }
+
+  /// 重新拉取 auth.config.js（绕过缓存），用于检测注册是否已生效
+  function reloadConfig() {
+    return new Promise(function (resolve) {
+      var el = document.createElement("script");
+      el.src = "assets/auth.config.js?v=" + Date.now();
+      el.onload = function () { resolve(window.L2_AUTH || null); };
+      el.onerror = function () { resolve(null); };
+      document.head.appendChild(el);
+    });
+  }
+
+  function accountExists(username) {
+    if (!username) return Promise.resolve(false);
+    return reloadConfig().then(function () { return !!find(username); });
+  }
+
   window.L2Auth = {
     mode: MODE,
     serverOnly: SERVER_ONLY,
@@ -219,6 +281,12 @@
     changePassword: changePassword,
     health: health,
     api: api,
+    // GitHub Pages 注册
+    pagesRepo: pagesRepo,
+    makeRegistration: makeRegistration,
+    registrationUrl: registrationUrl,
+    reloadConfig: reloadConfig,
+    accountExists: accountExists,
     // 缓存
     isAuthed: isAuthed,
     currentUser: currentUser,

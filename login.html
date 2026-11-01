@@ -162,6 +162,32 @@ input[type=text]:focus, input[type=password]:focus {
       <button class="submit" id="regBtn" type="submit">注册并登录</button>
     </form>
 
+    <form id="ghRegisterForm" novalidate hidden>
+      <p class="tip" style="margin:0 0 16px">
+        通过 GitHub 提交注册申请：点击后会打开 GitHub 的新建 Issue 页面（需登录 GitHub 账号），
+        提交后约 1 分钟生效。密码只在本机计算成哈希后提交，不会上传明文。
+      </p>
+      <label>账号
+        <input id="ghUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      </label>
+      <label>显示名（可选）
+        <input id="ghDisplayName" type="text" maxlength="32">
+      </label>
+      <label>密码（至少 8 位）
+        <span class="pwd">
+          <input id="ghPassword" type="password" autocomplete="new-password" required>
+          <button type="button" id="ghTogglePwd" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label>确认密码
+        <input id="ghPassword2" type="password" autocomplete="new-password" required>
+      </label>
+      <p class="error" id="ghError" role="alert" hidden></p>
+      <p class="ok" id="ghOk" role="status" hidden></p>
+      <button class="submit" id="ghBtn" type="submit">提交注册申请</button>
+      <p class="tip" id="ghHint" hidden></p>
+    </form>
+
     <p class="foot">仅限授权人员访问 · 请勿共享账号</p>
     <p class="tip" id="modeTip">本页面为前端访问门禁，无法阻止直接下载静态文件。请勿在公开环境放置敏感数据。</p>
   </section>
@@ -197,6 +223,27 @@ input[type=text]:focus, input[type=password]:focus {
   var regToggle = document.getElementById("regTogglePwd");
 
   var isApi = !!(window.L2Auth && L2Auth.mode === "api");
+  // GitHub Pages 形态：静态托管 + Issue 工作流注册（桌面版不显示，避免跳外部浏览器）
+  var ghEnabled = !!(
+    window.L2Auth && !isApi && !L2Auth.serverOnly &&
+    L2Auth.pagesRepo && L2Auth.pagesRepo() &&
+    /^https?:$/.test(location.protocol) &&
+    location.hostname !== "l2pbi.local"
+  );
+
+  var ghForm = document.getElementById("ghRegisterForm");
+  var ghUsername = document.getElementById("ghUsername");
+  var ghDisplayName = document.getElementById("ghDisplayName");
+  var ghPassword = document.getElementById("ghPassword");
+  var ghPassword2 = document.getElementById("ghPassword2");
+  var ghError = document.getElementById("ghError");
+  var ghOk = document.getElementById("ghOk");
+  var ghBtn = document.getElementById("ghBtn");
+  var ghHint = document.getElementById("ghHint");
+  var ghToggle = document.getElementById("ghTogglePwd");
+  var ghStage = "idle";
+  var ghPollTimer = null;
+  var ghPollTries = 0;
 
   function nextUrl() {
     var next = new URLSearchParams(location.search).get("next") || "index.html";
@@ -247,6 +294,9 @@ input[type=text]:focus, input[type=password]:focus {
     modeTip.textContent = "当前无法连接账号服务，请确认内网地址或稍后重试。";
     submitBtn.disabled = true;
     submitBtn.textContent = "服务暂不可用";
+  } else if (ghEnabled) {
+    tabs.hidden = false;
+    modeTip.textContent = "本站部署在 GitHub Pages 上，注册通过 GitHub 申请完成（约 1 分钟生效）；忘记密码请联系管理员。";
   } else {
     modeTip.textContent = "当前离线版本：账号由管理员分配，如需新增账号或修改密码请联系管理员。";
     tabs.hidden = true;
@@ -255,17 +305,20 @@ input[type=text]:focus, input[type=password]:focus {
   /* ---------- 页签 ---------- */
   function showTab(name) {
     var isLogin = name === "login";
+    var useGh = !isLogin && ghEnabled;
     loginForm.hidden = !isLogin;
-    registerForm.hidden = isLogin;
+    registerForm.hidden = isLogin || useGh;
+    ghForm.hidden = !useGh;
     tabLogin.className = isLogin ? "tab on" : "tab";
     tabRegister.className = isLogin ? "tab" : "tab on";
     clearError(error);
     clearError(regError);
+    if (ghError) clearError(ghError);
     setTimeout(function () {
-      (isLogin ? username : regUsername).focus();
+      (isLogin ? username : (useGh ? ghUsername : regUsername)).focus();
     }, 30);
   }
-  if (isApi) {
+  if (!tabs.hidden) {
     tabLogin.addEventListener("click", function () { showTab("login"); });
     tabRegister.addEventListener("click", function () { showTab("register"); });
   }
@@ -340,6 +393,81 @@ input[type=text]:focus, input[type=password]:focus {
     });
   }
 
+  /* ---------- GitHub Pages 注册 ---------- */
+  var ghPending = null;
+
+  if (ghEnabled) {
+    bindToggle(ghToggle, ghPassword);
+
+    ghForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      clearError(ghError);
+      if (ghStage === "submitted") { checkActivation(true); return; }
+
+      var u = ghUsername.value.trim();
+      var p = ghPassword.value;
+      var p2 = ghPassword2.value;
+      if (!u || !p) { showError(ghError, "请输入账号和密码"); return; }
+      if (!/^[A-Za-z0-9._-]{3,32}$/.test(u)) { showError(ghError, "账号需为 3-32 位字母、数字或 . _ -"); return; }
+      if (p.length < 8) { showError(ghError, "密码至少 8 位"); return; }
+      if (p !== p2) { showError(ghError, "两次输入的密码不一致"); return; }
+
+      ghBtn.disabled = true;
+      ghBtn.textContent = "生成中…";
+      L2Auth.makeRegistration(u, p, ghDisplayName.value.trim()).then(function (payload) {
+        ghPending = { u: u, p: p };
+        var url = L2Auth.registrationUrl(payload);
+        var win = window.open(url, "_blank");
+        ghStage = "submitted";
+        ghBtn.disabled = false;
+        ghBtn.textContent = "我已提交，检查是否生效";
+        ghOk.textContent = "已打开 GitHub 注册页。点击「Submit new issue」提交后，回到这里稍等约 1 分钟，再点上面的按钮完成登录。";
+        ghOk.hidden = false;
+        if (!win) {
+          ghHint.textContent = "浏览器拦截了新窗口，请手动打开：" + url;
+          ghHint.hidden = false;
+        }
+        startPolling();
+      }).catch(function (err) {
+        showError(ghError, (err && err.message) || "生成注册申请失败");
+        ghBtn.disabled = false;
+        ghBtn.textContent = "提交注册申请";
+      });
+    });
+  }
+
+  function startPolling() {
+    stopPolling();
+    ghPollTries = 0;
+    ghPollTimer = setInterval(function () {
+      ghPollTries++;
+      if (ghPollTries > 18) { stopPolling(); return; } // 约 3 分钟
+      checkActivation(false);
+    }, 10000);
+  }
+  function stopPolling() {
+    if (ghPollTimer) { clearInterval(ghPollTimer); ghPollTimer = null; }
+  }
+
+  function checkActivation(manual) {
+    if (!ghPending) return;
+    L2Auth.accountExists(ghPending.u).then(function (exists) {
+      if (!exists) {
+        if (manual) showError(ghError, "申请还没有生效。GitHub 处理通常需要 1 分钟左右，请稍后再试。");
+        return;
+      }
+      stopPolling();
+      return L2Auth.verify(ghPending.u, ghPending.p).then(function (user) {
+        if (!user) {
+          showError(ghError, "账号已生效，但密码校验失败。请确认密码与提交时一致，或联系管理员。");
+          return;
+        }
+        L2Auth.saveToken(user, false);
+        location.replace(nextUrl());
+      });
+    });
+  }
+
   function friendly(err, fallback) {
     if (!err) return fallback;
     if (err.code === "invalid_credentials") return "账号或密码不正确";
@@ -355,6 +483,9 @@ input[type=text]:focus, input[type=password]:focus {
   });
   [regUsername, regPassword, regPassword2].forEach(function (el) {
     el.addEventListener("input", function () { clearError(regError); });
+  });
+  [ghUsername, ghPassword, ghPassword2].forEach(function (el) {
+    el.addEventListener("input", function () { clearError(ghError); });
   });
 })();
 </script>
