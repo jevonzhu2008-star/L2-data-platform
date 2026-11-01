@@ -118,6 +118,23 @@
     return cfg.adminConsoleUrl || "";
   }
 
+  /// 旧令牌里没有角色（或角色被管理员改过）时，按当前账号表刷新一次，
+  /// 避免"必须退出再登录"才能看到管理员入口。
+  function syncRole() {
+    var token = read();
+    if (!token || !token.u) return false;
+    var role = roleOf(token.u);
+    if ((token.role || "user") === role) return false;
+    token.role = role;
+    try {
+      var target = token.remember ? localStorage : sessionStorage;
+      var other = token.remember ? sessionStorage : localStorage;
+      other.removeItem(KEY);
+      target.setItem(KEY, JSON.stringify(token));
+    } catch (e) { /* ignore */ }
+    return true;
+  }
+
   /// 本地账号表里可能带 displayName（自助注册时保留），取不到就回落为账号名
   function displayNameOf(username) {
     var acct = find(username);
@@ -302,6 +319,7 @@
     displayNameOf: displayNameOf,
     roleOf: roleOf,
     adminConsoleUrl: adminConsoleUrl,
+    syncRole: syncRole,
     isAdmin: isAdmin,
     getToken: getToken,
     saveToken: saveToken,

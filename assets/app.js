@@ -1146,6 +1146,8 @@
     }
   }
   var consoleLink = document.getElementById("consoleLink");
+  // 旧令牌可能没有角色字段，先按账号表刷新，再判断是否显示管理入口
+  if (window.L2Auth && L2Auth.mode !== "api" && L2Auth.syncRole) L2Auth.syncRole();
   if (userLinks && window.L2Auth && L2Auth.mode !== "api" && L2Auth.isAdmin && L2Auth.isAdmin()) {
     // 离线版：只有本地账号表里标了 role=admin 的账号能看到本机账号维护入口
     userLinks.hidden = false;
