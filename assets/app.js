@@ -1145,6 +1145,21 @@
       });
     }
   }
+  var consoleLink = document.getElementById("consoleLink");
+  if (userLinks && window.L2Auth && L2Auth.mode !== "api" && L2Auth.isAdmin && L2Auth.isAdmin()) {
+    // 离线版：只有本地账号表里标了 role=admin 的账号能看到本机账号维护入口
+    userLinks.hidden = false;
+    var accountLink = document.getElementById("accountLink");
+    if (accountLink) accountLink.hidden = true; // 离线版不支持在线改密
+    if (consoleLink) {
+      var consoleUrl = L2Auth.adminConsoleUrl ? L2Auth.adminConsoleUrl() : "";
+      if (consoleUrl) {
+        consoleLink.href = consoleUrl;
+        consoleLink.title = "本机账号维护页：需先运行 tools/admin_console.cmd";
+        consoleLink.hidden = false;
+      }
+    }
+  }
   var buildStamp = document.getElementById("buildStamp");
   if (buildStamp && D.meta && D.meta.updated) buildStamp.textContent = "构建 " + D.meta.updated;
   var logoutBtn = document.getElementById("logoutBtn");

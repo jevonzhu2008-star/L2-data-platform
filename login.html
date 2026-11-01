@@ -386,7 +386,8 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
         password.focus();
         return;
       }
-      L2Auth.saveToken(user, remember.checked, null, "user",
+      L2Auth.saveToken(user, remember.checked, null,
+        L2Auth.roleOf ? L2Auth.roleOf(user) : "user",
         L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
       location.replace(nextUrl());
     }).catch(function () {
@@ -495,7 +496,8 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
           showError(codeError, "账号已生效，但密码校验失败。请确认密码与生成注册码时一致，或联系管理员。");
           return;
         }
-        L2Auth.saveToken(user, false, null, "user",
+        L2Auth.saveToken(user, false, null,
+          L2Auth.roleOf ? L2Auth.roleOf(user) : "user",
           L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
         location.replace(nextUrl());
       });

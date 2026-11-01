@@ -107,6 +107,17 @@
   function getToken() { var t = read(); return t && t.token ? t.token : ""; }
   function isAdmin() { return currentRole() === "admin"; }
 
+  /// 本地账号表里的角色（只有标了 "role": "admin" 的账号算管理员）
+  function roleOf(username) {
+    var acct = find(username);
+    return acct && String(acct.role || "").toLowerCase() === "admin" ? "admin" : "user";
+  }
+
+  function adminConsoleUrl() {
+    var cfg = window.L2_AUTH || CFG;
+    return cfg.adminConsoleUrl || "";
+  }
+
   /// 本地账号表里可能带 displayName（自助注册时保留），取不到就回落为账号名
   function displayNameOf(username) {
     var acct = find(username);
@@ -289,6 +300,8 @@
     currentDisplayName: currentDisplayName,
     currentRole: currentRole,
     displayNameOf: displayNameOf,
+    roleOf: roleOf,
+    adminConsoleUrl: adminConsoleUrl,
     isAdmin: isAdmin,
     getToken: getToken,
     saveToken: saveToken,
