@@ -244,39 +244,6 @@
 
   /* ------------------------------ 离线版注册（申请码） ------------------------------ */
 
-  /// 在浏览器本地生成 salt + PBKDF2 哈希，只有哈希进入注册码，密码明文不出本机
-  function makeRegistration(username, password, displayName) {
-    if (!window.crypto || !crypto.subtle || !window.crypto.getRandomValues) {
-      return Promise.reject({ code: "no_crypto", message: "当前浏览器不支持密码加密，请换用较新的浏览器" });
-    }
-    var cfg = window.L2_AUTH || CFG;
-    var iterations = cfg.iterations || 120000;
-    var saltBytes = new Uint8Array(16);
-    crypto.getRandomValues(saltBytes);
-    var saltB64 = bytesToB64(saltBytes);
-    var name = String(username || "").trim();
-    var display = String(displayName || "").trim() || name;
-    return derive(password, saltB64, iterations).then(function (hash) {
-      return {
-        l2register: 1,
-        username: name,
-        displayName: display,
-        iterations: iterations,
-        salt: saltB64,
-        hash: hash
-      };
-    });
-  }
-
-  /// 注册码：L2R1.<base64url(JSON)>，管理员用 python tools/set_password.py --import 合入后发布
-  function registrationCode(payload) {
-    if (!payload) return "";
-    var bytes = new TextEncoder().encode(JSON.stringify(payload));
-    var raw = "";
-    for (var i = 0; i < bytes.length; i++) raw += String.fromCharCode(bytes[i]);
-    return "L2R1." + btoa(raw).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-  }
-
   /// 重新拉取 auth.config.js（绕过缓存），用于检测注册是否已生效
   function reloadConfig() {
     return new Promise(function (resolve) {
@@ -286,11 +253,6 @@
       el.onerror = function () { resolve(null); };
       document.head.appendChild(el);
     });
-  }
-
-  function accountExists(username) {
-    if (!username) return Promise.resolve(false);
-    return reloadConfig().then(function () { return !!find(username); });
   }
 
   window.L2Auth = {
@@ -306,11 +268,7 @@
     changePassword: changePassword,
     health: health,
     api: api,
-    // 离线版注册
-    makeRegistration: makeRegistration,
-    registrationCode: registrationCode,
     reloadConfig: reloadConfig,
-    accountExists: accountExists,
     // 缓存
     isAuthed: isAuthed,
     currentUser: currentUser,

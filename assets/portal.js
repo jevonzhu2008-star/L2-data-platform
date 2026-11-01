@@ -210,6 +210,49 @@
     });
   });
 
+  /* ------------------------------ 新增账号 ------------------------------ */
+
+  var createMask = document.getElementById("createMask");
+  var createUsername = document.getElementById("createUsername");
+  var createDisplay = document.getElementById("createDisplay");
+  var createPassword = document.getElementById("createPassword");
+  var createError = document.getElementById("createError");
+  var createOkBtn = document.getElementById("createOk");
+
+  function openCreate() {
+    createUsername.value = "";
+    createDisplay.value = "";
+    createPassword.value = "";
+    createError.hidden = true;
+    createMask.hidden = false;
+    setTimeout(function () { createUsername.focus(); }, 50);
+  }
+  function closeCreate() { createMask.hidden = true; }
+
+  document.getElementById("createUserBtn").addEventListener("click", openCreate);
+  document.getElementById("createCancel").addEventListener("click", closeCreate);
+  createMask.addEventListener("click", function (e) { if (e.target === createMask) closeCreate(); });
+
+  createOkBtn.addEventListener("click", function () {
+    var u = createUsername.value.trim();
+    var p = createPassword.value;
+    if (!u) { createError.textContent = "请输入账号"; createError.hidden = false; return; }
+    if (!p) { createError.textContent = "请输入密码"; createError.hidden = false; return; }
+    createOkBtn.disabled = true;
+    L2Auth.api("api/admin/user", "POST", {
+      action: "create", username: u, displayName: createDisplay.value.trim(), password: p
+    }).then(function (data) {
+      createOkBtn.disabled = false;
+      closeCreate();
+      toast("已创建账号：" + (data.username || u));
+      loadUsers();
+    }).catch(function (err) {
+      createOkBtn.disabled = false;
+      createError.textContent = (err && err.message) || "创建失败";
+      createError.hidden = false;
+    });
+  });
+
   /* ------------------------------ 临时密码 ------------------------------ */
 
   function showSecret(password, user) {
@@ -308,7 +351,9 @@
   }
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !secretMask.hidden) secretMask.hidden = true;
+    if (e.key !== "Escape") return;
+    if (!secretMask.hidden) secretMask.hidden = true;
+    if (!createMask.hidden) createMask.hidden = true;
   });
 
   loadUsers();

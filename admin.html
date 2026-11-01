@@ -42,6 +42,7 @@
     <div class="toolbar">
       <input type="search" id="searchInput" placeholder="搜索账号或显示名…" autocomplete="off">
       <button class="btn small" type="button" id="refreshBtn">刷新</button>
+      <button class="btn small primary" type="button" id="createUserBtn">新增账号</button>
       <span class="muted" id="usersHint"></span>
     </div>
     <div class="table-wrap">
@@ -89,6 +90,21 @@
     </div>
   </section>
 </main>
+
+<div class="modal-mask" id="createMask" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="createTitle">
+    <h3 id="createTitle">新增账号</h3>
+    <p>创建后对方即可用该账号登录；请把密码通过安全渠道告知对方。</p>
+    <label>账号<input id="createUsername" type="text" autocomplete="off" spellcheck="false"></label>
+    <label>显示名（可选）<input id="createDisplay" type="text" maxlength="32"></label>
+    <label>密码<input id="createPassword" type="password" autocomplete="new-password"></label>
+    <p class="error" id="createError" hidden></p>
+    <div class="modal-actions">
+      <button class="btn small" type="button" id="createCancel">取消</button>
+      <button class="btn small primary" type="button" id="createOk">创建</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-mask" id="secretMask" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="secretTitle">

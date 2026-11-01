@@ -45,7 +45,7 @@ body {
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .logo { display: block; width: auto; height: auto; max-width: 100%; max-height: 34px; margin-bottom: 22px; }
 h1 { font-size: 21px; line-height: 1.35; margin: 0 0 6px; color: #2A1B52; letter-spacing: .01em; }
-.sub { margin: 0 0 18px; font-size: 12.5px; color: var(--muted); }
+.sub { margin: 0 0 22px; font-size: 12.5px; color: var(--muted); }
 label { display: block; font-size: 12px; color: #4A4558; margin-bottom: 14px; }
 input[type=text], input[type=password] {
   width: 100%; height: 42px; margin-top: 6px; padding: 0 12px;
@@ -75,11 +75,6 @@ input[type=text]:focus, input[type=password]:focus {
   background: #FDECEA; color: #B42318; font-size: 12px;
 }
 .error[hidden] { display: none; }
-.ok {
-  margin: 0 0 14px; padding: 9px 11px; border-radius: 7px;
-  background: #EDF5E8; color: #3F6B26; font-size: 12px;
-}
-.ok[hidden] { display: none; }
 .submit {
   width: 100%; height: 44px; border: 0; border-radius: 9px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -94,31 +89,6 @@ input[type=text]:focus, input[type=password]:focus {
   margin-top: 14px; padding: 9px 11px; border-radius: 7px;
   background: #F4F1FA; color: var(--muted); font-size: 10.5px; line-height: 1.55;
 }
-.tabs {
-  display: flex; gap: 4px; margin: 0 0 20px;
-  background: #F4F1FA; padding: 4px; border-radius: 10px;
-}
-.tab {
-  flex: 1; border: 0; background: transparent; color: var(--muted);
-  font: inherit; font-size: 13px; padding: 8px 0; border-radius: 8px; cursor: pointer;
-  transition: background .15s, color .15s;
-}
-.tab.on { background: #fff; color: var(--primary); font-weight: 600; box-shadow: 0 1px 3px rgba(31,27,46,.12); }
-.tab[hidden] { display: none; }
-.tabs[hidden] { display: none; }
-.subtle {
-  width: 100%; height: 38px; margin-top: 8px; border: 1px solid var(--line);
-  border-radius: 9px; background: #fff; color: var(--primary);
-  font: inherit; font-size: 12.5px; cursor: pointer;
-}
-.subtle:hover { background: #F4F1FA; }
-textarea {
-  width: 100%; margin-top: 6px; padding: 10px 12px;
-  border: 1px solid var(--line); border-radius: 8px;
-  font-family: Consolas, "Courier New", monospace; font-size: 11px; line-height: 1.5;
-  background: #FBFAFE; color: var(--ink); resize: vertical;
-}
-textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
 @media (max-width: 420px) {
   .login-card { padding: 28px 22px 22px; border-radius: 14px; }
   h1 { font-size: 19px; }
@@ -133,11 +103,6 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
     <h1>L2 PBI报表开发平台</h1>
     <p class="sub">集团管理报表工作台 · 请登录后访问</p>
 
-    <div class="tabs" id="tabs" hidden>
-      <button type="button" class="tab on" id="tabLogin" data-tab="login">登录</button>
-      <button type="button" class="tab" id="tabRegister" data-tab="register">注册</button>
-    </div>
-
     <form id="loginForm" novalidate>
       <label>账号
         <input id="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required autofocus>
@@ -150,62 +115,7 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
       </label>
       <label class="remember"><input id="remember" type="checkbox"> 记住我（7 天）</label>
       <p class="error" id="error" role="alert" hidden></p>
-      <p class="ok" id="ok" role="status" hidden></p>
       <button class="submit" id="submitBtn" type="submit">登 录</button>
-    </form>
-
-    <form id="registerForm" novalidate hidden>
-      <label>账号
-        <input id="regUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
-      </label>
-      <label>显示名（可选）
-        <input id="regDisplayName" type="text" autocomplete="name" maxlength="32">
-      </label>
-      <label>密码
-        <span class="pwd">
-          <input id="regPassword" type="password" autocomplete="new-password" required>
-          <button type="button" id="regTogglePwd" aria-label="显示密码">显示</button>
-        </span>
-      </label>
-      <label>确认密码
-        <input id="regPassword2" type="password" autocomplete="new-password" required>
-      </label>
-      <p class="error" id="regError" role="alert" hidden></p>
-      <p class="ok" id="regOk" role="status" hidden></p>
-      <button class="submit" id="regBtn" type="submit">注册并登录</button>
-    </form>
-
-    <form id="codeRegisterForm" novalidate hidden>
-      <p class="tip" style="margin:0 0 16px">
-        离线版没有服务器：填好后生成一段注册码，发给管理员合入即可使用。
-        密码只在本机算成哈希放进注册码，明文不会离开这台设备。
-      </p>
-      <label>账号
-        <input id="codeUsername" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
-      </label>
-      <label>显示名（可选）
-        <input id="codeDisplayName" type="text" maxlength="32">
-      </label>
-      <label>密码
-        <span class="pwd">
-          <input id="codePassword" type="password" autocomplete="new-password" required>
-          <button type="button" id="codeTogglePwd" aria-label="显示密码">显示</button>
-        </span>
-      </label>
-      <label>确认密码
-        <input id="codePassword2" type="password" autocomplete="new-password" required>
-      </label>
-      <p class="error" id="codeError" role="alert" hidden></p>
-      <p class="ok" id="codeOk" role="status" hidden></p>
-      <button class="submit" id="codeBtn" type="submit">生成注册码</button>
-
-      <div id="codeResult" hidden>
-        <label style="margin-top:16px">注册码（复制后发给管理员）
-          <textarea id="codeValue" readonly rows="4" spellcheck="false"></textarea>
-        </label>
-        <button class="subtle" id="codeCopyBtn" type="button">复制注册码</button>
-        <p class="tip">管理员合入后重新打开平台即可用该账号登录。不会操作？把这段发给平台负责人即可。</p>
-      </div>
     </form>
 
     <p class="foot">仅限授权人员访问 · 请勿共享账号</p>
@@ -219,52 +129,16 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
 (function () {
   "use strict";
 
-  var tabs = document.getElementById("tabs");
-  var tabLogin = document.getElementById("tabLogin");
-  var tabRegister = document.getElementById("tabRegister");
-  var loginForm = document.getElementById("loginForm");
-  var registerForm = document.getElementById("registerForm");
+  var form = document.getElementById("loginForm");
   var username = document.getElementById("username");
   var password = document.getElementById("password");
   var remember = document.getElementById("remember");
   var error = document.getElementById("error");
-  var okMsg = document.getElementById("ok");
   var submitBtn = document.getElementById("submitBtn");
   var toggle = document.getElementById("togglePwd");
   var modeTip = document.getElementById("modeTip");
 
-  var regUsername = document.getElementById("regUsername");
-  var regDisplayName = document.getElementById("regDisplayName");
-  var regPassword = document.getElementById("regPassword");
-  var regPassword2 = document.getElementById("regPassword2");
-  var regError = document.getElementById("regError");
-  var regOk = document.getElementById("regOk");
-  var regBtn = document.getElementById("regBtn");
-  var regToggle = document.getElementById("regTogglePwd");
-
   var isApi = !!(window.L2Auth && L2Auth.mode === "api");
-  // 离线版（GitHub Pages）用申请码注册；桌面版不显示，避免把注册码流程带进离线壳
-  var codeEnabled = !!(
-    window.L2Auth && !isApi && !L2Auth.serverOnly &&
-    /^https?:$/.test(location.protocol) &&
-    location.hostname !== "l2pbi.local"
-  );
-
-  var codeForm = document.getElementById("codeRegisterForm");
-  var codeUsername = document.getElementById("codeUsername");
-  var codeDisplayName = document.getElementById("codeDisplayName");
-  var codePassword = document.getElementById("codePassword");
-  var codePassword2 = document.getElementById("codePassword2");
-  var codeError = document.getElementById("codeError");
-  var codeOk = document.getElementById("codeOk");
-  var codeBtn = document.getElementById("codeBtn");
-  var codeToggle = document.getElementById("codeTogglePwd");
-  var codeResult = document.getElementById("codeResult");
-  var codeValue = document.getElementById("codeValue");
-  var codeCopyBtn = document.getElementById("codeCopyBtn");
-  var codeStage = "idle";
-  var codePollTimer = null;
-  var codePollTries = 0;
 
   function nextUrl() {
     var next = new URLSearchParams(location.search).get("next") || "index.html";
@@ -274,11 +148,11 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
     }
     return next;
   }
-  function showError(el, msg) { el.textContent = msg; el.hidden = false; }
-  function clearError(el) { el.hidden = true; }
-  function setBusy(btn, busy, idleText, busyText) {
-    btn.disabled = busy;
-    btn.textContent = busy ? busyText : idleText;
+  function showError(msg) { error.textContent = msg; error.hidden = false; }
+  function clearError() { error.hidden = true; }
+  function setBusy(busy) {
+    submitBtn.disabled = busy;
+    submitBtn.textContent = busy ? "登录中…" : "登 录";
   }
 
   if (window.L2Auth && L2Auth.isAuthed()) {
@@ -288,88 +162,43 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
 
   /* ---------- 模式提示 ---------- */
   if (isApi) {
-    tabs.hidden = false;
-    modeTip.textContent = "内网账号由平台统一管理：可自助注册、登录后修改密码；忘记密码请联系管理员重置。";
+    modeTip.textContent = "账号由平台管理员在后台创建；忘记密码请联系管理员重置。";
     L2Auth.health().then(function (info) {
-      if (!info) {
-        // 内网包里禁用了本地回退：连不上账号服务就不能假装能登录
-        if (L2Auth.serverOnly) {
-          modeTip.textContent = "当前无法连接账号服务，请确认访问地址正确或稍后重试；如持续失败请联系管理员。";
-          submitBtn.disabled = true;
-          submitBtn.textContent = "服务暂不可用";
-          tabRegister.hidden = true;
-          showTab("login");
-        }
-        return;
-      }
-      if (info.firstRun) {
-        regOk.textContent = "首次初始化：第一个注册的账号将成为管理员，请确认由平台负责人注册。";
-        regOk.hidden = false;
-      }
-      if (info.registrationOpen === false) {
-        tabRegister.hidden = true;
-        showTab("login");
+      if (!info && L2Auth.serverOnly) {
+        modeTip.textContent = "当前无法连接账号服务，请确认访问地址正确或稍后重试；如持续失败请联系管理员。";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "服务暂不可用";
       }
     });
   } else if (L2Auth && L2Auth.serverOnly) {
     modeTip.textContent = "当前无法连接账号服务，请确认内网地址或稍后重试。";
     submitBtn.disabled = true;
     submitBtn.textContent = "服务暂不可用";
-  } else if (codeEnabled) {
-    tabs.hidden = false;
-    modeTip.textContent = "离线版注册：填好后生成一段注册码发给管理员，合入后即可登录；忘记密码请联系管理员。";
   } else {
-    modeTip.textContent = "当前离线版本：账号由管理员分配，如需新增账号或修改密码请联系管理员。";
-    tabs.hidden = true;
+    modeTip.textContent = "账号由管理员分配：如需开通账号或重置密码，请联系平台管理员。";
   }
 
-  /* ---------- 页签 ---------- */
-  function showTab(name) {
-    var isLogin = name === "login";
-    var useCode = !isLogin && codeEnabled;
-    loginForm.hidden = !isLogin;
-    registerForm.hidden = isLogin || useCode;
-    codeForm.hidden = !useCode;
-    tabLogin.className = isLogin ? "tab on" : "tab";
-    tabRegister.className = isLogin ? "tab" : "tab on";
-    clearError(error);
-    clearError(regError);
-    if (codeError) clearError(codeError);
-    setTimeout(function () {
-      (isLogin ? username : (useCode ? codeUsername : regUsername)).focus();
-    }, 30);
-  }
-  if (!tabs.hidden) {
-    tabLogin.addEventListener("click", function () { showTab("login"); });
-    tabRegister.addEventListener("click", function () { showTab("register"); });
-  }
+  toggle.addEventListener("click", function () {
+    var show = password.type === "password";
+    password.type = show ? "text" : "password";
+    toggle.textContent = show ? "隐藏" : "显示";
+    toggle.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
+  });
 
-  function bindToggle(button, input) {
-    button.addEventListener("click", function () {
-      var show = input.type === "password";
-      input.type = show ? "text" : "password";
-      button.textContent = show ? "隐藏" : "显示";
-      button.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
-    });
-  }
-  bindToggle(toggle, password);
-  bindToggle(regToggle, regPassword);
-
-  /* ---------- 登录 ---------- */
-  loginForm.addEventListener("submit", function (e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    clearError(error);
+    clearError();
     var u = username.value.trim();
     var p = password.value;
-    if (!u || !p) { showError(error, "请输入账号和密码"); return; }
-    setBusy(submitBtn, true, "登 录", "登录中…");
+    if (!u || !p) { showError("请输入账号和密码"); return; }
+    setBusy(true);
 
     if (isApi) {
       L2Auth.login(u, p, remember.checked).then(function () {
         location.replace(nextUrl());
       }).catch(function (err) {
-        showError(error, friendly(err, "账号或密码不正确"));
-        setBusy(submitBtn, false, "登 录", "登录中…");
+        showError(friendly(err, "账号或密码不正确"));
+        setBusy(false);
         password.value = "";
         password.focus();
       });
@@ -380,8 +209,8 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
     var fresh = L2Auth.reloadConfig ? L2Auth.reloadConfig() : Promise.resolve();
     fresh.then(function () { return L2Auth.verify(u, p); }).then(function (user) {
       if (!user) {
-        showError(error, "账号或密码不正确");
-        setBusy(submitBtn, false, "登 录", "登录中…");
+        showError("账号或密码不正确");
+        setBusy(false);
         password.value = "";
         password.focus();
         return;
@@ -391,152 +220,10 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
         L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
       location.replace(nextUrl());
     }).catch(function () {
-      showError(error, "登录失败，请刷新页面后重试");
-      setBusy(submitBtn, false, "登 录", "登录中…");
+      showError("登录失败，请刷新页面后重试");
+      setBusy(false);
     });
   });
-
-  /* ---------- 注册 ---------- */
-  if (isApi) {
-    registerForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      clearError(regError);
-      var u = regUsername.value.trim();
-      var p = regPassword.value;
-      var p2 = regPassword2.value;
-      if (!u || !p) { showError(regError, "请输入账号和密码"); return; }
-      var nameProblem = usernameProblem(u);
-      if (nameProblem) { showError(regError, nameProblem); return; }
-      if (p.length < 1) { showError(regError, "请输入密码"); return; }
-      if (p !== p2) { showError(regError, "两次输入的密码不一致"); return; }
-      setBusy(regBtn, true, "注册并登录", "注册中…");
-
-      L2Auth.register(u, p, regDisplayName.value.trim()).then(function () {
-        location.replace(nextUrl());
-      }).catch(function (err) {
-        showError(regError, friendly(err, "注册失败，请稍后重试"));
-        setBusy(regBtn, false, "注册并登录", "注册中…");
-      });
-    });
-  }
-
-  /* ---------- 离线版：申请码注册 ---------- */
-  var codePending = null;
-
-  if (codeEnabled) {
-    bindToggle(codeToggle, codePassword);
-
-    codeForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      clearError(codeError);
-      if (codeStage === "submitted") { checkActivation(true); return; }
-
-      var u = codeUsername.value.trim();
-      var p = codePassword.value;
-      var p2 = codePassword2.value;
-      if (!u || !p) { showError(codeError, "请输入账号和密码"); return; }
-      var nameProblem = usernameProblem(u);
-      if (nameProblem) { showError(codeError, nameProblem); return; }
-      if (p !== p2) { showError(codeError, "两次输入的密码不一致"); return; }
-
-      codeBtn.disabled = true;
-      codeBtn.textContent = "生成中…";
-      L2Auth.makeRegistration(u, p, codeDisplayName.value.trim()).then(function (payload) {
-        codePending = { u: u, p: p };
-        codeValue.value = L2Auth.registrationCode(payload);
-        deliverToConsole(codeValue.value);
-        codeResult.hidden = false;
-        codeStage = "submitted";
-        codeBtn.disabled = false;
-        codeBtn.textContent = "已发给管理员，检查是否生效";
-        codeOk.textContent = "注册码已生成。把它发给平台管理员，管理员合入并重新发布后，点上面的按钮即可完成登录。";
-        codeOk.hidden = false;
-        startPolling();
-      }).catch(function (err) {
-        showError(codeError, (err && err.message) || "生成注册码失败");
-        codeBtn.disabled = false;
-        codeBtn.textContent = "生成注册码";
-      });
-    });
-
-    codeCopyBtn.addEventListener("click", function () {
-      var text = codeValue.value || "";
-      function done() { codeCopyBtn.textContent = "已复制"; setTimeout(function () { codeCopyBtn.textContent = "复制注册码"; }, 1600); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, function () { codeValue.select(); });
-        return;
-      }
-      codeValue.select();
-      try { document.execCommand("copy"); done(); } catch (e2) { /* 交给用户手动复制 */ }
-    });
-  }
-
-  /// 同机场景：直接把注册码送到本机维护页（没运行维护页时静默失败，走复制）
-  function deliverToConsole(code) {
-    if (!/^https?:$/.test(location.protocol)) return;
-    var base = L2Auth.adminConsoleUrl ? String(L2Auth.adminConsoleUrl() || "").replace(/\/$/, "") : "";
-    if (!base) return;
-    var controller = window.AbortController ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, 2500) : null;
-    fetch(base + "/api/submit", {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: code }),
-      signal: controller ? controller.signal : undefined
-    }).then(function (response) { return response.json(); }).then(function (data) {
-      if (timer) clearTimeout(timer);
-      if (data && data.ok) {
-        codeOk.textContent = "注册码已直接送达本机维护页。管理员不在本机时，请复制下面的注册码发给他。";
-        codeOk.hidden = false;
-      }
-    }).catch(function () {
-      if (timer) clearTimeout(timer);
-      // 本机没运行维护页属于正常情况，保持"复制发送"的提示
-    });
-  }
-
-  function startPolling() {
-    stopPolling();
-    codePollTries = 0;
-    codePollTimer = setInterval(function () {
-      codePollTries++;
-      if (codePollTries > 18) { stopPolling(); return; } // 约 3 分钟
-      checkActivation(false);
-    }, 10000);
-  }
-  function stopPolling() {
-    if (codePollTimer) { clearInterval(codePollTimer); codePollTimer = null; }
-  }
-
-  function checkActivation(manual) {
-    if (!codePending) return;
-    L2Auth.accountExists(codePending.u).then(function (exists) {
-      if (!exists) {
-        if (manual) showError(codeError, "账号还没生效：管理员可能还没合入注册码，请把注册码发给他并稍后再试。");
-        return;
-      }
-      stopPolling();
-      return L2Auth.verify(codePending.u, codePending.p).then(function (user) {
-        if (!user) {
-          showError(codeError, "账号已生效，但密码校验失败。请确认密码与生成注册码时一致，或联系管理员。");
-          return;
-        }
-        L2Auth.saveToken(user, false, null,
-          L2Auth.roleOf ? L2Auth.roleOf(user) : "user",
-          L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
-        location.replace(nextUrl());
-      });
-    });
-  }
-
-  /// 账号规则：不限字符集（允许中文），只拦空值、超长和空白
-  function usernameProblem(name) {
-    if (!name) return "请输入账号";
-    if (name.length > 32) return "账号最多 32 个字符";
-    if (/[\s\u0000-\u001F\u007F]/.test(name)) return "账号不能包含空格";
-    return "";
-  }
 
   function friendly(err, fallback) {
     if (!err) return fallback;
@@ -549,13 +236,7 @@ textarea:focus { outline: none; border-color: var(--primary); background: #fff; 
   }
 
   [username, password].forEach(function (el) {
-    el.addEventListener("input", function () { clearError(error); });
-  });
-  [regUsername, regPassword, regPassword2].forEach(function (el) {
-    el.addEventListener("input", function () { clearError(regError); });
-  });
-  [codeUsername, codePassword, codePassword2].forEach(function (el) {
-    el.addEventListener("input", function () { clearError(codeError); });
+    el.addEventListener("input", clearError);
   });
 })();
 </script>
