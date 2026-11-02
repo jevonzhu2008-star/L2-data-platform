@@ -313,7 +313,7 @@
             '<div class="hero-rule"></div>' +
             '<span class="page-kicker">CMOC GROUP · L2 MANAGEMENT REPORTING</span>' +
             "<h1>L2 PBI报表开发平台</h1>" +
-            "<p>集团管理报表的报表页、语义模型与 PBIX 成果。11 个报表页、11 张事实表、24 个度量值、6 个 PBIX，数据来自 02.PBIP 与 06.表样POC。</p>" +
+            "<p>集团管理报表的报表页、语义模型与 PBIX 成果。" + D.stats.contentPages + " 个报表页、" + D.stats.factTables + " 张事实表、" + D.stats.measures + " 个度量值、" + D.stats.pbix + " 个 PBIX，数据来自 02.PBIP 与 06.表样POC。</p>" +
             '<div class="hero-actions">' +
               '<a class="btn primary" href="#/page/L2-01-02">浏览报表页</a>' +
               '<a class="btn" href="#/model">查看语义模型</a>' +
@@ -331,14 +331,14 @@
         "</div>" +
 
         '<section class="section">' +
-          '<div class="section-head"><div><h2>报表页</h2><p>11 个内容页 · ' + onlineCount + ' 个 Report · 在线（可切截图） · ' + shotCount + ' 个 PBIP 页面 · 截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
+          '<div class="section-head"><div><h2>报表页</h2><p>' + D.stats.contentPages + ' 个内容页 · ' + onlineCount + ' 个 Report · 在线（可切截图） · ' + shotCount + ' 个 PBIP 页面 · 截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
           '<div class="report-legend"><span><i class="dot online"></i>Report · 在线 <b>' + onlineCount + '</b></span><span><i class="dot shot"></i>PBIP 页面 · 截图 <b>' + shotCount + '</b></span></div>' +
           groupsHtml +
         "</section>" +
 
         '<div class="two-col">' +
           '<div class="panel"><h3>语义模型 · 事实表</h3><div class="mini-list">' + modelRows + "</div>" +
-            '<div style="margin-top:10px"><a class="section-link" href="#/model">全部 11 张事实表 →</a></div></div>' +
+            '<div style="margin-top:10px"><a class="section-link" href="#/model">全部 ' + factTables.length + ' 张事实表 →</a></div></div>' +
           '<div class="panel"><h3>交付成果 · PBIX</h3><div class="mini-list">' + pbixRows + "</div>" +
             '<div style="margin-top:10px"><a class="section-link" href="#/pbix">PBIX 表样 →</a></div></div>' +
         "</div>" +
@@ -876,6 +876,8 @@
   /* ---------- 交付成果 ---------- */
   function renderDeliverables() {
     app.className = "";
+    var onlineCount = pages.filter(function (p) { return pageService(p); }).length;
+    var shotCount = pages.length - onlineCount;
     var sampleCodes = Object.keys(service.reports || {});
     var configured = sampleCodes.filter(function (code) {
       var r = service.reports[code];
@@ -903,7 +905,7 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">DELIVERABLES</span><h1>交付成果</h1>' +
-          "<p>PBIP 报表工程、11 页报表与 6 个 PBIX 表样。6 个已在 Service 发布在线报表的页面默认在线嵌入，公网未登录时显示截图；其余 5 页使用 Power BI Desktop 导出的截图。</p></div>" +
+          "<p>PBIP 报表工程、" + D.stats.contentPages + " 页报表与 " + D.stats.pbix + " 个 PBIX 表样。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入，公网未登录时显示截图；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/pbix">PBIX</a></div></div>' +
 
         '<section class="section"><div class="pbip-panel">' +
@@ -931,7 +933,7 @@
           '<div class="pbip-list">' + pageList + "</div>" +
         "</div></section>" +
 
-        '<section class="section"><div class="section-head"><div><h2>PBIX 表样</h2><p>6 个 · 实时连接 · 点击打开文件</p></div></div>' +
+        '<section class="section"><div class="section-head"><div><h2>PBIX 表样</h2><p>' + D.stats.pbix + ' 个 · 实时连接 · 点击打开文件</p></div></div>' +
           '<div class="deliver-list">' + pbixRows + "</div>" +
         "</section>" +
       "</div>";
