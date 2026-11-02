@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / PBIX 成果",
-  "updated": "2026-11-02 14:37",
-  "generatedAt": "2026-11-02T14:37:29",
+  "updated": "2026-11-02 15:17",
+  "generatedAt": "2026-11-02T15:17:54",
   "sources": [
    "02.PBIP 语义模型与报表",
    "06.表样POC PBIX",
@@ -361,13 +361,13 @@ window.L2_DATA = {
        ],
        [
         "1",
-        "总部资金",
-        "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FVR1K5OEYTJCQ]"
+        "铜钴板块",
+        "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSJUW]"
        ],
        [
         "2",
-        "铜钴板块",
-        "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSJUW]"
+        "铜钴未实现毛利",
+        "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSQ6G]"
        ]
       ]
      },
@@ -5342,13 +5342,13 @@ window.L2_DATA = {
       ],
       [
        "1",
-       "总部资金",
-       "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FVR1K5OEYTJCQ]"
+       "铜钴板块",
+       "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSJUW]"
       ],
       [
        "2",
-       "铜钴板块",
-       "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSJUW]"
+       "铜钴未实现毛利",
+       "[4VGQHR12MHZ3FU4L96KDFQ9OO].[4VGQHR12MHZ3FU4L96KDFSQ6G]"
       ]
      ]
     },
