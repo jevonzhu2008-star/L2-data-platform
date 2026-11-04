@@ -843,6 +843,12 @@
     var cards = D.pbix.map(function (p) {
       var page = pageByCode[p.code];
       var svc = pageService(page);
+      var src = "";
+      if (p.source === "pbip") {
+        src = '<div class="pbix-source' + (p.stale ? " stale" : "") + '">' +
+          '<span class="badge ' + (p.stale ? "warn" : "pbip") + '">' + (p.stale ? "PBIX 待导出" : "PBIP 源") + "</span>" +
+          "<span>PBIP 更新 " + esc(p.sourceUpdated) + " · PBIX 导出 " + esc(p.pbixUpdated) + "</span></div>";
+      }
       return '<article class="pbix-card">' +
         '<a class="pbix-thumb' + (p.thumb ? "" : (svc ? " is-online" : "")) + '" href="#/page/' + p.code + '">' +
           (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : (svc ? onlineTile(true) : "")) +
@@ -850,7 +856,8 @@
         '<div class="pbix-body">' +
           '<span class="code">' + esc(p.code) + "</span>" +
           "<h3>" + esc(shortName(p.name, p.code)) + "</h3>" +
-          '<div class="pbix-meta">' + esc(p.size) + " · " + esc(p.date) + " · " + p.pageCount + " 页 · " + esc(p.visualTypes.length) + " 个视觉 · " + (svc ? "在线报表" : "PBIP 截图") + "</div>" +
+          '<div class="pbix-meta">' + esc(p.size) + " · " + p.pageCount + " 页 · " + esc(p.visualTypes.length) + " 个视觉 · " + (svc ? "在线报表" : "PBIP 截图") + "</div>" +
+          src +
           '<div class="pbix-actions">' +
             '<a class="btn small primary" href="#/page/' + p.code + '">查看报表页</a>' +
             (svc ? '<a class="btn small" href="' + serviceUrl(page) + '" target="_blank" rel="noopener">Service ↗</a>' : "") +
@@ -863,7 +870,9 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">PBIX</span><h1>PBIX 表样</h1>' +
-          "<p>06.表样POC 下的 " + D.stats.pbix + " 个 PBIX。它们都是 Power BI Service 实时连接报表；平台默认在线嵌入，公网未登录时显示对应 Service 截图。</p></div>" +
+          "<p>06.表样POC 下的 " + D.stats.pbix + " 个表样：每个表样由对应的 PBIP 工程维护，PBIX 由 PBIP 导出，页数与视觉均以 PBIP 源为准" +
+            (D.stats.pbixStale ? "（当前 " + D.stats.pbixStale + " 个 PBIX 早于 PBIP，待重新导出）" : "") +
+            "。它们都是 Power BI Service 实时连接报表；平台默认在线嵌入，公网未登录时显示对应 Service 截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
         '<div class="hint">pbiServiceLive 报表不包含本地数据模型，浏览器不能直接渲染；如需真实交互请发布到 Power BI Service 或打开 PBIX 后登录。</div>' +
         '<div class="pbix-grid">' + cards + "</div>" +

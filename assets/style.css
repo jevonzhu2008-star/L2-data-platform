@@ -149,6 +149,7 @@ main { flex: 1; width: 100%; max-width: 1600px; margin: 0 auto; padding: 24px 28
 .badge.pbix { background: #F8EDE5; color: #9A5427; }
 .badge.pbip { background: #E6F6EE; color: #047857; }
 .badge.muted { background: #F3F6FA; color: #5F6B6D; }
+.badge.warn { background: #FFF1DC; color: #9A5427; }
 
 .status-dot { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 10.5px; color: var(--muted); }
 .status-dot::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #94A3B8; flex: 0 0 auto; }
@@ -361,6 +362,8 @@ main.detail-mode { padding: 0; max-width: none; height: calc(100vh - var(--topba
 .pbix-body .code { align-self: flex-start; }
 .pbix-body h3 { font-size: 13.5px; line-height: 1.4; }
 .pbix-meta { font-size: 10.5px; color: var(--muted); }
+.pbix-source { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--muted); flex-wrap: wrap; }
+.pbix-source.stale { color: var(--warn); }
 .pbix-actions { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
 .pbix-note { margin-top: 4px; padding: 5px 7px; font-size: 10.5px; color: var(--warn); background: #FFF8EC; border: 1px solid #F0DFC0; border-radius: 5px; }
 
@@ -509,6 +512,7 @@ body.nav-open .mobile-backdrop { opacity: 1; pointer-events: auto; }
 .badge.pbip { color: #4F7A32; background: #EAF4E3; }
 .badge.pbix { color: #8D6A44; background: #F6EFE6; }
 .badge.muted { color: #6B6778; background: #F3F0FA; }
+.badge.warn { color: #E8B26A; background: #3A2E1E; }
 
 .hero-report { background: #1B1038; min-height: 300px; }
 .hero-bg { filter: brightness(.72) saturate(.9); }

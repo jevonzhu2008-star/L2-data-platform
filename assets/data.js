@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / PBIX 成果",
-  "updated": "2026-11-04 19:38",
-  "generatedAt": "2026-11-04T19:38:36",
+  "updated": "2026-11-04 19:46",
+  "generatedAt": "2026-11-04T19:46:07",
   "sources": [
    "02.PBIP 语义模型与报表",
    "06.表样POC PBIX",
@@ -18,6 +18,8 @@ window.L2_DATA = {
   "relationships": 17,
   "parameters": 7,
   "pbix": 10,
+  "pbixStale": 10,
+  "samplePbips": 10,
   "mappings": 13
  },
  "reportMeta": {
@@ -329,20 +331,29 @@ window.L2_DATA = {
     "file": "deliverables/L2-01-02 集团合并利润汇总表.pbix",
     "size": "21.4 KB",
     "date": "2026-11-04",
+    "pbixUpdated": "2026-11-04 14:00",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:25",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-01-02 集团合并利润汇总表/L2-01-02 集团合并利润汇总表.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 2,
     "visualTypes": [
+     "pivotTable",
+     "pivotTable",
      "slicer",
+     "textbox",
      "card",
-     "pivotTable",
-     "pivotTable",
-     "textbox"
+     "waterfallChart",
+     "card",
+     "textbox",
+     "slicer"
     ],
     "screenshot": "assets/screens/service/L2-01-02.png",
     "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
     "pbipPage": "50df5dd79c9c19213b42",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-01-02",
@@ -482,19 +493,24 @@ window.L2_DATA = {
     "file": "deliverables/L2-01-03 快报-金融投资业务专属.pbix",
     "size": "16.5 KB",
     "date": "2026-10-30",
+    "pbixUpdated": "2026-10-30 11:41",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:26",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-01-03 快报-金融投资业务专属/L2-01-03 快报-金融投资业务专属.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 1,
     "visualTypes": [
-     "pivotTable",
      "textbox",
-     "slicer",
-     "card"
+     "card",
+     "pivotTable",
+     "slicer"
     ],
     "screenshot": "assets/screens/service/L2-01-03.png",
     "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
     "pbipPage": "020a059bfd06b6347883",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-01-03",
@@ -644,19 +660,32 @@ window.L2_DATA = {
     "file": "deliverables/L2-01-04 S3 C1成本变化步行图VS上月.pbix",
     "size": "26.4 KB",
     "date": "2026-11-04",
+    "pbixUpdated": "2026-11-04 10:14",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:27",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-01-04 S3 C1成本变化步行图VS上月/L2-01-04 S3 C1成本变化步行图VS上月.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 2,
     "visualTypes": [
      "textbox",
+     "pivotTable",
      "slicer",
      "card",
-     "pivotTable"
+     "slicer",
+     "waterfallChart",
+     "slicer",
+     "donutChart",
+     "lineChart",
+     "slicer",
+     "textbox",
+     "card"
     ],
     "screenshot": "assets/screens/pbip/L2-01-04.png",
     "thumb": "assets/screens/pbip/L2-01-04-thumb.jpg",
     "pbipPage": "8df4296b5610c7c60c7a",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-01-04",
@@ -974,19 +1003,24 @@ window.L2_DATA = {
     "file": "deliverables/L2-01-25 工序成本完成情况.pbix",
     "size": "14.9 KB",
     "date": "2026-11-02",
+    "pbixUpdated": "2026-11-02 11:07",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:27",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-01-25 工序成本完成情况/L2-01-25 工序成本完成情况.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 1,
     "visualTypes": [
      "textbox",
+     "pivotTable",
      "slicer",
-     "card",
-     "pivotTable"
+     "card"
     ],
     "screenshot": "assets/screens/pbip/L2-01-25.png",
     "thumb": "assets/screens/pbip/L2-01-25-thumb.jpg",
     "pbipPage": "98de86891699048a660e",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-01-25",
@@ -1157,6 +1191,11 @@ window.L2_DATA = {
     "file": "deliverables/L2-03-01 销售管理费用预算执行汇总表.pbix",
     "size": "22.4 KB",
     "date": "2026-11-04",
+    "pbixUpdated": "2026-11-04 12:12",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:28",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-03-01 销售管理费用预算执行汇总表/L2-03-01 销售管理费用预算执行汇总表.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 2,
@@ -1164,12 +1203,19 @@ window.L2_DATA = {
      "pivotTable",
      "slicer",
      "textbox",
-     "card"
+     "card",
+     "waterfallChart",
+     "waterfallChart",
+     "textbox",
+     "lineChart",
+     "slicer",
+     "card",
+     "slicer"
     ],
     "screenshot": "assets/screens/service/L2-03-01.png",
     "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
     "pbipPage": "e16279b10e3df23fa8cb",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-03-01",
@@ -1321,19 +1367,24 @@ window.L2_DATA = {
     "file": "deliverables/L2-03-02 财务费用汇总表.pbix",
     "size": "14.9 KB",
     "date": "2026-10-30",
+    "pbixUpdated": "2026-10-30 11:45",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:29",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-03-02 财务费用汇总表/L2-03-02 财务费用汇总表.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 1,
     "visualTypes": [
-     "pivotTable",
-     "textbox",
      "slicer",
+     "textbox",
+     "pivotTable",
      "card"
     ],
     "screenshot": "assets/screens/service/L2-03-02.png",
     "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
     "pbipPage": "4effe47efe2ace12b72b",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-03-02",
@@ -1465,19 +1516,24 @@ window.L2_DATA = {
     "file": "deliverables/L2-03-06 矿石成本分析.pbix",
     "size": "14.7 KB",
     "date": "2026-11-02",
+    "pbixUpdated": "2026-11-02 11:06",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:30",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-03-06 矿石成本分析/L2-03-06 矿石成本分析.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 1,
     "visualTypes": [
      "textbox",
+     "pivotTable",
      "slicer",
-     "card",
-     "pivotTable"
+     "card"
     ],
     "screenshot": "assets/screens/pbip/L2-03-06.png",
     "thumb": "assets/screens/pbip/L2-03-06-thumb.jpg",
     "pbipPage": "feed276a3075012f7e94",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-03-06",
@@ -1641,20 +1697,32 @@ window.L2_DATA = {
     "file": "deliverables/L2-04-01库存汇总表.pbix",
     "size": "25.5 KB",
     "date": "2026-11-04",
+    "pbixUpdated": "2026-11-04 16:39",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:34",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-04-01库存汇总表/L2-04-01库存汇总表.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 2,
     "visualTypes": [
      "slicer",
+     "card",
+     "slicer",
      "pivotTable",
      "textbox",
      "slicer",
+     "textbox",
+     "columnChart",
+     "clusteredColumnChart",
+     "treemap",
+     "lineChart",
      "card"
     ],
     "screenshot": "assets/screens/service/L2-04-01.png",
     "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
     "pbipPage": "72b8f9de0e30717743ca",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-04-01",
@@ -1802,19 +1870,28 @@ window.L2_DATA = {
     "file": "deliverables/L2-05-01 硫磺及硫酸价格分析月报.pbix",
     "size": "18.9 KB",
     "date": "2026-11-04",
+    "pbixUpdated": "2026-11-04 13:25",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:32",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-05-01 硫磺及硫酸价格分析月报/L2-05-01 硫磺及硫酸价格分析月报.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 2,
     "visualTypes": [
-     "pivotTable",
      "textbox",
+     "pivotTable",
      "slicer",
-     "card"
+     "card",
+     "slicer",
+     "lineChart",
+     "card",
+     "textbox"
     ],
     "screenshot": "assets/screens/service/L2-05-01.png",
     "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
     "pbipPage": "4782da4e728bfbbefc8c",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-05-01",
@@ -1927,19 +2004,24 @@ window.L2_DATA = {
     "file": "deliverables/L2-06-01 主要产品价格波动汇总表.pbix",
     "size": "14.8 KB",
     "date": "2026-11-02",
+    "pbixUpdated": "2026-11-02 11:06",
+    "source": "pbip",
+    "sourceUpdated": "2026-11-04 19:32",
+    "sourcePath": "06.表样POC/表样POC PBIP/L2-06-01 主要产品价格波动汇总表/L2-06-01 主要产品价格波动汇总表.Report",
+    "stale": true,
     "connectionType": "pbiServiceLive",
     "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
     "pageCount": 1,
     "visualTypes": [
      "textbox",
+     "pivotTable",
      "slicer",
-     "card",
-     "pivotTable"
+     "card"
     ],
     "screenshot": "assets/screens/pbip/L2-06-01.png",
     "thumb": "assets/screens/pbip/L2-06-01-thumb.jpg",
     "pbipPage": "e3b3b9f3eab1c72826c8",
-    "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+    "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
    },
    "mapping": {
     "code": "L2-06-01",
@@ -5138,20 +5220,29 @@ window.L2_DATA = {
    "file": "deliverables/L2-01-02 集团合并利润汇总表.pbix",
    "size": "21.4 KB",
    "date": "2026-11-04",
+   "pbixUpdated": "2026-11-04 14:00",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:25",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-01-02 集团合并利润汇总表/L2-01-02 集团合并利润汇总表.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 2,
    "visualTypes": [
+    "pivotTable",
+    "pivotTable",
     "slicer",
+    "textbox",
     "card",
-    "pivotTable",
-    "pivotTable",
-    "textbox"
+    "waterfallChart",
+    "card",
+    "textbox",
+    "slicer"
    ],
    "screenshot": "assets/screens/service/L2-01-02.png",
    "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
    "pbipPage": "50df5dd79c9c19213b42",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-01-03",
@@ -5159,19 +5250,24 @@ window.L2_DATA = {
    "file": "deliverables/L2-01-03 快报-金融投资业务专属.pbix",
    "size": "16.5 KB",
    "date": "2026-10-30",
+   "pbixUpdated": "2026-10-30 11:41",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:26",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-01-03 快报-金融投资业务专属/L2-01-03 快报-金融投资业务专属.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 1,
    "visualTypes": [
-    "pivotTable",
     "textbox",
-    "slicer",
-    "card"
+    "card",
+    "pivotTable",
+    "slicer"
    ],
    "screenshot": "assets/screens/service/L2-01-03.png",
    "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
    "pbipPage": "020a059bfd06b6347883",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-01-04",
@@ -5179,19 +5275,32 @@ window.L2_DATA = {
    "file": "deliverables/L2-01-04 S3 C1成本变化步行图VS上月.pbix",
    "size": "26.4 KB",
    "date": "2026-11-04",
+   "pbixUpdated": "2026-11-04 10:14",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:27",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-01-04 S3 C1成本变化步行图VS上月/L2-01-04 S3 C1成本变化步行图VS上月.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 2,
    "visualTypes": [
     "textbox",
+    "pivotTable",
     "slicer",
     "card",
-    "pivotTable"
+    "slicer",
+    "waterfallChart",
+    "slicer",
+    "donutChart",
+    "lineChart",
+    "slicer",
+    "textbox",
+    "card"
    ],
    "screenshot": "assets/screens/pbip/L2-01-04.png",
    "thumb": "assets/screens/pbip/L2-01-04-thumb.jpg",
    "pbipPage": "8df4296b5610c7c60c7a",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-01-25",
@@ -5199,19 +5308,24 @@ window.L2_DATA = {
    "file": "deliverables/L2-01-25 工序成本完成情况.pbix",
    "size": "14.9 KB",
    "date": "2026-11-02",
+   "pbixUpdated": "2026-11-02 11:07",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:27",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-01-25 工序成本完成情况/L2-01-25 工序成本完成情况.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 1,
    "visualTypes": [
     "textbox",
+    "pivotTable",
     "slicer",
-    "card",
-    "pivotTable"
+    "card"
    ],
    "screenshot": "assets/screens/pbip/L2-01-25.png",
    "thumb": "assets/screens/pbip/L2-01-25-thumb.jpg",
    "pbipPage": "98de86891699048a660e",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-03-01",
@@ -5219,6 +5333,11 @@ window.L2_DATA = {
    "file": "deliverables/L2-03-01 销售管理费用预算执行汇总表.pbix",
    "size": "22.4 KB",
    "date": "2026-11-04",
+   "pbixUpdated": "2026-11-04 12:12",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:28",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-03-01 销售管理费用预算执行汇总表/L2-03-01 销售管理费用预算执行汇总表.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 2,
@@ -5226,12 +5345,19 @@ window.L2_DATA = {
     "pivotTable",
     "slicer",
     "textbox",
-    "card"
+    "card",
+    "waterfallChart",
+    "waterfallChart",
+    "textbox",
+    "lineChart",
+    "slicer",
+    "card",
+    "slicer"
    ],
    "screenshot": "assets/screens/service/L2-03-01.png",
    "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
    "pbipPage": "e16279b10e3df23fa8cb",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-03-02",
@@ -5239,19 +5365,24 @@ window.L2_DATA = {
    "file": "deliverables/L2-03-02 财务费用汇总表.pbix",
    "size": "14.9 KB",
    "date": "2026-10-30",
+   "pbixUpdated": "2026-10-30 11:45",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:29",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-03-02 财务费用汇总表/L2-03-02 财务费用汇总表.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 1,
    "visualTypes": [
-    "pivotTable",
-    "textbox",
     "slicer",
+    "textbox",
+    "pivotTable",
     "card"
    ],
    "screenshot": "assets/screens/service/L2-03-02.png",
    "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
    "pbipPage": "4effe47efe2ace12b72b",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-03-06",
@@ -5259,19 +5390,24 @@ window.L2_DATA = {
    "file": "deliverables/L2-03-06 矿石成本分析.pbix",
    "size": "14.7 KB",
    "date": "2026-11-02",
+   "pbixUpdated": "2026-11-02 11:06",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:30",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-03-06 矿石成本分析/L2-03-06 矿石成本分析.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 1,
    "visualTypes": [
     "textbox",
+    "pivotTable",
     "slicer",
-    "card",
-    "pivotTable"
+    "card"
    ],
    "screenshot": "assets/screens/pbip/L2-03-06.png",
    "thumb": "assets/screens/pbip/L2-03-06-thumb.jpg",
    "pbipPage": "feed276a3075012f7e94",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-04-01",
@@ -5279,20 +5415,32 @@ window.L2_DATA = {
    "file": "deliverables/L2-04-01库存汇总表.pbix",
    "size": "25.5 KB",
    "date": "2026-11-04",
+   "pbixUpdated": "2026-11-04 16:39",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:34",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-04-01库存汇总表/L2-04-01库存汇总表.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 2,
    "visualTypes": [
     "slicer",
+    "card",
+    "slicer",
     "pivotTable",
     "textbox",
     "slicer",
+    "textbox",
+    "columnChart",
+    "clusteredColumnChart",
+    "treemap",
+    "lineChart",
     "card"
    ],
    "screenshot": "assets/screens/service/L2-04-01.png",
    "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
    "pbipPage": "72b8f9de0e30717743ca",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-05-01",
@@ -5300,19 +5448,28 @@ window.L2_DATA = {
    "file": "deliverables/L2-05-01 硫磺及硫酸价格分析月报.pbix",
    "size": "18.9 KB",
    "date": "2026-11-04",
+   "pbixUpdated": "2026-11-04 13:25",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:32",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-05-01 硫磺及硫酸价格分析月报/L2-05-01 硫磺及硫酸价格分析月报.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 2,
    "visualTypes": [
-    "pivotTable",
     "textbox",
+    "pivotTable",
     "slicer",
-    "card"
+    "card",
+    "slicer",
+    "lineChart",
+    "card",
+    "textbox"
    ],
    "screenshot": "assets/screens/service/L2-05-01.png",
    "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
    "pbipPage": "4782da4e728bfbbefc8c",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   },
   {
    "code": "L2-06-01",
@@ -5320,19 +5477,24 @@ window.L2_DATA = {
    "file": "deliverables/L2-06-01 主要产品价格波动汇总表.pbix",
    "size": "14.8 KB",
    "date": "2026-11-02",
+   "pbixUpdated": "2026-11-02 11:06",
+   "source": "pbip",
+   "sourceUpdated": "2026-11-04 19:32",
+   "sourcePath": "06.表样POC/表样POC PBIP/L2-06-01 主要产品价格波动汇总表/L2-06-01 主要产品价格波动汇总表.Report",
+   "stale": true,
    "connectionType": "pbiServiceLive",
    "modelId": "002848fa-769b-4bef-bd21-9e5d33688b53",
    "pageCount": 1,
    "visualTypes": [
     "textbox",
+    "pivotTable",
     "slicer",
-    "card",
-    "pivotTable"
+    "card"
    ],
    "screenshot": "assets/screens/pbip/L2-06-01.png",
    "thumb": "assets/screens/pbip/L2-06-01-thumb.jpg",
    "pbipPage": "e3b3b9f3eab1c72826c8",
-   "note": "Power BI Service 实时连接（pbiServiceLive），本地不可离线渲染；平台优先在线嵌入，公网未登录时显示对应 Service 截图。"
+   "note": "PBIX 导出早于 PBIP 源，最新表样以 PBIP 为准；建议在 Power BI Desktop 中从对应 PBIP 重新导出。"
   }
  ],
  "mappings": [
