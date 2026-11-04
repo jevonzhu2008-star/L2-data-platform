@@ -1,4 +1,4 @@
-/* CMOC L2 PBI报表开发平台 · 报表页 / 语义模型 / PBIX 工作台 */
+/* CMOC L2 PBI报表开发平台 · 报表页 / 语义模型 / 指标映射工作台 */
 (function () {
   "use strict";
 
@@ -176,7 +176,6 @@
     }).join("");
     var modelOverview = '<a class="sb-sub-item sb-overview" href="#/model">语义模型总览 →</a>';
     html += sbGroup("model", "语义模型", factTables.length, modelOverview, modelSubs);
-    html += sbItem("#/pbix", "PBIX 表样", D.stats.pbix, "pbix");
     html += sbItem("#/mappings", "指标映射", D.stats.mappings, "mappings");
     html += sbItem("#/deliverables", "交付成果", "", "deliverables");
     sbNav.innerHTML = html;
@@ -224,8 +223,6 @@
         var sov = sg.querySelector(".sb-overview");
         if (sov) sov.classList.add("active");
       }
-    } else if (section === "pbix") {
-      activateItem("pbix");
     } else if (section === "mappings") {
       activateItem("mappings");
     } else if (section === "page") {
@@ -295,10 +292,6 @@
       return miniRow("#/model/" + encodeURIComponent(t.name), t.code, shortName(t.name, t.code), (t.measureNames || []).length + " 度量值");
     }).join("");
 
-    var pbixRows = D.pbix.map(function (p) {
-      return miniRow("#/page/" + p.code, p.code, shortName(p.name, p.code), p.size);
-    }).join("");
-
     var mappingRows = mappings.slice(0, 5).map(function (m) {
       return miniRow("#/mappings" + (m.code ? "/" + encodeURIComponent(m.code) : ""), m.code || "其他", m.name, m.sheets.length + " 表");
     }).join("");
@@ -313,11 +306,10 @@
             '<div class="hero-rule"></div>' +
             '<span class="page-kicker">CMOC GROUP · L2 MANAGEMENT REPORTING</span>' +
             "<h1>L2 PBI报表开发平台</h1>" +
-            "<p>集团管理报表的报表页、语义模型与 PBIX 成果。" + D.stats.contentPages + " 个报表页、" + D.stats.factTables + " 张事实表、" + D.stats.measures + " 个度量值、" + D.stats.pbix + " 个 PBIX，数据来自 02.PBIP 与 06.表样POC。</p>" +
+            "<p>集团管理报表的报表页与语义模型。" + D.stats.contentPages + " 个报表页、" + D.stats.factTables + " 张事实表、" + D.stats.measures + " 个度量值，数据来自 02.PBIP 与 03.项目映射文件。</p>" +
             '<div class="hero-actions">' +
               '<a class="btn primary" href="#/page/L2-01-02">浏览报表页</a>' +
               '<a class="btn" href="#/model">查看语义模型</a>' +
-              '<a class="btn" href="#/pbix">PBIX 成果</a>' +
             "</div>" +
           "</div>" +
           '<div class="hero-meta">洛阳钼业 · 财经数据中心<br>数据更新 ' + esc(D.meta.updated) + "</div>" +
@@ -327,7 +319,6 @@
           '<div class="kpi-card"><b>' + D.stats.contentPages + '</b><span>报表页</span><small>PBIP</small></div>' +
           '<div class="kpi-card"><b>' + D.stats.measures + '</b><span>度量值</span><small>DAX</small></div>' +
           '<div class="kpi-card"><b>' + D.stats.factTables + '</b><span>事实表</span><small>' + D.stats.relationships + ' 关系</small></div>' +
-          '<div class="kpi-card"><b>' + D.stats.pbix + '</b><span>PBIX 成果</span><small>实时连接</small></div>' +
         "</div>" +
 
         '<section class="section">' +
@@ -339,14 +330,9 @@
         '<div class="two-col">' +
           '<div class="panel"><h3>语义模型 · 事实表</h3><div class="mini-list">' + modelRows + "</div>" +
             '<div style="margin-top:10px"><a class="section-link" href="#/model">全部 ' + factTables.length + ' 张事实表 →</a></div></div>' +
-          '<div class="panel"><h3>交付成果 · PBIX</h3><div class="mini-list">' + pbixRows + "</div>" +
-            '<div style="margin-top:10px"><a class="section-link" href="#/pbix">PBIX 表样 →</a></div></div>' +
+          '<div class="panel"><h3>指标映射 · 排序与维度字典</h3><div class="mini-list">' + mappingRows + "</div>" +
+            '<div style="margin-top:10px"><a class="section-link" href="#/mappings">全部 ' + D.stats.mappings + ' 个 →</a></div></div>' +
         "</div>" +
-
-        '<section class="section">' +
-          '<div class="section-head"><div><h2>指标映射</h2><p>03.项目映射文件 · 排序与维度字典</p></div><a class="section-link" href="#/mappings">全部 ' + D.stats.mappings + ' 个 →</a></div>' +
-          '<div class="panel"><div class="mini-list">' + mappingRows + "</div></div>" +
-        "</section>" +
       "</div>";
 
     setCrumb("<b>工作台</b>");
@@ -368,7 +354,6 @@
     var deliver = [];
     if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service 在线报表</span><a href="' + serviceUrl(p) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.pbix) deliver.push('<div class="deliver-row"><span class="badge pbix">PBIX</span><span class="dr-name" title="' + esc(p.pbix.file) + '">' + esc(p.pbix.file.split("/").pop()) + '</span><a href="' + url(p.pbix.file) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="' + url(p.mapping.file) + '" target="_blank" rel="noopener">打开</a></div>');
 
     drawer.innerHTML =
@@ -837,51 +822,6 @@
     document.title = "指标映射 · CMOC L2 PBI报表开发平台";
   }
 
-  /* ---------- PBIX ---------- */
-  function renderPbix() {
-    app.className = "";
-    var cards = D.pbix.map(function (p) {
-      var page = pageByCode[p.code];
-      var svc = pageService(page);
-      var src = "";
-      if (p.source === "pbip") {
-        src = '<div class="pbix-source' + (p.stale ? " stale" : "") + '">' +
-          '<span class="badge ' + (p.stale ? "warn" : "pbip") + '">' + (p.stale ? "PBIX 待导出" : "PBIP 源") + "</span>" +
-          "<span>PBIP 更新 " + esc(p.sourceUpdated) + " · PBIX 导出 " + esc(p.pbixUpdated) + "</span></div>";
-      }
-      return '<article class="pbix-card">' +
-        '<a class="pbix-thumb' + (p.thumb ? "" : (svc ? " is-online" : "")) + '" href="#/page/' + p.code + '">' +
-          (p.thumb ? '<img src="' + url(p.thumb) + '" alt="" loading="lazy">' : (svc ? onlineTile(true) : "")) +
-        "</a>" +
-        '<div class="pbix-body">' +
-          '<span class="code">' + esc(p.code) + "</span>" +
-          "<h3>" + esc(shortName(p.name, p.code)) + "</h3>" +
-          '<div class="pbix-meta">' + esc(p.size) + " · " + p.pageCount + " 页 · " + esc(p.visualTypes.length) + " 个视觉 · " + (svc ? "在线报表" : "PBIP 截图") + "</div>" +
-          src +
-          '<div class="pbix-actions">' +
-            '<a class="btn small primary" href="#/page/' + p.code + '">查看报表页</a>' +
-            (svc ? '<a class="btn small" href="' + serviceUrl(page) + '" target="_blank" rel="noopener">Service ↗</a>' : "") +
-            '<a class="btn small" href="' + url(p.file) + '" target="_blank" rel="noopener">打开 PBIX</a>' +
-          "</div>" +
-          '<div class="pbix-note">' + esc(p.note) + "</div>" +
-        "</div></article>";
-    }).join("");
-
-    app.innerHTML =
-      '<div class="page">' +
-        '<div class="page-head"><div><span class="page-kicker">PBIX</span><h1>PBIX 表样</h1>' +
-          "<p>06.表样POC 下的 " + D.stats.pbix + " 个表样：每个表样由对应的 PBIP 工程维护，PBIX 由 PBIP 导出，页数与视觉均以 PBIP 源为准" +
-            (D.stats.pbixStale ? "（当前 " + D.stats.pbixStale + " 个 PBIX 早于 PBIP，待重新导出）" : "") +
-            "。它们都是 Power BI Service 实时连接报表；平台默认在线嵌入，公网未登录时显示对应 Service 截图。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
-        '<div class="hint">pbiServiceLive 报表不包含本地数据模型，浏览器不能直接渲染；如需真实交互请发布到 Power BI Service 或打开 PBIX 后登录。</div>' +
-        '<div class="pbix-grid">' + cards + "</div>" +
-      "</div>";
-
-    setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>PBIX 表样</b>');
-    document.title = "PBIX 表样 · CMOC L2 PBI报表开发平台";
-  }
-
   /* ---------- 交付成果 ---------- */
   function renderDeliverables() {
     app.className = "";
@@ -892,15 +832,6 @@
       var r = service.reports[code];
       return r && r.reportId;
     }).length;
-    var pbixRows = D.pbix.map(function (p) {
-      return '<a class="deliver-item" href="' + url(p.file) + '" target="_blank" rel="noopener">' +
-        '<span class="di-icon">PBIX</span>' +
-        '<span class="di-name">' + esc(shortName(p.name, p.code)) + "<small>" + esc(p.code) + " · " + esc(p.connectionType) + "</small></span>" +
-        '<span class="di-path">' + esc(p.file) + "</span>" +
-        '<span class="di-meta">' + esc(p.size) + " · " + esc(p.date) + "</span>" +
-        '<span class="di-arrow">↗</span></a>';
-    }).join("");
-
     var pageList = pages.map(function (p) { return "<span>" + esc(p.code + " " + shortName(p.name, p.code)) + "</span>"; }).join("");
     var serviceList = sampleCodes.map(function (code) {
       var p = pageByCode[code];
@@ -914,8 +845,8 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">DELIVERABLES</span><h1>交付成果</h1>' +
-          "<p>PBIP 报表工程、" + D.stats.contentPages + " 页报表与 " + D.stats.pbix + " 个 PBIX 表样。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入，公网未登录时显示截图；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/pbix">PBIX</a></div></div>' +
+          "<p>PBIP 报表工程与 " + D.stats.contentPages + " 页报表。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入，公网未登录时显示截图；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
+          '<div class="head-actions"><a class="btn" href="#/model">语义模型</a></div></div>' +
 
         '<section class="section"><div class="pbip-panel">' +
           '<span class="page-kicker">PBIP PROJECT</span><h2>' + esc(D.reportMeta.name) + "</h2>" +
@@ -941,10 +872,6 @@
           '<h3 style="margin-top:18px;font-size:12px;color:var(--muted)">报表页</h3>' +
           '<div class="pbip-list">' + pageList + "</div>" +
         "</div></section>" +
-
-        '<section class="section"><div class="section-head"><div><h2>PBIX 表样</h2><p>' + D.stats.pbix + ' 个 · 实时连接 · 点击打开文件</p></div></div>' +
-          '<div class="deliver-list">' + pbixRows + "</div>" +
-        "</section>" +
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>交付成果</b>');
@@ -1008,9 +935,6 @@
     });
     measures.forEach(function (m) {
       searchIndex.push({ kind: "度量值", code: "", name: m.name, route: "#/measures/" + encodeURIComponent(m.name), desc: m.folder });
-    });
-    D.pbix.forEach(function (p) {
-      searchIndex.push({ kind: "PBIX", code: p.code, name: shortName(p.name, p.code), route: "#/page/" + p.code, desc: "PBIX 表样" });
     });
     mappings.forEach(function (m) {
       searchIndex.push({ kind: "指标映射", code: m.code, name: m.name, route: "#/mappings" + (m.code ? "/" + encodeURIComponent(m.code) : ""), desc: "指标映射 Excel" });
@@ -1118,8 +1042,6 @@
     } else if (info.section === "measures") {
       // 兼容旧的 #/measures 链接：渲染语义模型页并定位到度量值
       renderModelOverview(info.arg);
-    } else if (info.section === "pbix") {
-      renderPbix();
     } else if (info.section === "mappings") {
       renderMappings(info.arg);
     } else if (info.section === "deliverables") {
