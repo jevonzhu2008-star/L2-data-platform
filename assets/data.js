@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-04 19:57",
-  "generatedAt": "2026-11-04T19:57:02",
+  "updated": "2026-11-04 21:19",
+  "generatedAt": "2026-11-04T21:19:14",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -41,8 +41,8 @@ window.L2_DATA = {
     "reportId": "9f43e1bf-6c04-47c4-bcf1-264b1db81e8a",
     "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
     "tenantId": "",
-    "pageName": "74334dbb9c48d1a3d048",
-    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/9f43e1bf-6c04-47c4-bcf1-264b1db81e8a/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
+    "pageName": "e38fe940e1a4896b2c1a",
+    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/9f43e1bf-6c04-47c4-bcf1-264b1db81e8a/e38fe940e1a4896b2c1a?language=zh-Hans&experience=power-bi"
    },
    "L2-01-03": {
     "reportId": "00159d90-92bd-4a41-a67d-76fb4fbf34b7",
@@ -52,11 +52,11 @@ window.L2_DATA = {
     "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/00159d90-92bd-4a41-a67d-76fb4fbf34b7/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
    },
    "L2-01-04": {
-    "reportId": "09e6ab70-1177-4afd-a848-92da7da5741b",
+    "reportId": "d7b1b4bc-e62a-437a-816f-0c174cf7705f",
     "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
     "tenantId": "",
-    "pageName": "74334dbb9c48d1a3d048",
-    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/09e6ab70-1177-4afd-a848-92da7da5741b/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
+    "pageName": "79500f7e54d1d5e3e074",
+    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/d7b1b4bc-e62a-437a-816f-0c174cf7705f/79500f7e54d1d5e3e074?language=zh-Hans&experience=power-bi"
    },
    "L2-01-25": {
     "reportId": "1d83c63d-c66a-4fa8-9f95-b48ba51bf64b",
@@ -69,8 +69,8 @@ window.L2_DATA = {
     "reportId": "7ffe721d-def2-4be8-bdff-44c67bf0e2ad",
     "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
     "tenantId": "",
-    "pageName": "74334dbb9c48d1a3d048",
-    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/7ffe721d-def2-4be8-bdff-44c67bf0e2ad/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
+    "pageName": "a4913cd2de89737d609e",
+    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/7ffe721d-def2-4be8-bdff-44c67bf0e2ad/a4913cd2de89737d609e?language=zh-Hans&experience=power-bi"
    },
    "L2-03-02": {
     "reportId": "f2c59644-2285-4042-841b-4723bf38d592",
@@ -90,15 +90,15 @@ window.L2_DATA = {
     "reportId": "4b255747-3fc2-431b-94a6-0be22bfb4c1b",
     "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
     "tenantId": "",
-    "pageName": "74334dbb9c48d1a3d048",
-    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/4b255747-3fc2-431b-94a6-0be22bfb4c1b/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
+    "pageName": "2b524983c6976678c342",
+    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/4b255747-3fc2-431b-94a6-0be22bfb4c1b/2b524983c6976678c342?language=zh-Hans&experience=power-bi"
    },
    "L2-05-01": {
     "reportId": "76e23197-9594-4331-896d-e2006700c7f5",
     "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
     "tenantId": "",
-    "pageName": "74334dbb9c48d1a3d048",
-    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/76e23197-9594-4331-896d-e2006700c7f5/74334dbb9c48d1a3d048?language=zh-Hans&experience=power-bi"
+    "pageName": "2ce21018013a40780e68",
+    "url": "https://app.powerbi.com/groups/9d8fa59d-4673-4867-9640-b4fd3f4149e1/reports/76e23197-9594-4331-896d-e2006700c7f5/2ce21018013a40780e68?language=zh-Hans&experience=power-bi"
    },
    "L2-06-01": {
     "reportId": "53e49892-b308-4a21-9d41-5b52e8d1079b",
@@ -319,7 +319,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-01-02.png",
    "thumb": "assets/screens/service/L2-01-02-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:39",
+   "screenshotTime": "2026-11-04 21:17",
    "mapping": {
     "code": "L2-01-02",
     "name": "L2-01-02 集团合并利润汇总表指标映射",
@@ -451,7 +451,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-01-03.png",
    "thumb": "assets/screens/service/L2-01-03-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:39",
+   "screenshotTime": "2026-11-04 21:17",
    "mapping": {
     "code": "L2-01-03",
     "name": "L2-01-03 快报-金融投资业务专属指标映射",
@@ -590,10 +590,10 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "assets/screens/pbip/L2-01-04.png",
-   "thumb": "assets/screens/pbip/L2-01-04-thumb.jpg",
-   "screenshotSource": "pbip",
-   "screenshotTime": "2026-10-31 09:39",
+   "screenshot": "assets/screens/service/L2-01-04.png",
+   "thumb": "assets/screens/service/L2-01-04-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-01-04",
     "name": "L2-01-04 S3 C1成本变化步行图VS上月指标映射",
@@ -899,10 +899,10 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "assets/screens/pbip/L2-01-25.png",
-   "thumb": "assets/screens/pbip/L2-01-25-thumb.jpg",
-   "screenshotSource": "pbip",
-   "screenshotTime": "2026-10-31 09:39",
+   "screenshot": "assets/screens/service/L2-01-25.png",
+   "thumb": "assets/screens/service/L2-01-25-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-01-25",
     "name": "L2-01-25 工序成本完成情况指标映射",
@@ -1065,7 +1065,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-03-01.png",
    "thumb": "assets/screens/service/L2-03-01-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:39",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-03-01",
     "name": "L2-03-01 销售管理费用预算执行汇总表指标映射",
@@ -1209,7 +1209,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-03-02.png",
    "thumb": "assets/screens/service/L2-03-02-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:39",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-03-02",
     "name": "L2-03-02 财务费用汇总表指标映射",
@@ -1330,10 +1330,10 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "assets/screens/pbip/L2-03-06.png",
-   "thumb": "assets/screens/pbip/L2-03-06-thumb.jpg",
-   "screenshotSource": "pbip",
-   "screenshotTime": "2026-10-31 09:39",
+   "screenshot": "assets/screens/service/L2-03-06.png",
+   "thumb": "assets/screens/service/L2-03-06-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-03-06",
     "name": "L2-03-06 矿石成本分析指标映射",
@@ -1489,7 +1489,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-04-01.png",
    "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:40",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-04-01",
     "name": "L2-04-01库存汇总表指标映射",
@@ -1629,7 +1629,7 @@ window.L2_DATA = {
    "screenshot": "assets/screens/service/L2-05-01.png",
    "thumb": "assets/screens/service/L2-05-01-thumb.jpg",
    "screenshotSource": "service",
-   "screenshotTime": "2026-10-31 10:40",
+   "screenshotTime": "2026-11-04 21:18",
    "mapping": {
     "code": "L2-05-01",
     "name": "L2-05-01 硫磺及硫酸价格分析月报指标映射",
@@ -1731,10 +1731,10 @@ window.L2_DATA = {
     "度量值.当前月报期间",
     "日期表.年月筛选"
    ],
-   "screenshot": "assets/screens/pbip/L2-06-01.png",
-   "thumb": "assets/screens/pbip/L2-06-01-thumb.jpg",
-   "screenshotSource": "pbip",
-   "screenshotTime": "2026-10-31 09:40",
+   "screenshot": "assets/screens/service/L2-06-01.png",
+   "thumb": "assets/screens/service/L2-06-01-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-04 21:19",
    "mapping": {
     "code": "L2-06-01",
     "name": "L2-06-01 主要产品价格波动汇总表指标映射",
