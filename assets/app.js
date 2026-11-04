@@ -26,8 +26,7 @@
   var measures = D.measures;
   var mappings = D.mappings;
   var service = D.service || {};
-  // GitHub Pages 匿名访问无法登录 Power BI，默认先显示截图；内网/本地默认在线报表。
-  var preferScreenshot = /(^|\.)github\.io$/i.test(location.hostname);
+  // 有在线报表的页面只提供在线报表（可视化 / 表样切换）；无在线报表的页面显示截图。
   var viewMode = "service";
 
   var VISUAL_LABEL = {
@@ -341,7 +340,7 @@
         "</div>" +
 
         '<section class="section">' +
-          '<div class="section-head"><div><h2>报表页</h2><p>' + D.stats.contentPages + ' 个内容页 · ' + onlineCount + ' 个 Report · 在线（可切截图） · ' + shotCount + ' 个 PBIP 页面 · 截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
+          '<div class="section-head"><div><h2>报表页</h2><p>' + D.stats.contentPages + ' 个内容页 · ' + onlineCount + ' 个 Report · 在线 · ' + shotCount + ' 个 PBIP 页面 · 截图</p></div><a class="section-link" href="#/model">语义模型 →</a></div>' +
           '<div class="report-legend"><span><i class="dot online"></i>Report · 在线 <b>' + onlineCount + '</b></span><span><i class="dot shot"></i>PBIP 页面 · 截图 <b>' + shotCount + '</b></span></div>' +
           groupsHtml +
         "</section>" +
@@ -374,8 +373,7 @@
     var deliver = [];
     if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 可视化页</span><a href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener">打开</a></div>');
     if (tableSvc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 表样页</span><a href="' + serviceUrl(p, "table") + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · 可视化 · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.tableScreenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '-table.png · 表样 · ' + (p.tableScreenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.tableScreenshot) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (p.screenshot && !svc) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="' + url(p.mapping.file) + '" target="_blank" rel="noopener">打开</a></div>');
 
     drawer.innerHTML =
@@ -391,10 +389,8 @@
           "<dt>数据来源</dt><dd>" + esc(sourceLabel(p)) + "</dd>" +
           (svc ? "<dt>Service 报表</dt><dd style=\"font-family:var(--mono);font-size:10.5px\">" + esc(svc.reportId) + "</dd>" : "") +
         "</dl></section>" +
-        (svc ? "<section><h3>在线报表</h3><p>" + (preferScreenshot
-          ? "GitHub Pages 公网默认加载在线报表，需要登录 Power BI；未登录时会停在登录页，可切到「截图」查看静态内容。"
-          : "该页已在 Power BI Service 发布，可在「在线报表 / 截图」之间切换。在线报表需要浏览器已登录 Power BI。") +
-          (tableSvc ? " 该报表同时提供「可视化 / 表样」两种页面，可在顶部切换。" : "") + "</p></section>" : "") +
+        (svc ? "<section><h3>在线报表</h3><p>该页已在 Power BI Service 发布，需要浏览器已登录 Power BI。" +
+          (tableSvc ? " 可在顶部切换「可视化 / 表样」。" : "") + "</p></section>" : "") +
         "<section><h3>视觉构成</h3>" + visualRows + "</section>" +
         "<section><h3>数据表</h3><div class=\"chips\">" + (tableChips || "—") + "</div></section>" +
         "<section><h3>度量值</h3><div class=\"chips\">" + (measureChips || "—") + "</div></section>" +
@@ -410,12 +406,11 @@
     if (!p) return notFound(code);
     var svc = pageService(p);
     var hasService = !!svc;
-    var hasShot = !!p.screenshot;
+    // 有在线报表的页面只保留在线报表，不再提供截图视图
+    var hasShot = !hasService && !!p.screenshot;
     var tableAvailable = hasTablePage(p);
     var pageKind = "visual";
-    var compact = window.matchMedia("(max-width: 720px)").matches;
-    // 移动端在线报表 iframe 体验差，默认显示截图
-    var mode = hasService ? (compact && hasShot ? "shot" : "service") : "shot";
+    var mode = hasService ? "service" : "shot";
     viewMode = mode;
     var idx = pages.indexOf(p);
     var prev = idx > 0 ? pages[idx - 1] : null;
@@ -428,16 +423,6 @@
           '<button type="button" data-kind="table">表样</button>' +
         "</div>"
       : "";
-    var viewSeg = hasService && hasShot
-      ? '<div class="seg" id="viewSeg">' +
-          '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表（需登录）</button>' +
-          '<button type="button" data-view="shot" class="' + (mode === "shot" ? "on" : "") + '">截图</button>' +
-        "</div>"
-      : "";
-
-    function shotOf(kind) { return kind === "table" ? (p.tableScreenshot || "") : (p.screenshot || ""); }
-    function shotTimeOf(kind) { return kind === "table" ? (p.tableScreenshotTime || "") : (p.screenshotTime || ""); }
-    var initialShot = shotOf("visual");
 
     app.className = "detail-mode";
     app.innerHTML =
@@ -448,15 +433,13 @@
           "<h1>" + esc(shortName(p.name, p.code)) + "</h1>" +
           '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 截图") + "</span>" +
           '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span>" +
-            '<span id="shotTimeWrap"' + (initialShot && shotTimeOf("visual") ? "" : " hidden") + '><span class="sep">·</span><span id="shotTimeMeta">' +
-              (shotTimeOf("visual") ? "截图 " + esc(shotTimeOf("visual")) : "") + "</span></span>" +
-            (preferScreenshot && hasService && mode === "shot" ? '<span class="sep">·</span><span>公网显示截图</span>' : "") + "</div>" +
+            (hasShot && p.screenshotTime ? '<span class="sep">·</span><span>截图 ' + esc(p.screenshotTime) + "</span>" : "") + "</div>" +
         "</div>" +
         '<div class="db-actions">' +
-          prevBtn + nextBtn + kindSeg + viewSeg +
+          prevBtn + nextBtn + kindSeg +
           '<button class="btn" type="button" id="drawerBtn">详情</button>' +
           (hasService ? '<a class="btn" id="svcLink" href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>' : "") +
-          (initialShot ? '<a class="btn" id="shotLink" href="' + url(initialShot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
+          (hasShot ? '<a class="btn" id="shotLink" href="' + url(p.screenshot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
         "</div>" +
       "</div>" +
       '<div class="report-view' + (mode === "service" ? " service-mode" : "") + '" id="reportView">' +
@@ -468,15 +451,13 @@
             "</div>" +
             '<div class="report-timeout" id="reportTimeout" hidden>' +
               "<b>在线报表加载较慢</b>" +
-              "<span>可能未登录 Power BI。可切换到截图，或点 Service ↗ 打开。</span>" +
-              '<button class="btn small" type="button" id="timeoutShot">查看截图</button>' +
+              "<span>可能未登录 Power BI，可点 Service ↗ 打开。</span>" +
             "</div>" +
             '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p, "visual") : "") + '" data-src="' + embedUrl(p, "visual") + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
-        (initialShot || tableAvailable
-          ? '<img class="report-shot" id="reportShot"' + (initialShot ? ' src="' + url(initialShot) + '"' : " hidden") + ' alt="' + esc(p.name) + ' 报表截图">' +
-            '<div class="report-note" id="reportNote"' + (initialShot ? " hidden" : "") + '>暂无报表截图</div>'
-          : '<div class="report-note">暂无报表截图</div>') +
+        (hasShot
+          ? '<img class="report-shot" id="reportShot" src="' + url(p.screenshot) + '" alt="' + esc(p.name) + ' 报表截图">'
+          : (hasService ? "" : '<div class="report-note">暂无报表截图</div>')) +
       "</div>";
 
     renderPageDrawer(p);
@@ -500,66 +481,22 @@
         if (timeoutBox) timeoutBox.hidden = false;
       }, 12000);
     }
-    function setView(nextMode) {
-      viewMode = nextMode;
-      var rv = document.getElementById("reportView");
-      if (rv) rv.classList.toggle("service-mode", viewMode === "service");
-      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (b) {
-        b.classList.toggle("on", b.getAttribute("data-view") === viewMode);
-      });
-      if (timeoutBox) timeoutBox.hidden = true;
-      if (viewMode === "service") {
-        if (frame && !frame.getAttribute("src")) frame.setAttribute("src", frame.getAttribute("data-src"));
-        if (loading) loading.hidden = frameLoaded;
-        startLoadTimer();
-      } else {
-        if (loading) loading.hidden = true;
-        clearLoadTimer();
-      }
-    }
-    // 切换「可视化 / 表样」：同步 iframe 页面、截图与下载链接
+    // 切换「可视化 / 表样」：同步 iframe 页面与 Service 链接
     function setKind(kind) {
       if (kind === pageKind) return;
       pageKind = kind;
       Array.prototype.forEach.call(app.querySelectorAll("#kindSeg button"), function (b) {
         b.classList.toggle("on", b.getAttribute("data-kind") === kind);
       });
-      var shot = document.getElementById("reportShot");
-      var note = document.getElementById("reportNote");
-      var path = shotOf(kind);
-      if (shot) {
-        if (path) { shot.hidden = false; shot.setAttribute("src", url(path)); }
-        else { shot.hidden = true; }
-      }
-      if (note) {
-        note.hidden = !!path;
-        if (!path) note.textContent = kind === "table" ? "暂无表样截图，请使用在线报表查看" : "暂无报表截图";
-      }
-      var shotLink = document.getElementById("shotLink");
-      if (shotLink) {
-        shotLink.hidden = !path;
-        if (path) shotLink.setAttribute("href", url(path));
-      }
-      var timeWrap = document.getElementById("shotTimeWrap");
-      var timeMeta = document.getElementById("shotTimeMeta");
-      var t = shotTimeOf(kind);
-      if (timeWrap) timeWrap.hidden = !t;
-      if (timeMeta) timeMeta.textContent = t ? "截图 " + t : "";
       var svcLink = document.getElementById("svcLink");
       if (svcLink) svcLink.setAttribute("href", serviceUrl(p, kind));
       if (timeoutBox) timeoutBox.hidden = true;
       if (frame) {
         frameLoaded = false;
         frame.setAttribute("data-src", embedUrl(p, kind));
-        if (viewMode === "service") {
-          if (loading) loading.hidden = false;
-          frame.setAttribute("src", embedUrl(p, kind));
-          startLoadTimer();
-        } else {
-          frame.removeAttribute("src");
-          if (loading) loading.hidden = true;
-          clearLoadTimer();
-        }
+        if (loading) loading.hidden = false;
+        frame.setAttribute("src", embedUrl(p, kind));
+        startLoadTimer();
       }
     }
     if (frame) {
@@ -570,18 +507,11 @@
         clearLoadTimer();
       });
     }
-    if (hasService && hasShot) {
-      Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
-        btn.addEventListener("click", function () { setView(btn.getAttribute("data-view")); });
-      });
-    }
     if (tableAvailable) {
       Array.prototype.forEach.call(app.querySelectorAll("#kindSeg button"), function (btn) {
         btn.addEventListener("click", function () { setKind(btn.getAttribute("data-kind")); });
       });
     }
-    var timeoutShot = document.getElementById("timeoutShot");
-    if (timeoutShot) timeoutShot.addEventListener("click", function () { setView("shot"); });
     if (viewMode === "service") startLoadTimer();
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>' + esc(shortName(p.name, p.code)) + "</b>");
@@ -623,7 +553,7 @@
           '<span class="status-pill"><span class="dot"></span><b>' + shots + "</b> PBIP 页面 · 截图</span>" +
         "</div>" +
         '<section class="section">' +
-          '<div class="section-head"><div><h2>报表页</h2><p>按状态标注：Report · 在线（可切截图） / PBIP 页面 · 截图</p></div></div>' +
+          '<div class="section-head"><div><h2>报表页</h2><p>按状态标注：Report · 在线 / PBIP 页面 · 截图</p></div></div>' +
           (ps.length ? '<div class="report-grid">' + ps.map(reportCard).join("") + "</div>" : '<div class="empty-state">该主题暂无报表页</div>') +
         "</section>" +
       "</div>";
@@ -932,7 +862,7 @@
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">DELIVERABLES</span><h1>交付成果</h1>' +
-          "<p>PBIP 报表工程与 " + D.stats.contentPages + " 页报表。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入，公网未登录时显示截图；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
+          "<p>PBIP 报表工程与 " + D.stats.contentPages + " 页报表。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">语义模型</a></div></div>' +
 
         '<section class="section"><div class="pbip-panel">' +
