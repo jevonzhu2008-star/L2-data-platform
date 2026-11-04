@@ -77,8 +77,27 @@
     return r;
   }
 
-  function embedUrl(page) {
+  /* kind: "visual"（默认，可视化页）| "table"（表样页） */
+  function pageView(page, kind) {
     var r = pageService(page);
+    if (!r) return null;
+    if (kind !== "table") return r;
+    if (!r.tablePageName && !r.tableReportId) return null;
+    return {
+      reportId: r.tableReportId || r.reportId,
+      workspaceId: r.tableWorkspaceId || r.workspaceId,
+      tenantId: r.tenantId,
+      pageName: r.tablePageName || "",
+      url: r.tableUrl || ""
+    };
+  }
+
+  function hasTablePage(page) {
+    return !!pageView(page, "table");
+  }
+
+  function embedUrl(page, kind) {
+    var r = pageView(page, kind);
     if (!r) return "";
     var ws = r.workspaceId || service.workspaceId;
     var tid = r.tenantId || service.tenantId;
@@ -90,8 +109,8 @@
     return base;
   }
 
-  function serviceUrl(page) {
-    var r = pageService(page);
+  function serviceUrl(page, kind) {
+    var r = pageView(page, kind);
     if (!r) return "";
     if (r.url) return r.url;
     var ws = r.workspaceId || service.workspaceId;
@@ -342,6 +361,7 @@
   /* ---------- 报表页详情 ---------- */
   function renderPageDrawer(p) {
     var svc = pageService(p);
+    var tableSvc = pageView(p, "table");
     var visualRows = p.visuals.map(function (v) {
       return '<div class="deliver-row">' +
         '<span class="badge html">' + esc(vlabel(v.type)) + "</span>" +
@@ -352,8 +372,10 @@
     var measureChips = p.measures.map(function (m) { return '<span class="chip src">' + esc(m) + "</span>"; }).join("");
 
     var deliver = [];
-    if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service 在线报表</span><a href="' + serviceUrl(p) + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 可视化页</span><a href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener">打开</a></div>');
+    if (tableSvc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 表样页</span><a href="' + serviceUrl(p, "table") + '" target="_blank" rel="noopener">打开</a></div>');
+    if (p.screenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · 可视化 · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (p.tableScreenshot) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '-table.png · 表样 · ' + (p.tableScreenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.tableScreenshot) + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="' + url(p.mapping.file) + '" target="_blank" rel="noopener">打开</a></div>');
 
     drawer.innerHTML =
@@ -371,7 +393,8 @@
         "</dl></section>" +
         (svc ? "<section><h3>在线报表</h3><p>" + (preferScreenshot
           ? "GitHub Pages 公网默认加载在线报表，需要登录 Power BI；未登录时会停在登录页，可切到「截图」查看静态内容。"
-          : "该页已在 Power BI Service 发布，可在「在线报表 / 截图」之间切换。在线报表需要浏览器已登录 Power BI。") + "</p></section>" : "") +
+          : "该页已在 Power BI Service 发布，可在「在线报表 / 截图」之间切换。在线报表需要浏览器已登录 Power BI。") +
+          (tableSvc ? " 该报表同时提供「可视化 / 表样」两种页面，可在顶部切换。" : "") + "</p></section>" : "") +
         "<section><h3>视觉构成</h3>" + visualRows + "</section>" +
         "<section><h3>数据表</h3><div class=\"chips\">" + (tableChips || "—") + "</div></section>" +
         "<section><h3>度量值</h3><div class=\"chips\">" + (measureChips || "—") + "</div></section>" +
@@ -388,6 +411,8 @@
     var svc = pageService(p);
     var hasService = !!svc;
     var hasShot = !!p.screenshot;
+    var tableAvailable = hasTablePage(p);
+    var pageKind = "visual";
     var compact = window.matchMedia("(max-width: 720px)").matches;
     // 移动端在线报表 iframe 体验差，默认显示截图
     var mode = hasService ? (compact && hasShot ? "shot" : "service") : "shot";
@@ -397,12 +422,22 @@
     var next = idx < pages.length - 1 ? pages[idx + 1] : null;
     var prevBtn = prev ? '<a class="btn small" href="#/page/' + prev.code + '" title="上一页 (←)">←</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">←</span>';
     var nextBtn = next ? '<a class="btn small" href="#/page/' + next.code + '" title="下一页 (→)">→</a>' : '<span class="btn small" style="opacity:.35;pointer-events:none">→</span>';
+    var kindSeg = tableAvailable
+      ? '<div class="seg" id="kindSeg" title="切换表样页 / 可视化页">' +
+          '<button type="button" data-kind="visual" class="on">可视化</button>' +
+          '<button type="button" data-kind="table">表样</button>' +
+        "</div>"
+      : "";
     var viewSeg = hasService && hasShot
       ? '<div class="seg" id="viewSeg">' +
           '<button type="button" data-view="service" class="' + (mode === "service" ? "on" : "") + '">在线报表（需登录）</button>' +
           '<button type="button" data-view="shot" class="' + (mode === "shot" ? "on" : "") + '">截图</button>' +
         "</div>"
       : "";
+
+    function shotOf(kind) { return kind === "table" ? (p.tableScreenshot || "") : (p.screenshot || ""); }
+    function shotTimeOf(kind) { return kind === "table" ? (p.tableScreenshotTime || "") : (p.screenshotTime || ""); }
+    var initialShot = shotOf("visual");
 
     app.className = "detail-mode";
     app.innerHTML =
@@ -413,14 +448,15 @@
           "<h1>" + esc(shortName(p.name, p.code)) + "</h1>" +
           '<span class="db-status ' + (hasService ? "online" : "shot") + '">' + (hasService ? "Report · 在线" : "PBIP 页面 · 截图") + "</span>" +
           '<div class="db-meta"><span>' + p.width + " × " + p.height + '</span><span class="sep">·</span><span>' + p.visualCount + ' 个视觉</span><span class="sep">·</span><span>' + esc(sourceLabel(p)) + "</span>" +
-            (hasShot && p.screenshotTime ? '<span class="sep">·</span><span>截图 ' + esc(p.screenshotTime) + "</span>" : "") +
+            '<span id="shotTimeWrap"' + (initialShot && shotTimeOf("visual") ? "" : " hidden") + '><span class="sep">·</span><span id="shotTimeMeta">' +
+              (shotTimeOf("visual") ? "截图 " + esc(shotTimeOf("visual")) : "") + "</span></span>" +
             (preferScreenshot && hasService && mode === "shot" ? '<span class="sep">·</span><span>公网显示截图</span>' : "") + "</div>" +
         "</div>" +
         '<div class="db-actions">' +
-          prevBtn + nextBtn + viewSeg +
+          prevBtn + nextBtn + kindSeg + viewSeg +
           '<button class="btn" type="button" id="drawerBtn">详情</button>' +
-          (hasService ? '<a class="btn" href="' + serviceUrl(p) + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>' : "") +
-          (hasShot ? '<a class="btn" href="' + url(p.screenshot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
+          (hasService ? '<a class="btn" id="svcLink" href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>' : "") +
+          (initialShot ? '<a class="btn" id="shotLink" href="' + url(initialShot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
         "</div>" +
       "</div>" +
       '<div class="report-view' + (mode === "service" ? " service-mode" : "") + '" id="reportView">' +
@@ -435,10 +471,11 @@
               "<span>可能未登录 Power BI。可切换到截图，或点 Service ↗ 打开。</span>" +
               '<button class="btn small" type="button" id="timeoutShot">查看截图</button>' +
             "</div>" +
-            '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p) : "") + '" data-src="' + embedUrl(p) + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
+            '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p, "visual") : "") + '" data-src="' + embedUrl(p, "visual") + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
-        (hasShot
-          ? '<img class="report-shot" id="reportShot" src="' + url(p.screenshot) + '" alt="' + esc(p.name) + ' 报表截图">'
+        (initialShot || tableAvailable
+          ? '<img class="report-shot" id="reportShot"' + (initialShot ? ' src="' + url(initialShot) + '"' : " hidden") + ' alt="' + esc(p.name) + ' 报表截图">' +
+            '<div class="report-note" id="reportNote"' + (initialShot ? " hidden" : "") + '>暂无报表截图</div>'
           : '<div class="report-note">暂无报表截图</div>') +
       "</div>";
 
@@ -480,6 +517,51 @@
         clearLoadTimer();
       }
     }
+    // 切换「可视化 / 表样」：同步 iframe 页面、截图与下载链接
+    function setKind(kind) {
+      if (kind === pageKind) return;
+      pageKind = kind;
+      Array.prototype.forEach.call(app.querySelectorAll("#kindSeg button"), function (b) {
+        b.classList.toggle("on", b.getAttribute("data-kind") === kind);
+      });
+      var shot = document.getElementById("reportShot");
+      var note = document.getElementById("reportNote");
+      var path = shotOf(kind);
+      if (shot) {
+        if (path) { shot.hidden = false; shot.setAttribute("src", url(path)); }
+        else { shot.hidden = true; }
+      }
+      if (note) {
+        note.hidden = !!path;
+        if (!path) note.textContent = kind === "table" ? "暂无表样截图，请使用在线报表查看" : "暂无报表截图";
+      }
+      var shotLink = document.getElementById("shotLink");
+      if (shotLink) {
+        shotLink.hidden = !path;
+        if (path) shotLink.setAttribute("href", url(path));
+      }
+      var timeWrap = document.getElementById("shotTimeWrap");
+      var timeMeta = document.getElementById("shotTimeMeta");
+      var t = shotTimeOf(kind);
+      if (timeWrap) timeWrap.hidden = !t;
+      if (timeMeta) timeMeta.textContent = t ? "截图 " + t : "";
+      var svcLink = document.getElementById("svcLink");
+      if (svcLink) svcLink.setAttribute("href", serviceUrl(p, kind));
+      if (timeoutBox) timeoutBox.hidden = true;
+      if (frame) {
+        frameLoaded = false;
+        frame.setAttribute("data-src", embedUrl(p, kind));
+        if (viewMode === "service") {
+          if (loading) loading.hidden = false;
+          frame.setAttribute("src", embedUrl(p, kind));
+          startLoadTimer();
+        } else {
+          frame.removeAttribute("src");
+          if (loading) loading.hidden = true;
+          clearLoadTimer();
+        }
+      }
+    }
     if (frame) {
       frame.addEventListener("load", function () {
         if (!frame.getAttribute("src")) return;
@@ -491,6 +573,11 @@
     if (hasService && hasShot) {
       Array.prototype.forEach.call(app.querySelectorAll("#viewSeg button"), function (btn) {
         btn.addEventListener("click", function () { setView(btn.getAttribute("data-view")); });
+      });
+    }
+    if (tableAvailable) {
+      Array.prototype.forEach.call(app.querySelectorAll("#kindSeg button"), function (btn) {
+        btn.addEventListener("click", function () { setKind(btn.getAttribute("data-kind")); });
       });
     }
     var timeoutShot = document.getElementById("timeoutShot");
