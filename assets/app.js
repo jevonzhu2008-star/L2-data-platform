@@ -459,6 +459,7 @@
         '<div class="db-actions">' +
           prevBtn + nextBtn + kindSeg +
           '<button class="btn" type="button" id="drawerBtn">详情</button>' +
+          (hasService ? '<button class="btn" type="button" id="embedHelpBtn" aria-expanded="false" aria-controls="reportHelp" title="提示「无法查看此内容」时的排查步骤">无法查看？</button>' : "") +
           (hasService ? '<a class="btn" id="svcLink" href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener" title="在 Power BI Service 打开">Service ↗</a>' : "") +
           (hasShot ? '<a class="btn" id="shotLink" href="' + url(p.screenshot) + '" target="_blank" rel="noopener" title="新标签打开截图">原图 ↗</a>' : "") +
         "</div>" +
@@ -472,7 +473,18 @@
             "</div>" +
             '<div class="report-timeout" id="reportTimeout" hidden>' +
               "<b>在线报表加载较慢</b>" +
-              "<span>可能未登录 Power BI，可点 Service ↗ 打开。</span>" +
+              "<span>可能未登录 Power BI，可点 Service ↗ 打开；提示「无法查看此内容」时点「无法查看？」。</span>" +
+            "</div>" +
+            '<div class="report-help" id="reportHelp" hidden>' +
+              '<div class="report-help-head"><b>看不到在线报表？</b>' +
+                '<button class="icon-btn" type="button" id="reportHelpClose" aria-label="关闭">✕</button></div>' +
+              '<ol class="report-help-list">' +
+                "<li>浏览器需已用 <b>CMOC 组织账号</b>登录 Power BI（app.powerbi.com）；个人账号或其他租户的账号会提示「无法查看此内容」。</li>" +
+                "<li>账号需具备该报表 <b>工作区或应用</b> 的查看权限（Power BI Pro，或工作区在容量上且应用已共享给该账号）。</li>" +
+                "<li>浏览器拦截第三方 Cookie 时，请允许 <code>app.powerbi.com</code> 与 <code>login.microsoftonline.com</code> 的 Cookie。</li>" +
+                "<li>仍然打不开时点 <b>Service ↗</b>：Service 里能打开说明是嵌入限制；Service 里也打不开则是账号权限问题，请联系报表管理员授权。</li>" +
+              "</ol>" +
+              '<p class="report-help-foot">报表来自 CMOC Power BI 租户，嵌入地址已固定为租户 <code>' + esc(service.tenantId || "未配置") + "</code>。</p>" +
             "</div>" +
             '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p, "visual") : "") + '" data-src="' + embedUrl(p, "visual") + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
@@ -488,6 +500,24 @@
     var frame = document.getElementById("serviceFrame");
     var loading = document.getElementById("reportLoading");
     var timeoutBox = document.getElementById("reportTimeout");
+    var helpBtn = document.getElementById("embedHelpBtn");
+    var helpPanel = document.getElementById("reportHelp");
+    var helpClose = document.getElementById("reportHelpClose");
+
+    function setHelp(show) {
+      if (!helpPanel) return;
+      helpPanel.hidden = !show;
+      if (helpBtn) {
+        helpBtn.classList.toggle("on", show);
+        helpBtn.setAttribute("aria-expanded", show ? "true" : "false");
+      }
+    }
+    if (helpBtn) {
+      helpBtn.addEventListener("click", function () {
+        setHelp(helpPanel ? helpPanel.hidden : false);
+      });
+    }
+    if (helpClose) helpClose.addEventListener("click", function () { setHelp(false); });
     var loadTimer = null;
     var frameLoaded = false;
 

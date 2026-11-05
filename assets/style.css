@@ -261,6 +261,19 @@ main.detail-mode { padding: 0; max-width: none; height: calc(100vh - var(--topba
 .report-timeout { position: absolute; z-index: 3; left: 50%; top: 16px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px); padding: 9px 12px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); color: var(--muted); font-size: 11.5px; }
 .report-timeout b { color: var(--ink); white-space: nowrap; }
 .report-timeout span { line-height: 1.45; }
+.report-help {
+  position: absolute; z-index: 4; top: 16px; right: 16px; width: min(470px, calc(100% - 32px));
+  max-height: calc(100% - 32px); overflow: auto; padding: 14px 16px;
+  background: #fff; border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(10, 30, 60, .22); font-size: 12px; line-height: 1.75; color: #33415C;
+}
+.report-help-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.report-help-head b { font-size: 13px; color: var(--ink); }
+.report-help-list { margin: 0; padding-left: 18px; list-style: decimal; }
+.report-help-list li { margin-bottom: 6px; }
+.report-help code { font-family: var(--mono); font-size: 10.5px; background: var(--primary-soft); border-radius: 4px; padding: 1px 5px; word-break: break-all; }
+.report-help-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line-soft); font-size: 11px; color: var(--muted); }
+.btn.on { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
 [hidden] { display: none !important; }
 
 /* ---------- 语义模型 ---------- */
