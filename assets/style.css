@@ -372,8 +372,8 @@ main.detail-mode { padding: 0; max-width: none; height: calc(100vh - var(--topba
 .di-meta { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
 .di-arrow { color: #B9C4D0; text-align: right; }
 .deliver-item:hover .di-arrow { color: var(--primary); }
-.pbip-panel { margin-top: 18px; padding: 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
-.pbip-panel h2 { font-size: 18px; margin-top: 4px; }
+.pbip-panel, .pbix-panel { margin-top: 18px; padding: 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.pbip-panel h2, .pbix-panel h2 { font-size: 18px; margin-top: 4px; }
 .pbip-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
 .pbip-stat { padding: 12px 14px; background: #F7F9FC; border: 1px solid #E7EDF4; border-radius: 9px; }
 .pbip-stat b { display: block; font-size: 22px; line-height: 1.2; }

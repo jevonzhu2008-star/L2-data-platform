@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-05 12:25",
-  "generatedAt": "2026-11-05T12:25:25",
+  "updated": "2026-11-05 13:41",
+  "generatedAt": "2026-11-05T13:41:32",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -16,7 +16,8 @@ window.L2_DATA = {
   "factTables": 11,
   "relationships": 17,
   "parameters": 7,
-  "mappings": 13
+  "mappings": 13,
+  "pbix": 10
  },
  "reportMeta": {
   "name": "L2报表.pbip",
@@ -5844,6 +5845,108 @@ window.L2_DATA = {
     }
    ],
    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/%E7%BB%B4%E5%BA%A6%E8%A1%A8.xlsx"
+  }
+ ],
+ "pbix": [
+  {
+   "code": "L2-01-02",
+   "name": "L2-01-02 集团合并利润汇总表",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-01-02 集团合并利润汇总表.pbix",
+   "size": "24.1 KB",
+   "bytes": 24642,
+   "date": "2026-11-05",
+   "pageCount": 2
+  },
+  {
+   "code": "L2-01-03",
+   "name": "L2-01-03 快报-金融投资业务专属",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-01-03 快报-金融投资业务专属.pbix",
+   "size": "18.6 KB",
+   "bytes": 19094,
+   "date": "2026-11-05",
+   "pageCount": 1
+  },
+  {
+   "code": "L2-01-04",
+   "name": "L2-01-04 S3 C1成本变化步行图VS上月",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-01-04 S3 C1成本变化步行图VS上月.pbix",
+   "size": "28.3 KB",
+   "bytes": 28932,
+   "date": "2026-11-05",
+   "pageCount": 2
+  },
+  {
+   "code": "L2-01-25",
+   "name": "L2-01-25 工序成本完成情况",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-01-25 工序成本完成情况.pbix",
+   "size": "16.9 KB",
+   "bytes": 17318,
+   "date": "2026-11-05",
+   "pageCount": 1
+  },
+  {
+   "code": "L2-03-01",
+   "name": "L2-03-01 销售管理费用预算执行汇总表",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-03-01 销售管理费用预算执行汇总表.pbix",
+   "size": "25.4 KB",
+   "bytes": 26037,
+   "date": "2026-11-05",
+   "pageCount": 2
+  },
+  {
+   "code": "L2-03-02",
+   "name": "L2-03-02 财务费用汇总表",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-03-02 财务费用汇总表.pbix",
+   "size": "16.9 KB",
+   "bytes": 17270,
+   "date": "2026-11-05",
+   "pageCount": 1
+  },
+  {
+   "code": "L2-03-06",
+   "name": "L2-03-06 矿石成本分析",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-03-06 矿石成本分析.pbix",
+   "size": "16.7 KB",
+   "bytes": 17119,
+   "date": "2026-11-05",
+   "pageCount": 1
+  },
+  {
+   "code": "L2-04-01",
+   "name": "L2-04-01库存汇总表",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-04-01库存汇总表.pbix",
+   "size": "29.7 KB",
+   "bytes": 30441,
+   "date": "2026-11-05",
+   "pageCount": 2
+  },
+  {
+   "code": "L2-05-01",
+   "name": "L2-05-01 硫磺及硫酸价格分析月报",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-05-01 硫磺及硫酸价格分析月报.pbix",
+   "size": "21.4 KB",
+   "bytes": 21916,
+   "date": "2026-11-05",
+   "pageCount": 2
+  },
+  {
+   "code": "L2-06-01",
+   "name": "L2-06-01 主要产品价格波动汇总表",
+   "version": "V2",
+   "file": "deliverables/pbix/V2/L2-06-01 主要产品价格波动汇总表.pbix",
+   "size": "16.8 KB",
+   "bytes": 17178,
+   "date": "2026-11-05",
+   "pageCount": 1
   }
  ]
 };

@@ -1263,10 +1263,29 @@
       return '<span class="chip">' + esc(code) + " · 未配置</span>";
     }).join("");
 
+    var pbixFiles = D.pbix || [];
+    var pbixVersion = (pbixFiles[0] && pbixFiles[0].version) || "V2";
+    var pbixRows = pbixFiles.map(function (f) {
+      return '<a class="deliver-item" href="' + url(f.file) + '" download rel="noopener">' +
+        '<span class="di-icon">PBIX</span>' +
+        '<span class="di-name">' + esc(shortName(f.name, f.code)) + "<small>" + esc(f.code) + " · " + (f.pageCount || 0) + " 页 · " + esc(f.version) + "</small></span>" +
+        '<span class="di-path">' + esc(f.file) + "</span>" +
+        '<span class="di-meta">' + esc(f.size + " · " + f.date) + "</span>" +
+        '<span class="di-arrow">↓</span></a>';
+    }).join("");
+    var pbixSection = pbixFiles.length
+      ? '<section class="section"><div class="pbix-panel">' +
+          '<span class="page-kicker">PBIX FILES · ' + esc(pbixVersion) + '</span>' +
+          "<h2>表样 PBIX 工程（" + pbixFiles.length + " 个）</h2>" +
+          '<p class="spec-note">来自 <span class="path">06.表样POC/表样POC PBIX/' + esc(pbixVersion) + '</span>，均为 Service 实时连接工程（不内嵌数据），下载后用 Power BI Desktop 打开即可查看。点击任一行下载。</p>' +
+          '<div class="deliver-list">' + pbixRows + "</div>" +
+        "</div></section>"
+      : "";
+
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">DELIVERABLES</span><h1>交付成果</h1>' +
-          "<p>PBIP 报表工程与 " + D.stats.contentPages + " 页报表。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
+          "<p>PBIP 报表工程与 " + D.stats.contentPages + " 页报表" + (pbixFiles.length ? "、" + pbixFiles.length + " 个表样 PBIX（" + esc(pbixVersion) + "）" : "") + "。" + onlineCount + " 个已在 Service 发布在线报表的页面默认在线嵌入；其余 " + shotCount + " 页使用 Power BI Desktop 导出的截图。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">语义模型</a></div></div>' +
 
         '<section class="section"><div class="pbip-panel">' +
@@ -1293,6 +1312,7 @@
           '<h3 style="margin-top:18px;font-size:12px;color:var(--muted)">报表页</h3>' +
           '<div class="pbip-list">' + pageList + "</div>" +
         "</div></section>" +
+        pbixSection +
       "</div>";
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>交付成果</b>');
