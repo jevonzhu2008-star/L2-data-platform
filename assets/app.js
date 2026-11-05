@@ -838,18 +838,20 @@
         '<span class="mm-count">' + m.sheets.length + " 个工作表</span></summary>" +
         '<div class="mapping-body">' +
           '<div class="mapping-toolbar">' +
-            '<button class="btn small primary" type="button" data-excel="' + i + '" aria-expanded="false" aria-controls="excel-' + i + '">在线 Excel</button>' +
-            '<a class="btn small" href="' + esc(excelViewerUrl(m.file, false)) + '" target="_blank" rel="noopener">新窗口 ↗</a>' +
+            (m.webUrl
+              ? '<a class="btn small primary" href="' + esc(m.webUrl) + '" target="_blank" rel="noopener" title="在 SharePoint 网页版打开源文件 · 需登录，可直接编辑">在 SharePoint 打开 ↗</a>'
+              : "") +
+            '<button class="btn small" type="button" data-excel="' + i + '" aria-expanded="false" aria-controls="excel-' + i + '">页面内预览</button>' +
             '<a class="btn small" href="' + url(m.file) + '" download>下载 xlsx</a>' +
             '<span class="excel-file" title="' + esc(fileName) + '">' + esc(fileName) + "</span>" +
           "</div>" +
           '<div class="excel-panel" id="excel-' + i + '" hidden>' +
             '<div class="excel-loading" id="excel-loading-' + i + '">' +
               '<span class="spinner" aria-hidden="true"></span>' +
-              "<b>正在加载在线 Excel…</b>" +
-              "<span>Office 网页版 · 需联网；离线请用「下载 xlsx」</span>" +
+              "<b>正在加载预览…</b>" +
+              "<span>匿名副本 · 只读 · 需联网；要编辑请用「在 SharePoint 打开」</span>" +
             "</div>" +
-            '<iframe class="excel-frame" data-src="' + esc(excelViewerUrl(m.file, true)) + '" title="' + esc(m.name) + ' 在线 Excel"></iframe>' +
+            '<iframe class="excel-frame" data-src="' + esc(excelViewerUrl(m.file, true)) + '" title="' + esc(m.name) + ' 在线预览"></iframe>' +
           "</div>" +
           sheets +
         "</div></details>";
@@ -860,7 +862,7 @@
         '<div class="page-head"><div><span class="page-kicker">MAPPINGS</span><h1>指标映射</h1>' +
           "<p>来自 03.项目映射文件，共 " + D.stats.mappings + " 个 Excel；每个文件包含排序表、维度字典与取数说明。</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/ui">UI规范</a></div></div>' +
-        '<div class="hint">点「在线 Excel」会在页面内用 Office 网页版打开完整工作簿（工作表、公式、筛选都能操作），读取的是已发布站点上的副本；离线或尚未发布时请用「下载 xlsx」。下方表格只展示每个工作表的前 3 行样例。</div>' +
+        '<div class="hint">「在 SharePoint 打开」进入源文件的 Excel 网页版——需登录、可直接编辑，与 03.项目映射文件 实时同步；SharePoint 禁止第三方页面嵌入（X-Frame-Options: SAMEORIGIN），因此在新标签页打开。「页面内预览」读取已发布站点上的匿名副本，只读、离线可用。下方表格只展示每个工作表的前 3 行样例。</div>' +
         (html || '<div class="empty-state">暂无映射文件</div>') +
       "</div>";
 
@@ -879,13 +881,13 @@
             var other = p.closest(".mapping-item");
             var otherBtn = other ? other.querySelector("[data-excel]") : null;
             if (otherBtn) {
-              otherBtn.textContent = "在线 Excel";
+              otherBtn.textContent = "页面内预览";
               otherBtn.setAttribute("aria-expanded", "false");
             }
           });
         }
         panel.hidden = !show;
-        btn.textContent = show ? "收起 Excel" : "在线 Excel";
+        btn.textContent = show ? "收起预览" : "页面内预览";
         btn.setAttribute("aria-expanded", show ? "true" : "false");
         var frame = panel.querySelector(".excel-frame");
         var loading = panel.querySelector(".excel-loading");
@@ -900,7 +902,7 @@
             // 跨域 iframe 无法感知失败，超时后只收起转圈并提示用新窗口
             setTimeout(function () {
               if (!done && loading) {
-                loading.innerHTML = "<b>在线 Excel 加载较慢</b><span>可点「新窗口 ↗」在 Office 网页版打开；离线请用「下载 xlsx」。</span>";
+                loading.innerHTML = "<b>预览加载较慢</b><span>可点「在 SharePoint 打开」进入 Excel 网页版；离线请用「下载 xlsx」。</span>";
               }
             }, 15000);
           }

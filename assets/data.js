@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-05 07:59",
-  "generatedAt": "2026-11-05T07:59:59",
+  "updated": "2026-11-05 08:21",
+  "generatedAt": "2026-11-05T08:21:30",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -37,6 +37,7 @@ window.L2_DATA = {
   "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
   "tenantId": "",
   "excelBase": "https://jevonzhu2008-star.github.io/L2-data-platform/",
+  "sharePointBase": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/",
   "reports": {
    "L2-01-02": {
     "reportId": "9f43e1bf-6c04-47c4-bcf1-264b1db81e8a",
@@ -258,7 +259,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/Security_Ore_Permission.xlsx"
    }
   },
   {
@@ -417,7 +419,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-02%20%E9%9B%86%E5%9B%A2%E5%90%88%E5%B9%B6%E5%88%A9%E6%B6%A6%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -559,7 +562,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-03%20%E5%BF%AB%E6%8A%A5-%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84%E4%B8%9A%E5%8A%A1%E4%B8%93%E5%B1%9E%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -705,7 +709,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-04%20S3%20C1%E6%88%90%E6%9C%AC%E5%8F%98%E5%8C%96%E6%AD%A5%E8%A1%8C%E5%9B%BEVS%E4%B8%8A%E6%9C%88%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -870,7 +875,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-14%20%E7%89%A9%E6%96%99%E5%8D%95%E8%80%97%E6%9C%88%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1033,7 +1039,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-25%20%E5%B7%A5%E5%BA%8F%E6%88%90%E6%9C%AC%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1187,7 +1194,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-01%20%E9%94%80%E5%94%AE%E7%AE%A1%E7%90%86%E8%B4%B9%E7%94%A8%E9%A2%84%E7%AE%97%E6%89%A7%E8%A1%8C%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1309,7 +1317,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-02%20%E8%B4%A2%E5%8A%A1%E8%B4%B9%E7%94%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1449,7 +1458,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-06%20%E7%9F%BF%E7%9F%B3%E6%88%90%E6%9C%AC%E5%88%86%E6%9E%90%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1609,7 +1619,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-04-01%E5%BA%93%E5%AD%98%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1718,7 +1729,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-05-01%20%E7%A1%AB%E7%A3%BA%E5%8F%8A%E7%A1%AB%E9%85%B8%E4%BB%B7%E6%A0%BC%E5%88%86%E6%9E%90%E6%9C%88%E6%8A%A5%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   },
   {
@@ -1858,7 +1870,8 @@ window.L2_DATA = {
        ]
       ]
      }
-    ]
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-06-01%20%E4%B8%BB%E8%A6%81%E4%BA%A7%E5%93%81%E4%BB%B7%E6%A0%BC%E6%B3%A2%E5%8A%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
   }
  ],
@@ -5039,7 +5052,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-02%20%E9%9B%86%E5%9B%A2%E5%90%88%E5%B9%B6%E5%88%A9%E6%B6%A6%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-01-03",
@@ -5103,7 +5117,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-03%20%E5%BF%AB%E6%8A%A5-%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84%E4%B8%9A%E5%8A%A1%E4%B8%93%E5%B1%9E%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-01-04",
@@ -5167,7 +5182,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-04%20S3%20C1%E6%88%90%E6%9C%AC%E5%8F%98%E5%8C%96%E6%AD%A5%E8%A1%8C%E5%9B%BEVS%E4%B8%8A%E6%9C%88%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-01-14",
@@ -5250,7 +5266,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-14%20%E7%89%A9%E6%96%99%E5%8D%95%E8%80%97%E6%9C%88%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-01-25",
@@ -5333,7 +5350,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-01-25%20%E5%B7%A5%E5%BA%8F%E6%88%90%E6%9C%AC%E5%AE%8C%E6%88%90%E6%83%85%E5%86%B5%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-03-01",
@@ -5403,7 +5421,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-01%20%E9%94%80%E5%94%AE%E7%AE%A1%E7%90%86%E8%B4%B9%E7%94%A8%E9%A2%84%E7%AE%97%E6%89%A7%E8%A1%8C%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-03-02",
@@ -5451,7 +5470,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-02%20%E8%B4%A2%E5%8A%A1%E8%B4%B9%E7%94%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-03-06",
@@ -5515,7 +5535,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-03-06%20%E7%9F%BF%E7%9F%B3%E6%88%90%E6%9C%AC%E5%88%86%E6%9E%90%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-04-01",
@@ -5579,7 +5600,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-04-01%E5%BA%93%E5%AD%98%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-05-01",
@@ -5608,7 +5630,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-05-01%20%E7%A1%AB%E7%A3%BA%E5%8F%8A%E7%A1%AB%E9%85%B8%E4%BB%B7%E6%A0%BC%E5%88%86%E6%9E%90%E6%9C%88%E6%8A%A5%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "L2-06-01",
@@ -5672,7 +5695,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-06-01%20%E4%B8%BB%E8%A6%81%E4%BA%A7%E5%93%81%E4%BB%B7%E6%A0%BC%E6%B3%A2%E5%8A%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
   },
   {
    "code": "",
@@ -5701,7 +5725,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/Security_Ore_Permission.xlsx"
   },
   {
    "code": "",
@@ -5727,7 +5752,8 @@ window.L2_DATA = {
       ]
      ]
     }
-   ]
+   ],
+   "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/%E7%BB%B4%E5%BA%A6%E8%A1%A8.xlsx"
   }
  ]
 };
