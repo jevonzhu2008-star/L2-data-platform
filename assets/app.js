@@ -484,7 +484,11 @@
                 "<li>浏览器拦截第三方 Cookie 时，请允许 <code>app.powerbi.com</code> 与 <code>login.microsoftonline.com</code> 的 Cookie。</li>" +
                 "<li>仍然打不开时点 <b>Service ↗</b>：Service 里能打开说明是嵌入限制；Service 里也打不开则是账号权限问题，请联系报表管理员授权。</li>" +
               "</ol>" +
-              '<p class="report-help-foot">报表来自 CMOC Power BI 租户，嵌入地址已固定为租户 <code>' + esc(service.tenantId || "未配置") + "</code>。</p>" +
+              '<p class="report-help-foot">报表来自 CMOC Power BI 租户' +
+                (service.tenantId
+                  ? "，嵌入地址已固定为租户 <code>" + esc(service.tenantId) + "</code>。"
+                  : "；浏览器登录了多个租户时，请在 Power BI 右上角账号菜单里切换到报表所在租户。") +
+              "</p>" +
             "</div>" +
             '<iframe class="service-frame" id="serviceFrame" src="' + (mode === "service" ? embedUrl(p, "visual") : "") + '" data-src="' + embedUrl(p, "visual") + '" title="' + esc(p.name) + ' Power BI Service 报表" allowfullscreen></iframe>'
           : "") +
