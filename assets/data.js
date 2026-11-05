@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-05 09:16",
-  "generatedAt": "2026-11-05T09:16:36",
+  "updated": "2026-11-05 11:18",
+  "generatedAt": "2026-11-05T11:18:02",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -275,34 +275,21 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
-     "type": "pivotTable",
-     "x": 887,
-     "y": 94,
-     "width": 1010,
-     "height": 959,
-     "refs": [
-      "L2-01-02 集团合并利润汇总表.季度",
-      "L2-01-02 集团合并利润汇总表.月份",
-      "L2-01-02 集团合并利润汇总表.结构",
-      "度量值.实际值"
-     ]
-    },
-    {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     },
     {
      "type": "pivotTable",
-     "x": 14,
-     "y": 141,
-     "width": 872,
-     "height": 912,
+     "x": 24,
+     "y": 259,
+     "width": 925,
+     "height": 802,
      "refs": [
       "L2-01-02 集团合并利润汇总表.结构",
       "度量值.同比YTD",
@@ -313,21 +300,43 @@ window.L2_DATA = {
      ]
     },
     {
+     "type": "pivotTable",
+     "x": 972,
+     "y": 212,
+     "width": 924,
+     "height": 844,
+     "refs": [
+      "L2-01-02 集团合并利润汇总表.季度",
+      "L2-01-02 集团合并利润汇总表.月份",
+      "L2-01-02 集团合并利润汇总表.结构",
+      "度量值.实际值"
+     ]
+    },
+    {
      "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
       "度量值.当前月报期间"
      ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
     }
    ],
-   "visualCount": 4,
+   "visualCount": 5,
    "visualTypes": {
-    "pivotTable": 2,
     "slicer": 1,
-    "card": 1
+    "pivotTable": 2,
+    "card": 1,
+    "textbox": 1
    },
    "tables": [
     "L2-01-02 集团合并利润汇总表",
@@ -436,20 +445,30 @@ window.L2_DATA = {
    "visuals": [
     {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     },
     {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
+    },
+    {
      "type": "pivotTable",
-     "x": 32,
-     "y": 80,
+     "x": 24,
+     "y": 212,
      "width": 1872,
-     "height": 976,
+     "height": 844,
      "refs": [
       "L2-01-03 快报-金融投资业务专属.公司代码",
       "L2-01-03 快报-金融投资业务专属.公司代码货币",
@@ -459,21 +478,20 @@ window.L2_DATA = {
      ]
     },
     {
-     "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
-     "refs": [
-      "度量值.当前月报期间"
-     ]
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
     "slicer": 1,
+    "card": 1,
     "pivotTable": 1,
-    "card": 1
+    "textbox": 1
    },
    "tables": [
     "L2-01-03 快报-金融投资业务专属",
@@ -579,30 +597,38 @@ window.L2_DATA = {
    "visuals": [
     {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     },
     {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
      "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
       "度量值.当前月报期间"
      ]
     },
     {
      "type": "pivotTable",
-     "x": 16,
-     "y": 94,
-     "width": 1871,
-     "height": 961,
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-01-04 S3 C1成本变化步行图VS上月.产品",
       "L2-01-04 S3 C1成本变化步行图VS上月.单位",
@@ -612,9 +638,10 @@ window.L2_DATA = {
      ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
     "slicer": 1,
+    "textbox": 1,
     "card": 1,
     "pivotTable": 1
    },
@@ -891,11 +918,39 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
+    },
+    {
+     "type": "slicer",
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "日期表.年月筛选"
+     ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
      "type": "pivotTable",
-     "x": 16,
-     "y": 96,
-     "width": 1887,
-     "height": 945,
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-01-25 工序成本完成情况.单位",
       "L2-01-25 工序成本完成情况.大工序",
@@ -904,33 +959,14 @@ window.L2_DATA = {
       "L2-01-25 工序成本完成情况.矿体",
       "度量值.L2-01-25指标值"
      ]
-    },
-    {
-     "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
-     "refs": [
-      "度量值.当前月报期间"
-     ]
-    },
-    {
-     "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
-     "refs": [
-      "日期表.年月筛选"
-     ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
-    "pivotTable": 1,
     "card": 1,
-    "slicer": 1
+    "slicer": 1,
+    "textbox": 1,
+    "pivotTable": 1
    },
    "tables": [
     "L2-01-25 工序成本完成情况",
@@ -1057,9 +1093,9 @@ window.L2_DATA = {
     {
      "type": "pivotTable",
      "x": 24,
-     "y": 83,
-     "width": 1873,
-     "height": 997,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-03-01 销售管理费用预算执行汇总表.业务板块",
       "L2-03-01 销售管理费用预算执行汇总表.销管费分类",
@@ -1069,31 +1105,40 @@ window.L2_DATA = {
      ]
     },
     {
-     "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
-     "refs": [
-      "度量值.当前月报期间"
-     ]
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
     },
     {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
+    },
+    {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
     "pivotTable": 1,
-    "card": 1,
-    "slicer": 1
+    "textbox": 1,
+    "slicer": 1,
+    "card": 1
    },
    "tables": [
     "L2-03-01 销售管理费用预算执行汇总表",
@@ -1210,43 +1255,52 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
-     "type": "pivotTable",
-     "x": 16,
-     "y": 96,
-     "width": 1871,
-     "height": 961,
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
-      "L2-03-02 财务费用汇总表.指标名称",
-      "L2-03-02 财务费用汇总表.结构",
-      "度量值.指标值"
+      "度量值.当前月报期间"
      ]
     },
     {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     },
     {
-     "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "type": "pivotTable",
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
-      "度量值.当前月报期间"
+      "L2-03-02 财务费用汇总表.指标名称",
+      "L2-03-02 财务费用汇总表.结构",
+      "度量值.指标值"
      ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
-    "pivotTable": 1,
+    "card": 1,
+    "textbox": 1,
     "slicer": 1,
-    "card": 1
+    "pivotTable": 1
    },
    "tables": [
     "L2-03-02 财务费用汇总表",
@@ -1333,44 +1387,53 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
-     "type": "pivotTable",
-     "x": 33,
-     "y": 96,
-     "width": 1855,
-     "height": 975,
-     "refs": [
-      "L2-03-06 矿石成本分析.指标名称",
-      "L2-03-06 矿石成本分析.指标项",
-      "L2-03-06 矿石成本分析.矿体",
-      "度量值.L2-03-06指标值"
-     ]
-    },
-    {
      "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
       "度量值.当前月报期间"
      ]
     },
     {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
+     "type": "pivotTable",
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
+     "refs": [
+      "L2-03-06 矿石成本分析.指标名称",
+      "L2-03-06 矿石成本分析.指标项",
+      "L2-03-06 矿石成本分析.矿体",
+      "度量值.L2-03-06指标值"
+     ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
-    "pivotTable": 1,
     "card": 1,
-    "slicer": 1
+    "slicer": 1,
+    "textbox": 1,
+    "pivotTable": 1
    },
    "tables": [
     "L2-03-06 矿石成本分析",
@@ -1474,11 +1537,21 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
+     "type": "slicer",
+     "x": 340,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "L2-04-01 库存汇总表.矿体"
+     ]
+    },
+    {
      "type": "pivotTable",
      "x": 24,
-     "y": 76,
-     "width": 1871,
-     "height": 963,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-04-01 库存汇总表.分类",
       "L2-04-01 库存汇总表.口径",
@@ -1490,39 +1563,38 @@ window.L2_DATA = {
     },
     {
      "type": "slicer",
-     "x": 320,
-     "y": 0,
-     "width": 304,
-     "height": 96,
-     "refs": [
-      "L2-04-01 库存汇总表.矿体"
-     ]
-    },
-    {
-     "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     },
     {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
      "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
       "度量值.当前月报期间"
      ]
     }
    ],
-   "visualCount": 4,
+   "visualCount": 5,
    "visualTypes": {
-    "pivotTable": 1,
     "slicer": 2,
+    "pivotTable": 1,
+    "textbox": 1,
     "card": 1
    },
    "tables": [
@@ -1635,21 +1707,11 @@ window.L2_DATA = {
    "displayOption": "FitToPage",
    "visuals": [
     {
-     "type": "card",
-     "x": 1510,
-     "y": 0,
-     "width": 410,
-     "height": 76,
-     "refs": [
-      "度量值.当前月报期间"
-     ]
-    },
-    {
      "type": "pivotTable",
-     "x": 33,
-     "y": 118,
-     "width": 1857,
-     "height": 936,
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-05-01 硫磺及硫酸价格分析月报.指标单位",
       "L2-05-01 硫磺及硫酸价格分析月报.指标名称",
@@ -1658,20 +1720,39 @@ window.L2_DATA = {
      ]
     },
     {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
+    },
+    {
      "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
      "refs": [
       "日期表.年月筛选"
      ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
-    "card": 1,
     "pivotTable": 1,
+    "textbox": 1,
+    "card": 1,
     "slicer": 1
    },
    "tables": [
@@ -1746,10 +1827,10 @@ window.L2_DATA = {
    "visuals": [
     {
      "type": "pivotTable",
-     "x": 33,
-     "y": 96,
-     "width": 1855,
-     "height": 961,
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
      "refs": [
       "L2-06-01 主要产品价格波动汇总表.产品",
       "L2-06-01 主要产品价格波动汇总表.指标口径",
@@ -1758,31 +1839,40 @@ window.L2_DATA = {
      ]
     },
     {
-     "type": "slicer",
-     "x": 16,
-     "y": 0,
-     "width": 304,
-     "height": 96,
-     "refs": [
-      "日期表.年月筛选"
-     ]
-    },
-    {
      "type": "card",
-     "x": 1511,
-     "y": 0,
-     "width": 410,
-     "height": 76,
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
      "refs": [
       "度量值.当前月报期间"
      ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
+     "type": "slicer",
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "日期表.年月筛选"
+     ]
     }
    ],
-   "visualCount": 3,
+   "visualCount": 4,
    "visualTypes": {
     "pivotTable": 1,
-    "slicer": 1,
-    "card": 1
+    "card": 1,
+    "textbox": 1,
+    "slicer": 1
    },
    "tables": [
     "L2-06-01 主要产品价格波动汇总表",
