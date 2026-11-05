@@ -212,7 +212,7 @@
     }).join("");
     var modelOverview = '<a class="sb-sub-item sb-overview" href="#/model">语义模型总览 →</a>';
     html += sbGroup("model", "语义模型", factTables.length, modelOverview, modelSubs);
-    html += sbItem("#/ui", "UI规范", "v2.8", "ui");
+    html += sbItem("#/ui", "UI规范", (window.L2_UI_SPEC ? window.L2_UI_SPEC.version : "v3.0"), "ui");
     html += sbItem("#/mappings", "指标映射", D.stats.mappings, "mappings");
     html += sbItem("#/deliverables", "交付成果", "", "deliverables");
     sbNav.innerHTML = html;
@@ -1132,7 +1132,7 @@
           '<h3 class="sub-h">图表配色</h3><ul class="ui-list">' + chartRulesHtml + "</ul>" +
           '<div class="split" style="margin-top:14px">' +
             '<div class="spec-panel"><h3>表页矩阵配色（沿用主题）</h3><table class="kv-table">' + matrixRows + "</table></div>" +
-            '<div class="spec-panel"><h3>色值速查</h3><pre class="expr ui-code">主色            #1A2538\n次级文字        #5B6678\n数据标签        #334155\n网格线          #E8EEF6\n正向状态        #059669\n负向状态        #B91C1C\n树状图渐变      #D6E0EC → #1A2538\n画布            #FFFFFF</pre></div>' +
+            '<div class="spec-panel"><h3>色值速查</h3><pre class="expr ui-code">主色            #1A2538\n次级文字        #5B6678\n数据标签        #334155\n网格线          #E8EEF6\n正向状态        #059669\n负向状态        #B91C1C\n库存图渐变      #D6E0EC → #1A2538\n画布            #FFFFFF</pre></div>' +
           "</div>" +
         "</section>" +
 

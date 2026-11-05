@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-05 11:18",
-  "generatedAt": "2026-11-05T11:18:02",
+  "updated": "2026-11-05 12:14",
+  "generatedAt": "2026-11-05T12:14:45",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
