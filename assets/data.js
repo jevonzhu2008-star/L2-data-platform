@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-04 21:49",
-  "generatedAt": "2026-11-04T21:49:13",
+  "updated": "2026-11-05 07:59",
+  "generatedAt": "2026-11-05T07:59:59",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -36,6 +36,7 @@ window.L2_DATA = {
   "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
   "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
   "tenantId": "",
+  "excelBase": "https://jevonzhu2008-star.github.io/L2-data-platform/",
   "reports": {
    "L2-01-02": {
     "reportId": "9f43e1bf-6c04-47c4-bcf1-264b1db81e8a",

@@ -118,6 +118,24 @@
     return host + "/reports/" + encodeURIComponent(r.reportId);
   }
 
+  /* ---------- 在线 Excel ----------
+     Office 网页版读取的是「已发布站点」上的 xlsx 副本（默认 GitHub Pages），
+     所以 file:// 打开、内网 IIS 部署时同样能在线查看；离线时回落到「下载」。
+     部署地址可用 service_reports.json 的 excelBase 覆盖。 */
+  var EXCEL_PUBLIC_BASE = "https://jevonzhu2008-star.github.io/L2-data-platform/";
+  var EXCEL_VIEWER_BASE = "https://view.officeapps.live.com/op/";
+
+  function excelPublicUrl(file) {
+    var base = (service && service.excelBase) || EXCEL_PUBLIC_BASE;
+    if (base.slice(-1) !== "/") base += "/";
+    return base + String(file || "").split("/").map(encodeURIComponent).join("/");
+  }
+
+  function excelViewerUrl(file, embedded) {
+    return EXCEL_VIEWER_BASE + (embedded ? "embed.aspx" : "view.aspx") +
+      "?src=" + encodeURIComponent(excelPublicUrl(file));
+  }
+
   /* 在线报表入口卡：没有截图时使用。 */
   function onlineTile(compact) {
     return '<div class="rc-online">' +
@@ -194,6 +212,7 @@
     }).join("");
     var modelOverview = '<a class="sb-sub-item sb-overview" href="#/model">语义模型总览 →</a>';
     html += sbGroup("model", "语义模型", factTables.length, modelOverview, modelSubs);
+    html += sbItem("#/ui", "UI规范", "v2.8", "ui");
     html += sbItem("#/mappings", "指标映射", D.stats.mappings, "mappings");
     html += sbItem("#/deliverables", "交付成果", "", "deliverables");
     sbNav.innerHTML = html;
@@ -243,6 +262,8 @@
       }
     } else if (section === "mappings") {
       activateItem("mappings");
+    } else if (section === "ui") {
+      activateItem("ui");
     } else if (section === "page") {
       var p = pageByCode[arg];
       if (!p) return;
@@ -374,7 +395,7 @@
     if (svc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 可视化页</span><a href="' + serviceUrl(p, "visual") + '" target="_blank" rel="noopener">打开</a></div>');
     if (tableSvc) deliver.push('<div class="deliver-row"><span class="badge pbip">Service</span><span class="dr-name">Power BI Service · 表样页</span><a href="' + serviceUrl(p, "table") + '" target="_blank" rel="noopener">打开</a></div>');
     if (p.screenshot && !svc) deliver.push('<div class="deliver-row"><span class="badge html">截图</span><span class="dr-name">' + esc(p.code) + '.png · ' + (p.screenshotSource === "service" ? "Service 实时" : "PBIP") + '</span><a href="' + url(p.screenshot) + '" target="_blank" rel="noopener">打开</a></div>');
-    if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="' + url(p.mapping.file) + '" target="_blank" rel="noopener">打开</a></div>');
+    if (p.mapping) deliver.push('<div class="deliver-row"><span class="badge muted">映射</span><span class="dr-name" title="' + esc(p.mapping.name) + '">' + esc(p.mapping.name) + '</span><a href="#/mappings/' + encodeURIComponent(p.mapping.code || p.mapping.name) + '">在线查看</a></div>');
 
     drawer.innerHTML =
       '<div class="drawer-head"><h2>报表页详情 <span class="code">' + esc(p.code) + "</span></h2>" +
@@ -611,7 +632,7 @@
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">SEMANTIC MODEL</span><h1>语义模型</h1>' +
           "<p>" + D.stats.factTables + " 张事实表、" + D.stats.measures + " 个度量值、" + D.stats.relationships + " 条关系、" + D.stats.parameters + " 个取数参数。来源：02.PBIP/L2报表.SemanticModel。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/model" data-jump="model-measures">度量值目录</a><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
+          '<div class="head-actions"><a class="btn" href="#/model" data-jump="model-measures">度量值目录</a><a class="btn" href="#/ui">UI规范</a><a class="btn" href="#/deliverables">交付成果</a></div></div>' +
 
         '<div class="model-summary">' +
           '<div class="ms-card"><b>' + D.stats.factTables + '</b><span>事实表</span></div>' +
@@ -756,7 +777,7 @@
           "<h1>" + esc(shortName(t.name, t.code) || t.name) + "</h1>" +
           "<p>" + esc(t.name) + " · " + esc(t.source.join(" + ")) + "</p></div>" +
           '<div class="head-actions"><a class="btn" href="#/model">返回语义模型</a>' +
-          (mapping ? '<a class="btn" href="' + url(mapping.file) + '" target="_blank" rel="noopener">指标映射 Excel</a>' : "") +
+          (mapping ? '<a class="btn" href="#/mappings/' + encodeURIComponent(mapping.code || mapping.name) + '">指标映射 · 在线</a>' : "") +
           "</div></div>" +
 
         '<div class="model-summary">' +
@@ -811,21 +832,82 @@
         return '<div class="sheet-card"><h4>' + esc(s.name) + "</h4>" +
           '<div class="sheet-meta">' + s.rows + " 行 × " + s.cols + " 列</div>" + sample + "</div>";
       }).join("");
+      var fileName = String(m.file || "").split("/").pop();
       return '<details class="mapping-item" id="map-' + i + '"' + (open ? " open" : "") + ">" +
         '<summary><span class="code">' + esc(m.code || "其他") + "</span><span>" + esc(m.name) + "</span>" +
         '<span class="mm-count">' + m.sheets.length + " 个工作表</span></summary>" +
-        '<div class="mapping-body">' + sheets +
-        '<div style="margin-top:8px"><a class="btn small" href="' + url(m.file) + '" target="_blank" rel="noopener">打开 Excel</a></div></div></details>';
+        '<div class="mapping-body">' +
+          '<div class="mapping-toolbar">' +
+            '<button class="btn small primary" type="button" data-excel="' + i + '" aria-expanded="false" aria-controls="excel-' + i + '">在线 Excel</button>' +
+            '<a class="btn small" href="' + esc(excelViewerUrl(m.file, false)) + '" target="_blank" rel="noopener">新窗口 ↗</a>' +
+            '<a class="btn small" href="' + url(m.file) + '" download>下载 xlsx</a>' +
+            '<span class="excel-file" title="' + esc(fileName) + '">' + esc(fileName) + "</span>" +
+          "</div>" +
+          '<div class="excel-panel" id="excel-' + i + '" hidden>' +
+            '<div class="excel-loading" id="excel-loading-' + i + '">' +
+              '<span class="spinner" aria-hidden="true"></span>' +
+              "<b>正在加载在线 Excel…</b>" +
+              "<span>Office 网页版 · 需联网；离线请用「下载 xlsx」</span>" +
+            "</div>" +
+            '<iframe class="excel-frame" data-src="' + esc(excelViewerUrl(m.file, true)) + '" title="' + esc(m.name) + ' 在线 Excel"></iframe>' +
+          "</div>" +
+          sheets +
+        "</div></details>";
     }).join("");
 
     app.innerHTML =
       '<div class="page">' +
         '<div class="page-head"><div><span class="page-kicker">MAPPINGS</span><h1>指标映射</h1>' +
           "<p>来自 03.项目映射文件，共 " + D.stats.mappings + " 个 Excel；每个文件包含排序表、维度字典与取数说明。</p></div>" +
-          '<div class="head-actions"><a class="btn" href="#/model">语义模型</a></div></div>' +
-        '<div class="hint">Excel 已复制到 deliverables/mappings/，可直接打开；表格只展示前 3 行样例。</div>' +
+          '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/ui">UI规范</a></div></div>' +
+        '<div class="hint">点「在线 Excel」会在页面内用 Office 网页版打开完整工作簿（工作表、公式、筛选都能操作），读取的是已发布站点上的副本；离线或尚未发布时请用「下载 xlsx」。下方表格只展示每个工作表的前 3 行样例。</div>' +
         (html || '<div class="empty-state">暂无映射文件</div>') +
       "</div>";
+
+    /* 在线 Excel：首次展开时才加载 iframe，避免一次拉十几个工作簿 */
+    Array.prototype.forEach.call(app.querySelectorAll("[data-excel]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var item = btn.closest(".mapping-item");
+        var panel = item ? item.querySelector(".excel-panel") : null;
+        if (!panel) return;
+        var show = panel.hidden;
+        // 同一时间只展开一个工作簿，避免多个 Office 网页版实例同时占内存
+        if (show) {
+          Array.prototype.forEach.call(app.querySelectorAll(".excel-panel:not([hidden])"), function (p) {
+            if (p === panel) return;
+            p.hidden = true;
+            var other = p.closest(".mapping-item");
+            var otherBtn = other ? other.querySelector("[data-excel]") : null;
+            if (otherBtn) {
+              otherBtn.textContent = "在线 Excel";
+              otherBtn.setAttribute("aria-expanded", "false");
+            }
+          });
+        }
+        panel.hidden = !show;
+        btn.textContent = show ? "收起 Excel" : "在线 Excel";
+        btn.setAttribute("aria-expanded", show ? "true" : "false");
+        var frame = panel.querySelector(".excel-frame");
+        var loading = panel.querySelector(".excel-loading");
+        if (show && frame) {
+          if (!frame.getAttribute("src")) {
+            var done = false;
+            frame.addEventListener("load", function () {
+              done = true;
+              if (loading) loading.hidden = true;
+            });
+            frame.setAttribute("src", frame.getAttribute("data-src"));
+            // 跨域 iframe 无法感知失败，超时后只收起转圈并提示用新窗口
+            setTimeout(function () {
+              if (!done && loading) {
+                loading.innerHTML = "<b>在线 Excel 加载较慢</b><span>可点「新窗口 ↗」在 Office 网页版打开；离线请用「下载 xlsx」。</span>";
+              }
+            }, 15000);
+          }
+          setTimeout(function () { panel.scrollIntoView({ behavior: "smooth", block: "nearest" }); }, 60);
+        }
+      });
+    });
 
     if (target) {
       var hitIdx = mappings.findIndex(function (m) { return m.code === target || m.name === target; });
@@ -837,6 +919,292 @@
 
     setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>指标映射</b>');
     document.title = "指标映射 · CMOC L2 PBI报表开发平台";
+  }
+
+  /* ---------- UI 规范 ---------- */
+  function uiLayoutFigure(page) {
+    var blocks = page.blocks.map(function (b) {
+      var style = "left:" + (b[0] / 1920 * 100).toFixed(3) + "%;top:" + (b[1] / 1080 * 100).toFixed(3) +
+        "%;width:" + (b[2] / 1920 * 100).toFixed(3) + "%;height:" + (b[3] / 1080 * 100).toFixed(3) + "%";
+      var note = b[5] + " · (" + b[0] + ", " + b[1] + ") " + b[2] + "×" + b[3];
+      return '<span class="lb lb-' + b[4] + '" style="' + style + '" title="' + esc(note) + '"><i>' + esc(b[5]) + "</i></span>";
+    }).join("");
+    return '<figure class="layout-fig">' +
+      '<div class="layout-canvas">' + blocks + "</div>" +
+      '<figcaption><b>' + esc(page.name) + "</b><span>" + esc(page.meta) + "</span></figcaption></figure>";
+  }
+
+  function uiSwatch(c) {
+    return '<button class="swatch" type="button" data-hex="' + esc(c.hex) + '" title="点击复制 ' + esc(c.hex) + '">' +
+      '<span class="swatch-chip" style="background:' + esc(c.hex) + '"></span>' +
+      '<span class="swatch-body"><b>' + esc(c.name) + '</b><code>' + esc(c.hex) + '</code>' +
+      "<small>" + esc(c.use) + "</small></span></button>";
+  }
+
+  var UI_NAV = [
+    ["ui-principles", "设计目标"],
+    ["ui-rules", "命名规则"],
+    ["ui-canvas", "画布栅格"],
+    ["ui-colors", "色彩"],
+    ["ui-type", "字体"],
+    ["ui-components", "组件"],
+    ["ui-layouts", "页面布局"],
+    ["ui-interaction", "交互"],
+    ["ui-theme", "主题"],
+    ["ui-checklist", "检查清单"],
+    ["ui-issues", "已知问题"],
+    ["ui-changelog", "变更记录"]
+  ];
+
+  function renderUiGuide() {
+    var S = window.L2_UI_SPEC;
+    if (!S) return notFound("UI规范");
+    app.className = "";
+
+    var navHtml = UI_NAV.map(function (n) {
+      return '<a class="ui-nav-item" href="#/ui" data-anchor="' + n[0] + '">' + esc(n[1]) + "</a>";
+    }).join("");
+
+    var scopeHtml = S.scope.list.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    var principlesHtml = S.principles.map(function (p) {
+      return '<div class="principle"><b>' + esc(p.title) + "</b><p>" + esc(p.desc) + "</p></div>";
+    }).join("");
+    var rulesHtml = S.rules.map(function (r) {
+      return '<div class="rule-card"><span class="rule-n">' + esc(r.n) + "</span>" +
+        "<b>" + esc(r.name) + "</b><p>" + esc(r.desc) + "</p></div>";
+    }).join("");
+    var canvasRows = S.canvas.map(function (r) {
+      return "<tr><th>" + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>";
+    }).join("");
+    var bandRows = S.bands.map(function (r) {
+      return "<tr><td>" + esc(r[0]) + '</td><td class="mono">' + esc(r[1]) + "</td><td>" + esc(r[2]) + "</td><td>" + esc(r[3]) + "</td></tr>";
+    }).join("");
+    var tabRows = S.tabOrder.map(function (r) {
+      return "<tr><td>" + esc(r[0]) + '</td><td class="mono">' + esc(r[1]) + "</td></tr>";
+    }).join("");
+
+    var gridFigure = uiLayoutFigure({
+      name: "栅格示意 · 1920 × 1080",
+      meta: "外边距 24 · 栏间距 24 · 内容区 x 24→1896 / y 28→1056",
+      blocks: [
+        [24, 28, 1872, 56, "title", "标题区 28–84"],
+        [24, 104, 1872, 84, "filter", "筛选区 104–188"],
+        [24, 212, 924, 844, "matrix", "左栏 x=24 · 宽 924"],
+        [972, 212, 924, 844, "chart", "右栏 x=972 · 宽 924"]
+      ]
+    });
+
+    var mainSwatches = S.colors.main.map(uiSwatch).join("");
+    var statusSwatches = S.colors.status.map(uiSwatch).join("");
+    var statusRulesHtml = S.colors.statusRules.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    var chartRulesHtml = S.colors.chart.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    var matrixRows = S.colors.matrix.map(function (r) {
+      return "<tr><th>" + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>";
+    }).join("");
+
+    var typeRows = S.type.map(function (t) {
+      var color = t.color.charAt(0) === "#" ? t.color : "#5B6678";
+      return '<div class="type-row">' +
+        '<div class="type-sample" style="font-size:' + t.sample + "px;color:" + color + '">Aa 集团合并利润</div>' +
+        '<div class="type-meta"><b>' + esc(t.pos) + "</b><span>" + esc(t.size) + " · " + esc(t.weight) + "</span></div>" +
+        '<span class="type-color"><i style="background:' + color + '"></i>' + esc(t.color) + "</span>" +
+        '<span class="type-align">' + esc(t.align) + "</span></div>";
+    }).join("");
+
+    var componentHtml = S.components.map(function (c) {
+      return '<div class="spec-card"><div class="spec-card-head"><h3>' + esc(c.name) + "</h3>" +
+        '<span class="badge html">' + esc(c.tag) + "</span></div><ul>" +
+        c.items.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></div>";
+    }).join("");
+
+    var layoutsHtml = S.layouts.map(uiLayoutFigure).join("");
+
+    var interactionRows = S.interaction.map(function (r) {
+      return "<tr><th>" + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td></tr>";
+    }).join("");
+
+    var themeChips = S.theme.dataColors.map(function (hex, i) {
+      return '<span class="theme-chip"><i style="background:' + esc(hex) + '"></i><span>' + esc(hex) + "</span><small>" + (i + 1) + "</small></span>";
+    }).join("");
+    var themeNotes = S.theme.notes.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+
+    var pbirHtml = S.pbir.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+
+    var checklistHtml = S.checklist.map(function (t, i) {
+      return '<label class="check-item"><input type="checkbox" data-check="' + i + '">' +
+        '<span class="check-box" aria-hidden="true"></span>' +
+        '<span class="check-no">' + (i + 1) + "</span>" +
+        '<span class="check-text">' + esc(t) + "</span></label>";
+    }).join("");
+
+    var issuesHtml = S.issues.map(function (r) {
+      return '<tr><td class="issue-name">' + esc(r[0]) + '</td><td class="issue-impact">' + esc(r[1]) + "</td><td>" + esc(r[2]) + "</td></tr>";
+    }).join("");
+
+    var changelogHtml = S.changelog.map(function (r) {
+      return '<li class="log-row"><span class="log-v">' + esc(r[0]) + "</span>" +
+        '<span class="log-date">' + esc(r[1]) + "</span><span class=\"log-text\">" + esc(r[2]) + "</span></li>";
+    }).join("");
+
+    app.innerHTML =
+      '<div class="page ui-page">' +
+        '<div class="page-head"><div><span class="page-kicker">UI SPECIFICATION · ' + esc(S.version) + "</span>" +
+          "<h1>UI规范</h1>" +
+          "<p>「" + esc(S.northStar.title) + "」——L2 表样 POC 十个报表、十五个页面的统一视觉语言。整理自 " + esc(S.source) + "（" + esc(S.version) + "，" + esc(S.date) + "）。</p></div>" +
+          '<div class="head-actions"><a class="btn" href="#/model">语义模型</a><a class="btn" href="#/page/L2-01-02">看一张报表页</a></div></div>' +
+
+        '<div class="status-strip">' +
+          '<span class="status-pill"><b>' + S.scope.reports + "</b> 个报表</span>" +
+          '<span class="status-pill"><b>' + S.scope.pages + "</b> 个页面</span>" +
+          '<span class="status-pill"><b>' + S.scope.visuals + '</b> 个视觉对象</span>' +
+          '<span class="status-pill"><span class="dot green"></span>文档版本 <b>' + esc(S.version) + "</b></span>" +
+        "</div>" +
+
+        '<div class="ui-nav">' + navHtml + "</div>" +
+
+        '<section class="section ui-section" id="ui-principles">' +
+          '<div class="section-head"><div><h2>设计目标</h2><p>Creative North Star：「' + esc(S.northStar.title) + "」</p></div></div>" +
+          '<blockquote class="ui-quote">' + esc(S.northStar.desc) + "</blockquote>" +
+          '<div class="principle-grid">' + principlesHtml + "</div>" +
+          '<details class="ui-scope"><summary><span>适用范围 · ' + S.scope.reports + " 个报表 / " + S.scope.pages + ' 个页面</span><span class="chev">›</span></summary>' +
+            '<ul class="ui-scope-list">' + scopeHtml + "</ul></details>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-rules">' +
+          '<div class="section-head"><div><h2>命名规则</h2><p>四条不可协商的硬规则，改任何报表前先对照</p></div></div>' +
+          '<div class="rule-grid">' + rulesHtml + "</div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-canvas">' +
+          '<div class="section-head"><div><h2>画布与栅格</h2><p>1920 × 1080 · FitToPage · 24px 网格，所有页面共用</p></div></div>' +
+          '<div class="split">' +
+            '<div class="spec-panel"><table class="kv-table">' + canvasRows + "</table></div>" +
+            gridFigure +
+          "</div>" +
+          '<div class="split" style="margin-top:14px">' +
+            '<div class="spec-panel"><h3>竖向分区</h3><table class="data-table"><thead><tr><th>区带</th><th>y 范围</th><th>高度</th><th>内容</th></tr></thead><tbody>' + bandRows + "</tbody></table></div>" +
+            '<div class="spec-panel"><h3>阅读顺序 tabOrder</h3><table class="kv-table">' + tabRows + "</table>" +
+              '<p class="spec-note">键盘与读屏顺序与视觉顺序一致：标题 → 筛选 → 指标卡 → 内容。</p></div>' +
+          "</div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-colors">' +
+          '<div class="section-head"><div><h2>色彩</h2><p>一个主色 + 一组状态色；点色块可复制色值</p></div></div>' +
+          '<h3 class="sub-h">主色板</h3><div class="swatch-grid">' + mainSwatches + "</div>" +
+          '<h3 class="sub-h">状态色 · 唯一允许的红绿入口</h3><div class="swatch-grid two">' + statusSwatches + "</div>" +
+          '<ul class="ui-list">' + statusRulesHtml + "</ul>" +
+          '<h3 class="sub-h">图表配色</h3><ul class="ui-list">' + chartRulesHtml + "</ul>" +
+          '<div class="split" style="margin-top:14px">' +
+            '<div class="spec-panel"><h3>表页矩阵配色（沿用主题）</h3><table class="kv-table">' + matrixRows + "</table></div>" +
+            '<div class="spec-panel"><h3>色值速查</h3><pre class="expr ui-code">主色            #1A2538\n次级文字        #5B6678\n数据标签        #334155\n网格线          #E8EEF6\n正向状态        #059669\n负向状态        #B91C1C\n树状图渐变      #D6E0EC → #1A2538\n画布            #FFFFFF</pre></div>' +
+          "</div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-type">' +
+          '<div class="section-head"><div><h2>字体与字号</h2><p>统一微软雅黑；字号按角色固定，不随容器缩放</p></div></div>' +
+          '<div class="type-table">' + typeRows + "</div>" +
+          '<p class="spec-note">' + esc(S.typeNote) + "</p>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-components">' +
+          '<div class="section-head"><div><h2>组件规范</h2><p>容器、图表、切片器、指标卡、矩阵、文本框</p></div></div>' +
+          '<div class="spec-grid">' + componentHtml + "</div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-layouts">' +
+          '<div class="section-head"><div><h2>页面布局</h2><p>按 DESIGN.md 记录的真实坐标绘制（1920 × 1080 等比缩放，悬停看坐标）</p></div></div>' +
+          '<div class="layout-grid">' + layoutsHtml + "</div>" +
+          '<div class="legend-row"><span><i class="lg-title"></i>文本框</span><span><i class="lg-filter"></i>切片器</span><span><i class="lg-card"></i>指标卡</span><span><i class="lg-matrix"></i>矩阵</span><span><i class="lg-chart"></i>图表</span></div>' +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-interaction">' +
+          '<div class="section-head"><div><h2>交互与可见性</h2><p>起始页、隐藏页、页面筛选与 NoFilter 例外</p></div></div>' +
+          '<div class="spec-panel"><table class="kv-table wide">' + interactionRows + "</table></div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-theme">' +
+          '<div class="section-head"><div><h2>主题与内置 Visual</h2><p>颜色与字体由报表主题统一控制；逐 visual 覆盖必须取自上面色板</p></div></div>' +
+          '<div class="spec-panel"><h3>主题 ' + esc(S.theme.base) + '</h3><p class="spec-note">' + esc(S.theme.files) + "</p>" +
+            '<div class="theme-chips">' + themeChips + "</div>" +
+            '<ul class="ui-list">' + themeNotes + "</ul></div>" +
+          '<div class="spec-panel" style="margin-top:14px"><h3>PBIR 实现要点</h3><ul class="ui-list">' + pbirHtml + "</ul></div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-checklist">' +
+          '<div class="section-head"><div><h2>统一检查清单</h2><p>改任一报表前逐项自检 · 已确认 <b id="checkCount">0</b> / ' + S.checklist.length + "</p></div>" +
+            '<button class="btn small" type="button" id="checkReset">重置</button></div>' +
+          '<div class="check-list">' + checklistHtml + "</div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-issues">' +
+          '<div class="section-head"><div><h2>已知问题</h2><p>不影响当前渲染，记录待处理项与建议</p></div></div>' +
+          '<div class="table-wrap"><table class="data-table issue-table"><thead><tr><th>问题</th><th>影响</th><th>建议</th></tr></thead><tbody>' + issuesHtml + "</tbody></table></div>" +
+        "</section>" +
+
+        '<section class="section ui-section" id="ui-changelog">' +
+          '<div class="section-head"><div><h2>变更记录</h2><p>' + S.changelog.length + " 次迭代 · 当前 " + esc(S.version) + "</p></div></div>" +
+          '<ol class="log-list">' + changelogHtml + "</ol>" +
+        "</section>" +
+      "</div>";
+
+    /* 页内导航：锚点滚动（hash 保持 #/ui，便于刷新与分享） */
+    Array.prototype.forEach.call(app.querySelectorAll(".ui-nav-item"), function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        var target = document.getElementById(el.getAttribute("data-anchor"));
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    /* 色块复制 */
+    Array.prototype.forEach.call(app.querySelectorAll(".swatch"), function (el) {
+      el.addEventListener("click", function () {
+        copyText(el.getAttribute("data-hex")).then(function () {
+          el.classList.add("copied");
+          setTimeout(function () { el.classList.remove("copied"); }, 1200);
+        });
+      });
+    });
+
+    /* 检查清单：本地记住勾选状态 */
+    var boxes = app.querySelectorAll("[data-check]");
+    var countEl = document.getElementById("checkCount");
+    function updateCount() {
+      var n = 0;
+      Array.prototype.forEach.call(boxes, function (b) { if (b.checked) n += 1; });
+      if (countEl) countEl.textContent = n;
+    }
+    var saved = [];
+    try {
+      saved = JSON.parse(localStorage.getItem("l2-ui-checklist") || "[]");
+    } catch (e) { saved = []; }
+    if (saved && saved.length) {
+      Array.prototype.forEach.call(boxes, function (b) {
+        b.checked = saved.indexOf(Number(b.getAttribute("data-check"))) >= 0;
+      });
+    }
+    updateCount();
+    Array.prototype.forEach.call(boxes, function (b) {
+      b.addEventListener("change", function () {
+        var picked = [];
+        Array.prototype.forEach.call(boxes, function (x) {
+          if (x.checked) picked.push(Number(x.getAttribute("data-check")));
+        });
+        try { localStorage.setItem("l2-ui-checklist", JSON.stringify(picked)); } catch (e) { /* 忽略 */ }
+        updateCount();
+      });
+    });
+    var resetBtn = document.getElementById("checkReset");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function () {
+        Array.prototype.forEach.call(boxes, function (b) { b.checked = false; });
+        try { localStorage.removeItem("l2-ui-checklist"); } catch (e) { /* 忽略 */ }
+        updateCount();
+      });
+    }
+
+    setCrumb('<a href="#/">工作台</a><span class="crumb-sep">/</span><b>UI规范</b>');
+    document.title = "UI规范 · CMOC L2 PBI报表开发平台";
   }
 
   /* ---------- 交付成果 ---------- */
@@ -954,8 +1322,9 @@
       searchIndex.push({ kind: "度量值", code: "", name: m.name, route: "#/measures/" + encodeURIComponent(m.name), desc: m.folder });
     });
     mappings.forEach(function (m) {
-      searchIndex.push({ kind: "指标映射", code: m.code, name: m.name, route: "#/mappings" + (m.code ? "/" + encodeURIComponent(m.code) : ""), desc: "指标映射 Excel" });
+      searchIndex.push({ kind: "指标映射", code: m.code, name: m.name, route: "#/mappings" + (m.code ? "/" + encodeURIComponent(m.code) : ""), desc: "指标映射 Excel 在线查看" });
     });
+    searchIndex.push({ kind: "UI规范", code: "", name: "UI规范 " + (window.L2_UI_SPEC ? window.L2_UI_SPEC.version : ""), route: "#/ui", desc: "色彩 字体 栅格 组件 页面布局 检查清单 设计规范 DESIGN" });
   }
 
   function searchMatches(q) {
@@ -1061,6 +1430,8 @@
       renderModelOverview(info.arg);
     } else if (info.section === "mappings") {
       renderMappings(info.arg);
+    } else if (info.section === "ui") {
+      renderUiGuide();
     } else if (info.section === "deliverables") {
       renderDeliverables();
     } else {
