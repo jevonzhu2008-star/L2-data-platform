@@ -239,11 +239,27 @@
   /* ---------- 发送 ---------- */
   function friendlyError(provider, err) {
     var msg = (err && err.message) || "";
-    if (provider === "byok") {
-      if (msg.indexOf("byok_http_401") >= 0 || msg.indexOf("byok_http_403") >= 0) return "API Key 无效或无权限";
-      if (msg.indexOf("byok_missing") >= 0) return "尚未配置 BYOK";
+    var httpMatch = msg.match(/byok_http_(\d{3})/);
+    if (provider === "byok" && httpMatch) {
+      var status = Number(httpMatch[1]);
+      if (status === 401 || status === 403) return "API Key 无效或无权限（HTTP " + status + "）";
+      if (status === 402) return "账户余额不足（HTTP 402）";
+      if (status === 404) return "接口地址不正确（HTTP 404）";
+      if (status === 429) return "请求过于频繁或额度已用尽（HTTP 429）";
+      if (status >= 500) return "模型服务异常（HTTP " + status + "）";
+      return "模型服务返回 HTTP " + status;
     }
-    if (provider === "internal" && msg === "unauthorized") return "登录已失效，请重新登录";
+    if (provider === "byok") {
+      if (msg.indexOf("byok_missing") >= 0) return "尚未配置 BYOK";
+      if (msg.indexOf("byok_http_") >= 0) return "模型服务请求失败";
+    }
+    if (provider === "internal") {
+      if (msg === "unauthorized") return "登录已失效，请重新登录";
+      if (msg === "disabled") return "ChatBI 未启用或未配置";
+      if (msg === "rate_limited") return "提问过于频繁，请稍后再试";
+      if (msg === "timeout") return "模型响应超时";
+      if (msg === "upstream_error") return "模型服务不可用";
+    }
     if (msg === "provider_not_ready") return "当前模式不可用";
     return "网络不可达或被 CORS 拦截";
   }
