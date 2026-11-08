@@ -811,6 +811,7 @@ body.nav-open .mobile-backdrop { opacity: 1; pointer-events: auto; }
 .chat-dax summary::-webkit-details-marker { display: none; }
 .chat-dax pre { margin: 0; padding: 10px 12px; max-height: 280px; overflow: auto; background: #F7F6FB; border-top: 1px solid var(--line-soft); font-family: var(--mono); font-size: 11px; line-height: 1.6; white-space: pre; }
 .chat-truncated { margin: 8px 0 0; font-size: 11.5px; color: var(--warn); }
+.chat-snap-note { margin: 6px 0 0; font-size: 11px; color: var(--muted); }
 @media (max-width: 640px) {
   .chat-tabs { gap: 6px; }
   .chat-tab { padding: 6px 12px; font-size: 12px; }
