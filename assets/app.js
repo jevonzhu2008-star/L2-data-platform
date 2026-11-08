@@ -215,6 +215,7 @@
     html += sbItem("#/ui", "UI规范", (window.L2_UI_SPEC ? window.L2_UI_SPEC.version : "v3.0"), "ui");
     html += sbItem("#/mappings", "指标映射", D.stats.mappings, "mappings");
     html += sbItem("#/deliverables", "交付成果", "", "deliverables");
+    html += sbItem("#/chat", "ChatBI", "", "chat");
     sbNav.innerHTML = html;
   }
 
@@ -264,6 +265,8 @@
       activateItem("mappings");
     } else if (section === "ui") {
       activateItem("ui");
+    } else if (section === "chat") {
+      activateItem("chat");
     } else if (section === "page") {
       var p = pageByCode[arg];
       if (!p) return;
@@ -1381,6 +1384,7 @@
       searchIndex.push({ kind: "指标映射", code: m.code, name: m.name, route: "#/mappings" + (m.code ? "/" + encodeURIComponent(m.code) : ""), desc: "指标映射 Excel 在线查看" });
     });
     searchIndex.push({ kind: "UI规范", code: "", name: "UI规范 " + (window.L2_UI_SPEC ? window.L2_UI_SPEC.version : ""), route: "#/ui", desc: "色彩 字体 栅格 组件 页面布局 检查清单 设计规范 DESIGN" });
+    searchIndex.push({ kind: "ChatBI", code: "", name: "ChatBI 元数据问答", route: "#/chat", desc: "自然语言查询模型 报表 度量值 映射" });
   }
 
   function searchMatches(q) {
@@ -1490,6 +1494,9 @@
       renderUiGuide();
     } else if (info.section === "deliverables") {
       renderDeliverables();
+    } else if (info.section === "chat") {
+      if (window.L2Chat) window.L2Chat.render();
+      else notFound("ChatBI");
     } else {
       notFound(info.arg || info.section);
     }
