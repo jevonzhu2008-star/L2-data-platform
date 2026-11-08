@@ -367,6 +367,15 @@
     return callInternal(q, messages);
   }
 
+  function valueInQuestion(value, q) {
+    if (!value || !q) return false;
+    if (/^\d+$/.test(value)) {
+      if (value.length <= 2) return false;
+      return new RegExp("(^|\\D)" + value + "(\\D|$)").test(q);
+    }
+    return q.indexOf(value) >= 0;
+  }
+
   function snapshotLocalAnswer(q) {
     q = String(q || "");
     var table = pickTable(q);
@@ -391,13 +400,26 @@
     });
 
     var filterDesc = [];
+    var periodRows = null;
+    if (period && timeIdx.length) {
+      var bestTime = null;
+      timeIdx.forEach(function (i) {
+        var hits = rows.filter(function (r) { return cellMatchesPeriod((r || [])[i], period); });
+        if (hits.length && (!bestTime || hits.length > bestTime.count)) {
+          bestTime = { idx: i, count: hits.length, rows: hits };
+        }
+      });
+      if (bestTime) {
+        periodRows = bestTime.rows;
+        filterDesc.push(cols[bestTime.idx].name + "=" + period.code);
+      }
+    }
     var textFilters = [];
-    if (period && timeIdx.length) filterDesc.push(cols[timeIdx[0]].name + "=" + period.code);
     textIdx.forEach(function (i) {
       var values = [];
       rows.forEach(function (r) {
         var v = String((r || [])[i] == null ? "" : (r || [])[i]);
-        if (v.length >= 2 && q.indexOf(v) >= 0 && values.indexOf(v) < 0) values.push(v);
+        if (v.length >= 2 && valueInQuestion(v, q) && values.indexOf(v) < 0) values.push(v);
       });
       if (values.length) {
         textFilters.push({ idx: i, values: values });
@@ -405,24 +427,17 @@
       }
     });
 
-    var filtered = rows.filter(function (r) {
-      var ok = true;
-      if (period && timeIdx.length) {
-        for (var t = 0; t < timeIdx.length; t++) {
-          if (!cellMatchesPeriod((r || [])[timeIdx[t]], period)) { ok = false; break; }
-        }
+    var baseRows = periodRows || rows;
+    var filtered = baseRows.filter(function (r) {
+      for (var f = 0; f < textFilters.length; f++) {
+        var v = String((r || [])[textFilters[f].idx] == null ? "" : (r || [])[textFilters[f].idx]);
+        if (textFilters[f].values.indexOf(v) < 0) return false;
       }
-      if (ok) {
-        for (var f = 0; f < textFilters.length; f++) {
-          var v = String((r || [])[textFilters[f].idx] == null ? "" : (r || [])[textFilters[f].idx]);
-          if (textFilters[f].values.indexOf(v) < 0) { ok = false; break; }
-        }
-      }
-      return ok;
+      return true;
     });
 
     var metricIdx = numIdx.filter(function (i) {
-      return cols[i].name && q.indexOf(cols[i].name) >= 0;
+      return cols[i].name && cols[i].name.length >= 2 && q.indexOf(cols[i].name) >= 0;
     });
     if (!metricIdx.length) metricIdx = numIdx;
 
