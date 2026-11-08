@@ -1,0 +1,922 @@
+{
+ "generatedAt": "2026-11-08 09:29",
+ "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
+ "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
+ "tables": [
+  {
+   "name": "L2-01-02 集团合并利润汇总表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "结构唯一ID",
+     "dataType": "string"
+    },
+    {
+     "name": "季度",
+     "dataType": "string"
+    },
+    {
+     "name": "当月YTD",
+     "dataType": "double"
+    },
+    {
+     "name": "同比YTD",
+     "dataType": "double"
+    },
+    {
+     "name": "去年同期YTD",
+     "dataType": "double"
+    },
+    {
+     "name": "预算YTD",
+     "dataType": "double"
+    },
+    {
+     "name": "预算达成率",
+     "dataType": "double"
+    },
+    {
+     "name": "环比MTD",
+     "dataType": "double"
+    },
+    {
+     "name": "当月MTD",
+     "dataType": "double"
+    },
+    {
+     "name": "上月MTD",
+     "dataType": "double"
+    },
+    {
+     "name": "月份",
+     "dataType": "string"
+    },
+    {
+     "name": "实际值",
+     "dataType": "double"
+    },
+    {
+     "name": "月份排序",
+     "dataType": "int64"
+    },
+    {
+     "name": "结构",
+     "dataType": "string"
+    },
+    {
+     "name": "结构排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "L2-01-03 快报-金融投资业务专属",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "公司代码",
+     "dataType": "string"
+    },
+    {
+     "name": "公司代码货币",
+     "dataType": "string"
+    },
+    {
+     "name": "金融投资产品",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标排序",
+     "dataType": "double"
+    },
+    {
+     "name": "金融投资产品排序",
+     "dataType": "double"
+    },
+    {
+     "name": "公司代码排序",
+     "dataType": "double"
+    },
+    {
+     "name": "公司代码货币 级别 01",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "L2-01-04 S3 C1成本变化步行图VS上月",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "产品",
+     "dataType": "string"
+    },
+    {
+     "name": "单位",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double"
+    },
+    {
+     "name": "产品排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "L2-01-14 物料单耗月表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "单位",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double"
+    },
+    {
+     "name": "单位排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    },
+    {
+     "name": "主要耗材用量",
+     "dataType": "string"
+    },
+    {
+     "name": "区域排序",
+     "dataType": "double"
+    },
+    {
+     "name": "生产阶段区域",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "L2-01-25 工序成本完成情况",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "大工序",
+     "dataType": "string"
+    },
+    {
+     "name": "单位",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double"
+    },
+    {
+     "name": "大工序排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    },
+    {
+     "name": "单位排序",
+     "dataType": "double"
+    },
+    {
+     "name": "成本指标",
+     "dataType": "string"
+    },
+    {
+     "name": "成本指标排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "L2-03-01 销售管理费用预算执行汇总表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "累计实际",
+     "dataType": "double"
+    },
+    {
+     "name": "累计预算",
+     "dataType": "double"
+    },
+    {
+     "name": "销管费分类",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "销管费分类排序",
+     "dataType": "double"
+    },
+    {
+     "name": "业务板块",
+     "dataType": "string"
+    },
+    {
+     "name": "业务板块排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "L2-03-02 财务费用汇总表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标排序",
+     "dataType": "double"
+    },
+    {
+     "name": "结构排序",
+     "dataType": "double"
+    },
+    {
+     "name": "结构唯一ID",
+     "dataType": "string"
+    },
+    {
+     "name": "结构",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "L2-03-06 矿石成本分析",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "指标项",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    },
+    {
+     "name": "指标项排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "L2-04-01 库存汇总表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "分类",
+     "dataType": "string"
+    },
+    {
+     "name": "结构",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "分类排序",
+     "dataType": "double"
+    },
+    {
+     "name": "结构排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体v",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "decimal"
+    },
+    {
+     "name": "口径",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "L2-05-01 硫磺及硫酸价格分析月报",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "期间名称",
+     "dataType": "string"
+    },
+    {
+     "name": "期间排序",
+     "dataType": "double"
+    },
+    {
+     "name": "数据类别",
+     "dataType": "string"
+    },
+    {
+     "name": "年月",
+     "dataType": "string"
+    },
+    {
+     "name": "年",
+     "dataType": "string"
+    },
+    {
+     "name": "月",
+     "dataType": "string"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标排序",
+     "dataType": "double"
+    },
+    {
+     "name": "指标单位",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "L2-06-01 主要产品价格波动汇总表",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "产品",
+     "dataType": "string"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标口径",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "指标口径排序",
+     "dataType": "double"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double"
+    },
+    {
+     "name": "产品排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
+   "name": "Security_Ore_Permission",
+   "isFact": false,
+   "columns": [
+    {
+     "name": "UPN",
+     "dataType": "string"
+    },
+    {
+     "name": "OreName",
+     "dataType": "string"
+    },
+    {
+     "name": "IsActive",
+     "dataType": "boolean"
+    }
+   ]
+  },
+  {
+   "name": "度量值",
+   "isFact": false,
+   "columns": []
+  },
+  {
+   "name": "日期表",
+   "isFact": false,
+   "columns": [
+    {
+     "name": "日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "年",
+     "dataType": "string"
+    },
+    {
+     "name": "月",
+     "dataType": "string"
+    },
+    {
+     "name": "年月",
+     "dataType": "int64"
+    },
+    {
+     "name": "年排序",
+     "dataType": "int64"
+    },
+    {
+     "name": "月排序",
+     "dataType": "int64"
+    },
+    {
+     "name": "年月筛选",
+     "dataType": "string"
+    }
+   ]
+  },
+  {
+   "name": "矿体表",
+   "isFact": false,
+   "columns": [
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    }
+   ]
+  }
+ ],
+ "measures": [
+  {
+   "name": "当月YTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[当月YTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "去年同期YTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[去年同期YTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "预算YTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[预算YTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "当月MTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[当月MTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "上月MTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[上月MTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "实际值",
+   "expression": "SUM('L2-01-02 集团合并利润汇总表'[实际值])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "同比YTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[同比YTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "预算达成率",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[预算达成率])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "环比MTD",
+   "expression": "AVERAGE('L2-01-02 集团合并利润汇总表'[环比MTD])",
+   "folder": "L2-01-02 集团合并利润汇总表"
+  },
+  {
+   "name": "累计实际",
+   "expression": "SUM('L2-03-01 销售管理费用预算执行汇总表'[累计实际])/1000",
+   "folder": "L2-03-01 销售管理费用预算执行汇总表"
+  },
+  {
+   "name": "累计预算",
+   "expression": "SUM('L2-03-01 销售管理费用预算执行汇总表'[累计预算])",
+   "folder": "L2-03-01 销售管理费用预算执行汇总表"
+  },
+  {
+   "name": "累计执行%",
+   "expression": "DIVIDE([累计实际], [累计预算], 0)",
+   "folder": "L2-03-01 销售管理费用预算执行汇总表"
+  },
+  {
+   "name": "L2-03-02指标值",
+   "expression": "SUM('L2-03-02 财务费用汇总表'[指标值])",
+   "folder": "L2-03-02 财务费用汇总表"
+  },
+  {
+   "name": "L2-01-03指标值",
+   "expression": "SUM('L2-01-03 快报-金融投资业务专属'[指标值])",
+   "folder": "L2-01-03 快报-金融投资业务专属"
+  },
+  {
+   "name": "金额(人民币)",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(人民币)\")",
+   "folder": "L2-04-01 库存汇总表"
+  },
+  {
+   "name": "量(吨)",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"量(吨)\")",
+   "folder": "L2-04-01 库存汇总表"
+  },
+  {
+   "name": "L2-05-01指标值",
+   "expression": "SUM('L2-05-01 硫磺及硫酸价格分析月报'[指标值])",
+   "folder": "L2-05-01 硫磺及硫酸价格分析月报"
+  },
+  {
+   "name": "L2-01-04指标值",
+   "expression": "SUM('L2-01-04 S3 C1成本变化步行图VS上月'[指标值])",
+   "folder": "L2-01-04 S3 C1成本变化步行图VS上月"
+  },
+  {
+   "name": "L2-01-14指标值",
+   "expression": "SUM('L2-01-14 物料单耗月表'[指标值])",
+   "folder": "L2-01-14 物料单耗月表"
+  },
+  {
+   "name": "L2-01-25指标值",
+   "expression": "SUM('L2-01-25 工序成本完成情况'[指标值])",
+   "folder": "L2-01-25 工序成本完成情况"
+  },
+  {
+   "name": "L2-03-06指标值",
+   "expression": "SUM('L2-03-06 矿石成本分析'[指标值])",
+   "folder": "L2-03-06 矿石成本分析"
+  },
+  {
+   "name": "L2-06-01指标值",
+   "expression": "SUM('L2-06-01 主要产品价格波动汇总表'[指标值])",
+   "folder": "L2-06-01 主要产品价格波动汇总表"
+  },
+  {
+   "name": "当前月报期间",
+   "expression": "VAR _Date = MAX('日期表'[日期])\nVAR _YearMonth = FORMAT(_Date,\"yyyy年MM月\")\nRETURN\n\"当前月报期间: \" & _YearMonth",
+   "folder": "辅助"
+  },
+  {
+   "name": "金额(原币)",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(原币)\")",
+   "folder": "L2-04-01 库存汇总表"
+  }
+ ],
+ "relationships": [
+  {
+   "fromTable": "L2-05-01 硫磺及硫酸价格分析月报",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-03-01 销售管理费用预算执行汇总表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-03-02 财务费用汇总表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-01-02 集团合并利润汇总表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-01-04 S3 C1成本变化步行图VS上月",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-01-14 物料单耗月表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-03-06 矿石成本分析",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-06-01 主要产品价格波动汇总表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-01-03 快报-金融投资业务专属",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-01-25 工序成本完成情况",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-01-04 S3 C1成本变化步行图VS上月",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-01-14 物料单耗月表",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-01-25 工序成本完成情况",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-03-06 矿石成本分析",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-03-01 销售管理费用预算执行汇总表",
+   "fromColumn": "业务板块",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  }
+ ],
+ "tableNames": [
+  "L2-01-02 集团合并利润汇总表",
+  "L2-01-03 快报-金融投资业务专属",
+  "L2-01-04 S3 C1成本变化步行图VS上月",
+  "L2-01-14 物料单耗月表",
+  "L2-01-25 工序成本完成情况",
+  "L2-03-01 销售管理费用预算执行汇总表",
+  "L2-03-02 财务费用汇总表",
+  "L2-03-06 矿石成本分析",
+  "L2-04-01 库存汇总表",
+  "L2-05-01 硫磺及硫酸价格分析月报",
+  "L2-06-01 主要产品价格波动汇总表",
+  "Security_Ore_Permission",
+  "度量值",
+  "日期表",
+  "矿体表"
+ ],
+ "columnNames": [
+  "IsActive",
+  "OreName",
+  "UPN",
+  "上月MTD",
+  "业务板块",
+  "业务板块排序",
+  "主要耗材用量",
+  "产品",
+  "产品排序",
+  "公司代码",
+  "公司代码排序",
+  "公司代码货币",
+  "公司代码货币 级别 01",
+  "分类",
+  "分类排序",
+  "加载日期",
+  "区域排序",
+  "单位",
+  "单位排序",
+  "去年同期YTD",
+  "口径",
+  "同比YTD",
+  "大工序",
+  "大工序排序",
+  "季度",
+  "实际值",
+  "年",
+  "年排序",
+  "年月",
+  "年月筛选",
+  "当月MTD",
+  "当月YTD",
+  "成本指标",
+  "成本指标排序",
+  "指标值",
+  "指标单位",
+  "指标口径",
+  "指标口径排序",
+  "指标名称",
+  "指标名称排序",
+  "指标排序",
+  "指标项",
+  "指标项排序",
+  "数据类别",
+  "日期",
+  "月",
+  "月份",
+  "月份排序",
+  "月排序",
+  "期间名称",
+  "期间排序",
+  "环比MTD",
+  "生产阶段区域",
+  "矿体",
+  "矿体v",
+  "矿体排序",
+  "累计实际",
+  "累计预算",
+  "结构",
+  "结构唯一ID",
+  "结构排序",
+  "金融投资产品",
+  "金融投资产品排序",
+  "销管费分类",
+  "销管费分类排序",
+  "预算YTD",
+  "预算达成率"
+ ],
+ "measureNames": [
+  "L2-01-03指标值",
+  "L2-01-04指标值",
+  "L2-01-14指标值",
+  "L2-01-25指标值",
+  "L2-03-02指标值",
+  "L2-03-06指标值",
+  "L2-05-01指标值",
+  "L2-06-01指标值",
+  "上月MTD",
+  "去年同期YTD",
+  "同比YTD",
+  "实际值",
+  "当前月报期间",
+  "当月MTD",
+  "当月YTD",
+  "环比MTD",
+  "累计实际",
+  "累计执行%",
+  "累计预算",
+  "量(吨)",
+  "金额(人民币)",
+  "金额(原币)",
+  "预算YTD",
+  "预算达成率"
+ ]
+}

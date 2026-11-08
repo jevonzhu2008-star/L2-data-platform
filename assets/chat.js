@@ -7,6 +7,7 @@
   var BYOK_KEY = "l2-chat-byok";
   var PROVIDER_KEY = "l2-chat-provider";
   var HISTORY_KEY = "l2-chat-history";
+  var ASK_HISTORY_KEY = "l2-chat-ask-history";
   var MAX_TURNS = 10;
   var CHAR_BUDGET = 36000;
   var KIND_LABEL = { measure: "度量值", table: "表", page: "报表页", mapping: "映射" };
@@ -16,6 +17,8 @@
 
   var state = {
     messages: [],
+    askMessages: [],
+    tab: "meta",
     provider: "local",
     notice: "",
     busy: false
@@ -36,6 +39,14 @@
     return state.messages.slice(-MAX_TURNS * 2).map(function (m) {
       return { role: m.role, content: m.content };
     });
+  }
+
+  function activeMessages() {
+    return state.tab === "ask" ? state.askMessages : state.messages;
+  }
+
+  function historyKey() {
+    return state.tab === "ask" ? ASK_HISTORY_KEY : HISTORY_KEY;
   }
 
   /* ---------- 配置 ---------- */
@@ -236,6 +247,32 @@
     });
   }
 
+  function callAsk(question) {
+    var token = window.L2Auth && L2Auth.getToken ? L2Auth.getToken() : "";
+    return fetch("api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify({ question: question, pageCode: currentPageCode() })
+    }).then(function (response) {
+      return response.json().then(function (body) {
+        if (!response.ok || !body || body.ok !== true) {
+          var code = body && body.error ? body.error.code : "http_" + response.status;
+          var message = body && body.error ? (body.error.message || code) : code;
+          throw new Error(message);
+        }
+        return {
+          answer: body.answer || "",
+          citations: body.citations || [],
+          suggestions: [],
+          provider: "internal",
+          table: body.table || null,
+          dax: body.dax || "",
+          truncated: !!body.truncated
+        };
+      });
+    });
+  }
+
   /* ---------- 发送 ---------- */
   function friendlyError(provider, err) {
     var msg = (err && err.message) || "";
@@ -260,20 +297,64 @@
       if (msg === "timeout") return "模型响应超时";
       if (msg === "upstream_error") return "模型服务不可用";
     }
+    if (provider === "ask") {
+      if (msg === "invalid_dax") return "无法生成合法查询";
+      if (msg === "schema_missing") return "模型白名单缺失";
+      if (msg === "disabled") return "数据查询未启用";
+      if (msg === "unauthorized") return "登录已失效，请重新登录";
+      if (msg === "rate_limited") return "提问过于频繁，请稍后再试";
+      if (msg === "timeout") return "模型响应超时";
+      if (msg === "upstream_error") return "模型服务不可用";
+    }
     if (msg === "provider_not_ready") return "当前模式不可用";
     return "网络不可达或被 CORS 拦截";
+  }
+
+  function pushAssistant(result) {
+    result.provider = result.provider || state.provider;
+    activeMessages().push({
+      role: "assistant",
+      content: result.answer,
+      citations: result.citations,
+      suggestions: result.suggestions,
+      table: result.table || null,
+      dax: result.dax || "",
+      truncated: !!result.truncated
+    });
+    state.busy = false;
+    var inputEl = document.querySelector(".chat-input");
+    var sendEl = document.querySelector(".chat-send");
+    if (inputEl) { inputEl.disabled = false; inputEl.focus(); }
+    if (sendEl) sendEl.disabled = false;
+    saveHistory();
+    renderThread();
+    state.notice = "";
   }
 
   function send(question) {
     question = (question || "").trim();
     if (!question || state.busy) return Promise.resolve(null);
-    state.messages.push({ role: "user", content: question });
+    activeMessages().push({ role: "user", content: question });
     state.busy = true;
     var inputEl = document.querySelector(".chat-input");
     var sendEl = document.querySelector(".chat-send");
     if (inputEl) inputEl.disabled = true;
     if (sendEl) sendEl.disabled = true;
     renderThread();
+
+    if (state.tab === "ask") {
+      return callAsk(question).then(function (result) {
+        pushAssistant(result);
+        return result;
+      }, function (err) {
+        state.notice = "数据查询失败（" + friendlyError("ask", err) + "）";
+        state.busy = false;
+        if (inputEl) inputEl.disabled = false;
+        if (sendEl) sendEl.disabled = false;
+        renderThread();
+        return null;
+      });
+    }
 
     var provider = state.provider;
     var job;
@@ -286,14 +367,7 @@
       state.provider = "local";
       return localAnswer(question);
     }).then(function (result) {
-      result.provider = result.provider || state.provider;
-      state.messages.push({ role: "assistant", content: result.answer, citations: result.citations, suggestions: result.suggestions });
-      state.busy = false;
-      if (inputEl) { inputEl.disabled = false; inputEl.focus(); }
-      if (sendEl) sendEl.disabled = false;
-      saveHistory();
-      renderThread();
-      state.notice = "";
+      pushAssistant(result);
       return result;
     });
   }
@@ -326,19 +400,41 @@
       esc(o.name) + "</a>";
   }
 
+  function tableHtml(t) {
+    if (!t || !t.columns || !t.columns.length || !t.rows) return "";
+    var head = t.columns.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("");
+    var body = t.rows.map(function (r) {
+      var cells = (r || []).map(function (c) { return "<td>" + esc(c) + "</td>"; }).join("");
+      return "<tr>" + cells + "</tr>";
+    }).join("");
+    return '<div class="chat-table-wrap"><table class="chat-table"><thead><tr>' + head +
+      "</tr></thead><tbody>" + body + "</tbody></table></div>";
+  }
+
+  function daxHtml(d) {
+    if (!d) return "";
+    return '<details class="chat-dax"><summary>查看 DAX</summary><pre>' + esc(d) + "</pre></details>";
+  }
+
   function messageHtml(m) {
     if (m.role === "user") {
       return '<div class="chat-msg user"><div class="chat-bubble">' + esc(m.content) + "</div></div>";
     }
     var cites = (m.citations || []).map(citationHtml).join("");
+    var table = tableHtml(m.table);
+    var dax = daxHtml(m.dax);
+    var truncated = m.truncated
+      ? '<p class="chat-truncated">结果已截断至 ' + (m.table && m.table.rows && m.table.rows.length ? m.table.rows.length : "N") + ' 行</p>'
+      : "";
     return '<div class="chat-msg assistant"><div class="chat-bubble">' + renderText(m.content) +
+      table + dax + truncated +
       (cites ? '<div class="chat-cites">' + cites + "</div>" : "") + "</div></div>";
   }
 
   function renderThread() {
     var thread = document.querySelector(".chat-thread");
     if (!thread) return;
-    thread.innerHTML = state.messages.map(messageHtml).join("") || emptyHtml();
+    thread.innerHTML = activeMessages().map(messageHtml).join("") || emptyHtml();
     var mode = document.querySelector(".chat-mode");
     if (mode) mode.textContent = modeLabel(state.provider);
     var notice = document.querySelector(".chat-notice");
@@ -367,18 +463,24 @@
 
   function saveHistory() {
     try {
-      sessionStorage.setItem(HISTORY_KEY, JSON.stringify(state.messages.slice(-MAX_TURNS * 2)));
+      sessionStorage.setItem(historyKey(), JSON.stringify(activeMessages().slice(-MAX_TURNS * 2)));
     } catch (e) {}
   }
 
-  function restoreHistory() {
+  function readHistory(key) {
     try {
-      var raw = sessionStorage.getItem(HISTORY_KEY);
+      var raw = sessionStorage.getItem(key);
       if (raw) {
         var parsed = JSON.parse(raw);
-        state.messages = Array.isArray(parsed) ? parsed : [];
+        return Array.isArray(parsed) ? parsed : [];
       }
-    } catch (e) { state.messages = []; }
+    } catch (e) { /* ignore */ }
+    return [];
+  }
+
+  function restoreHistory() {
+    state.messages = readHistory(HISTORY_KEY);
+    state.askMessages = readHistory(ASK_HISTORY_KEY);
   }
 
   function openSettings() {
@@ -461,6 +563,29 @@
   }
 
   /* ---------- 页面 ---------- */
+  function tabsHtml() {
+    if (!window.L2Auth || L2Auth.mode !== "api") return "";
+    var meta = '<button type="button" class="chat-tab' + (state.tab === "meta" ? " on" : "") + '" data-tab="meta">元数据问答</button>';
+    var ask = '<button type="button" class="chat-tab' + (state.tab === "ask" ? " on" : "") + '" data-tab="ask">数据查询</button>';
+    return '<div class="chat-tabs">' + meta + ask + "</div>";
+  }
+
+  function switchTab(tab) {
+    if (tab !== "meta" && tab !== "ask") return;
+    if (tab === state.tab) return;
+    saveHistory();
+    state.tab = tab;
+    state.notice = "";
+    renderThread();
+    var tabs = document.querySelectorAll(".chat-tab");
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].getAttribute("data-tab") === tab) tabs[i].classList.add("on");
+      else tabs[i].classList.remove("on");
+    }
+    var input = document.querySelector(".chat-input");
+    if (input) input.focus();
+  }
+
   function render() {
     var app = document.getElementById("app");
     var crumb = document.getElementById("crumb");
@@ -468,6 +593,9 @@
     app.className = "";
     state.provider = chooseProvider();
     restoreHistory();
+    if (state.tab === "ask" && !(window.L2Auth && L2Auth.mode === "api")) {
+      state.tab = "meta";
+    }
 
     app.innerHTML =
       '<div class="page chat-page">' +
@@ -475,6 +603,7 @@
           "<p>用自然语言查询报表结构、语义模型表与字段、度量值 DAX、指标映射来源；回答附带可跳转引用。</p></div>" +
           '<div class="head-actions"><span class="chat-mode-badge">模式：<b class="chat-mode">' + esc(modeLabel(state.provider)) + "</b></span>" +
           '<button type="button" class="btn small chat-settings-btn">模型设置</button></div></div>' +
+        tabsHtml() +
         '<p class="chat-notice" role="alert" hidden></p>' +
         '<div class="chat-thread" role="log" aria-live="polite"></div>' +
         '<form class="chat-compose">' +
@@ -484,6 +613,14 @@
       "</div>";
 
     app.querySelector(".chat-settings-btn").addEventListener("click", openSettings);
+
+    var tabs = app.querySelector(".chat-tabs");
+    if (tabs) {
+      tabs.addEventListener("click", function (e) {
+        var btn = e.target.closest(".chat-tab");
+        if (btn) switchTab(btn.getAttribute("data-tab"));
+      });
+    }
 
     if (crumb) {
       crumb.innerHTML = '<a href="#/">工作台</a><span class="crumb-sep">/</span><b>ChatBI</b>';
