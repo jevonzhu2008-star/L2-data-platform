@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-08 10:20",
+ "generatedAt": "2026-11-10 10:17",
  "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
  "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
  "tables": [
@@ -208,6 +208,10 @@
     {
      "name": "生产阶段区域",
      "dataType": "string"
+    },
+    {
+     "name": "主要耗材用量排序",
+     "dataType": "double"
     }
    ]
   },
@@ -262,6 +266,10 @@
     {
      "name": "成本指标排序",
      "dataType": "double"
+    },
+    {
+     "name": "产品",
+     "dataType": "string"
     }
    ]
   },
@@ -832,6 +840,7 @@
   "业务板块",
   "业务板块排序",
   "主要耗材用量",
+  "主要耗材用量排序",
   "产品",
   "产品排序",
   "公司代码",
