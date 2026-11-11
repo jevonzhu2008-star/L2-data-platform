@@ -1,6 +1,6 @@
 window.L2_CHAT_INDEX = {
  "version": "1",
- "generatedAt": "2026-11-11 13:48",
+ "generatedAt": "2026-11-11 14:17",
  "summary": "CMOC L2 PBI 报表开发平台：11 个报表页，语义模型含 15 张表、24 个度量值、17 条关系；另有 13 个指标映射 Excel。可回答报表结构、表与字段、度量值 DAX、指标口径与映射来源；平台不提供业务数值查询。",
  "objects": [
   {
