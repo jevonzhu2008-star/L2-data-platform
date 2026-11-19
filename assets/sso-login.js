@@ -35,6 +35,13 @@
 
   if (!btn) return;
 
+  /* 内网 IIS 走服务端账号；桌面版 file:// 无法登记重定向 URI，均不显示公网 SSO */
+  if ((window.L2Auth && L2Auth.mode === "api") || location.protocol === "file:") {
+    btn.style.display = "none";
+    if (note) note.style.display = "none";
+    return;
+  }
+
   if (!window.msal || !cfg.clientId) {
     btn.disabled = true;
     btn.textContent = "Microsoft 登录待配置";
