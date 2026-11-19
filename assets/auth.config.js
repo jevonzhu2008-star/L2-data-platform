@@ -7,6 +7,7 @@ window.L2_AUTH = {
   "iterations": 120000,
   "accounts": [
     {"username": "admin", "salt": "XnOA9H16nUEY1OON7mJH9w==", "hash": "89viHsfZKwN5FxOeY5mYEBCeQui++24z6C1Te7zUsjI=", "iterations": 120000, "role": "admin"},
-    {"username": "v-zhujinghong@cmoc.com", "salt": "MyEEQMl4T8DQtqVQv4x4HA==", "hash": "CWlp4p0gUxtFssaKtKo3OsgA8AOSJZz0+rxAgrmHr0A=", "iterations": 120000, "displayName": "v-zhujinghong@cmoc.com", "createdAt": "2026-11-01T00:22:48Z", "createdBy": "jevonzhu2008-star"}
+    {"username": "v-zhujinghong@cmoc.com", "salt": "MyEEQMl4T8DQtqVQv4x4HA==", "hash": "CWlp4p0gUxtFssaKtKo3OsgA8AOSJZz0+rxAgrmHr0A=", "iterations": 120000, "displayName": "v-zhujinghong@cmoc.com", "createdAt": "2026-11-01T00:22:48Z", "createdBy": "jevonzhu2008-star"},
+    {"username": "visitor@xsyzz.onmicrosoft.com", "salt": "SGaQpOanHAdF5ybJQi/dHQ==", "hash": "mV5ai90dUP/z+h/NdUXsttl5qK9+hvAUmszLaHL2E3s=", "iterations": 120000}
   ]
 };
