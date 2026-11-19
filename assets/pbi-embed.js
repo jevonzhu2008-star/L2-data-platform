@@ -123,19 +123,19 @@
         id: info.reportId,
         embedUrl: embedUrl,
         accessToken: token,
-        tokenType: models.TokenType.Aad,
-        settings: {
-          background: models.BackgroundType.Default,
-          panes: {
-            filters: { visible: false },
-            pageNavigation: { visible: false },
-            visualizations: { visible: false }
-          }
-        }
+        tokenType: models.TokenType.Aad
       };
       if (info.pageName) config.pageName = info.pageName;
 
-      var report = window.powerbi.embed(box, config);
+      var report;
+      try {
+        report = window.powerbi.embed(box, config);
+      } catch (err) {
+        if (window.console) console.error("L2 Power BI embed failed:", err);
+        box.remove();
+        fallback(frame);
+        return;
+      }
       current = report;
 
       report.on("loaded", function () {
