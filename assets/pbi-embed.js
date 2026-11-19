@@ -115,7 +115,13 @@
         fallback(frame);
         return;
       }
-      var models = window.powerbi.models;
+      var ns = window["powerbi-client"] || {};
+      var models = ns.models;
+      if (!models || !window.powerbi || typeof window.powerbi.embed !== "function") {
+        box.remove();
+        fallback(frame);
+        return;
+      }
       var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=" + encodeURIComponent(info.reportId) +
         (info.groupId ? "&groupId=" + encodeURIComponent(info.groupId) : "");
       var config = {
