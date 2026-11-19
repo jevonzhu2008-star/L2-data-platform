@@ -125,9 +125,28 @@ input[type=text]:focus, input[type=password]:focus {
 
     <button class="sso" id="ssoBtn" type="button">使用 Microsoft 账号登录</button>
     <p class="sso-note" id="ssoNote"></p>
+    <p class="error" id="ssoError" role="alert" hidden></p>
+
+    <div class="divider" id="localDivider" hidden><span>或使用平台账号</span></div>
+    <p class="local-note" id="localNote" hidden>平台账号仅用于离线/应急浏览；在线报表请使用 Microsoft 登录。</p>
+
+    <form id="loginForm" novalidate hidden>
+      <label>账号
+        <input id="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      </label>
+      <label>密码
+        <span class="pwd">
+          <input id="password" type="password" autocomplete="current-password" required>
+          <button type="button" id="togglePwd" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+      <label class="remember"><input id="remember" type="checkbox"> 记住我（7 天）</label>
+      <p class="error" id="error" role="alert" hidden></p>
+      <button class="submit" id="submitBtn" type="submit">登 录</button>
+    </form>
 
 
-    <div class="demo">
+    <div class="demo" id="demoBox">
       <b>Power BI 演示账号 · 只读</b>
       <div>在 Microsoft 登录页使用：</div>
       <div>账号：<code>visitor@xsyzz.onmicrosoft.com</code></div>
@@ -144,6 +163,7 @@ input[type=text]:focus, input[type=password]:focus {
 <script src="assets/sso.config.js?v=20261120h"></script>
 <script src="assets/auth.config.js?v=20261120h"></script>
 <script src="assets/auth.js?v=20261120h"></script>
+<script src="assets/login-local.js?v=20261120h"></script>
 <script src="assets/sso-login.js?v=20261120h"></script>
 <script>
 (function () {
