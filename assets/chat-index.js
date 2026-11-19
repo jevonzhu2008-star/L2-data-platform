@@ -1,14 +1,14 @@
 window.L2_CHAT_INDEX = {
  "version": "1",
- "generatedAt": "2026-11-11 17:48",
- "summary": "CMOC L2 PBI 报表开发平台：11 个报表页，语义模型含 15 张表、24 个度量值、17 条关系；另有 13 个指标映射 Excel。可回答报表结构、表与字段、度量值 DAX、指标口径与映射来源；平台不提供业务数值查询。",
+ "generatedAt": "2026-11-19 18:09",
+ "summary": "CMOC L2 PBI 报表开发平台：11 个报表页，语义模型含 15 张表、27 个度量值、17 条关系；另有 14 个指标映射 Excel。可回答报表结构、表与字段、度量值 DAX、指标口径与映射来源；平台不提供业务数值查询。",
  "objects": [
   {
    "id": "table:L2-01-02 集团合并利润汇总表",
    "kind": "table",
    "code": "L2-01-02",
    "name": "L2-01-02 集团合并利润汇总表",
-   "text": "语义模型表：L2-01-02 集团合并利润汇总表（fact）。字段：加载日期、结构唯一ID、季度、当月YTD、同比YTD、去年同期YTD、预算YTD、预算达成率、环比MTD、当月MTD、上月MTD、月份、实际值、月份排序、结构、结构排序。来源：SAP BW；SharePoint",
+   "text": "语义模型表：L2-01-02 集团合并利润汇总表（fact）。字段：加载日期、结构唯一ID、季度、当月YTD、同比YTD、去年同期YTD、预算YTD、预算达成率、环比MTD、当月MTD、上月MTD、月份、实际值、月份排序、结构、结构排序、占位。来源：SAP BW；SharePoint",
    "keywords": [
     "L2-01-02 集团合并利润汇总表",
     "L2-01-02",
@@ -27,7 +27,8 @@ window.L2_CHAT_INDEX = {
     "实际值",
     "月份排序",
     "结构",
-    "结构排序"
+    "结构排序",
+    "占位"
    ],
    "route": "#/model/L2-01-02%20%E9%9B%86%E5%9B%A2%E5%90%88%E5%B9%B6%E5%88%A9%E6%B6%A6%E6%B1%87%E6%80%BB%E8%A1%A8"
   },
@@ -79,7 +80,7 @@ window.L2_CHAT_INDEX = {
    "kind": "table",
    "code": "L2-01-14",
    "name": "L2-01-14 物料单耗月表",
-   "text": "语义模型表：L2-01-14 物料单耗月表（fact）。字段：单位、矿体、加载日期、指标名称、指标值、指标名称排序、单位排序、矿体排序、主要耗材用量、区域排序、生产阶段区域、主要耗材用量排序。来源：SAP BW；SharePoint",
+   "text": "语义模型表：L2-01-14 物料单耗月表（fact）。字段：单位、矿体、加载日期、指标名称、指标值、指标名称排序、矿体排序、主要耗材用量、区域排序、生产阶段区域、主要耗材用量排序。来源：SAP BW；SharePoint",
    "keywords": [
     "L2-01-14 物料单耗月表",
     "L2-01-14",
@@ -89,7 +90,6 @@ window.L2_CHAT_INDEX = {
     "指标名称",
     "指标值",
     "指标名称排序",
-    "单位排序",
     "矿体排序",
     "主要耗材用量",
     "区域排序",
@@ -147,7 +147,7 @@ window.L2_CHAT_INDEX = {
    "kind": "table",
    "code": "L2-03-02",
    "name": "L2-03-02 财务费用汇总表",
-   "text": "语义模型表：L2-03-02 财务费用汇总表（fact）。字段：加载日期、指标名称、指标值、指标排序、结构排序、结构唯一ID、结构。来源：SAP BW；SharePoint",
+   "text": "语义模型表：L2-03-02 财务费用汇总表（fact）。字段：加载日期、指标名称、指标值、指标排序、结构排序、结构唯一ID、结构、期间。来源：SAP BW；SharePoint",
    "keywords": [
     "L2-03-02 财务费用汇总表",
     "L2-03-02",
@@ -157,7 +157,8 @@ window.L2_CHAT_INDEX = {
     "指标排序",
     "结构排序",
     "结构唯一ID",
-    "结构"
+    "结构",
+    "期间"
    ],
    "route": "#/model/L2-03-02%20%E8%B4%A2%E5%8A%A1%E8%B4%B9%E7%94%A8%E6%B1%87%E6%80%BB%E8%A1%A8"
   },
@@ -186,7 +187,7 @@ window.L2_CHAT_INDEX = {
    "kind": "table",
    "code": "L2-04-01",
    "name": "L2-04-01 库存汇总表",
-   "text": "语义模型表：L2-04-01 库存汇总表（fact）。字段：分类、结构、矿体、加载日期、分类排序、结构排序、矿体排序、指标名称、矿体v、指标值、口径、口径排序。来源：SAP BW；SharePoint",
+   "text": "语义模型表：L2-04-01 库存汇总表（fact）。字段：分类、结构、矿体、加载日期、分类排序、结构排序、矿体排序、指标名称、矿体v、指标值、百万人民币、口径排序、分类ID。来源：SAP BW；SharePoint",
    "keywords": [
     "L2-04-01 库存汇总表",
     "L2-04-01",
@@ -200,8 +201,9 @@ window.L2_CHAT_INDEX = {
     "指标名称",
     "矿体v",
     "指标值",
-    "口径",
-    "口径排序"
+    "百万人民币",
+    "口径排序",
+    "分类ID"
    ],
    "route": "#/model/L2-04-01%20%E5%BA%93%E5%AD%98%E6%B1%87%E6%80%BB%E8%A1%A8"
   },
@@ -481,7 +483,7 @@ window.L2_CHAT_INDEX = {
    "kind": "measure",
    "code": "L2-04-01 库存汇总表",
    "name": "金额(人民币)",
-   "text": "度量值：金额(人民币)。DAX：CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(人民币)\")。格式：FormatAmount()。分组：L2-04-01 库存汇总表",
+   "text": "度量值：金额(人民币)。DAX：CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(人民币)\") /1000000。格式：FormatAmount()。分组：L2-04-01 库存汇总表",
    "keywords": [
     "金额(人民币)",
     "L2-04-01 库存汇总表"
@@ -589,12 +591,48 @@ window.L2_CHAT_INDEX = {
    "kind": "measure",
    "code": "L2-04-01 库存汇总表",
    "name": "金额(原币)",
-   "text": "度量值：金额(原币)。DAX：CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(原币)\")。格式：FormatAmount()。分组：L2-04-01 库存汇总表",
+   "text": "度量值：金额(原币)。DAX：CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(原币)\")/1000000。格式：FormatAmount()。分组：L2-04-01 库存汇总表",
    "keywords": [
     "金额(原币)",
     "L2-04-01 库存汇总表"
    ],
    "route": "#/measures/%E9%87%91%E9%A2%9D%28%E5%8E%9F%E5%B8%81%29"
+  },
+  {
+   "id": "measure:L2-03-06运营指标",
+   "kind": "measure",
+   "code": "L2-03-06 矿石成本分析",
+   "name": "L2-03-06运营指标",
+   "text": "度量值：L2-03-06运营指标。DAX：```\nVAR SumOfMetricValue = SUM('L2-03-06 矿石成本分析'[指标值])\nVAR CurrentMetricItem = SELECTEDVALUE('L2-03-06 矿石成本分析'[指标项])\nVAR ResultText =\nSWITCH(\nTRUE(),\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 1,\n\"欠采欠剥\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 2,\n\"欠剥\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 3,\n\"欠采\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 4,\n\"\",\nFORMAT(SumOfMetricValue,\"#,0.00;(#,0.00);0.00\")\n)\nRETURN\nResultText\n```。格式：—。分组：L2-03-06 矿石成本分析",
+   "keywords": [
+    "L2-03-06运营指标",
+    "L2-03-06 矿石成本分析"
+   ],
+   "route": "#/measures/L2-03-06%E8%BF%90%E8%90%A5%E6%8C%87%E6%A0%87"
+  },
+  {
+   "id": "measure:持仓金融投资产品数量",
+   "kind": "measure",
+   "code": "L2-01-03 快报-金融投资业务专属",
+   "name": "持仓金融投资产品数量",
+   "text": "度量值：持仓金融投资产品数量。DAX：DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[金融投资产品])。格式：—。分组：L2-01-03 快报-金融投资业务专属",
+   "keywords": [
+    "持仓金融投资产品数量",
+    "L2-01-03 快报-金融投资业务专属"
+   ],
+   "route": "#/measures/%E6%8C%81%E4%BB%93%E9%87%91%E8%9E%8D%E6%8A%95%E8%B5%84%E4%BA%A7%E5%93%81%E6%95%B0%E9%87%8F"
+  },
+  {
+   "id": "measure:公司数量",
+   "kind": "measure",
+   "code": "L2-01-03 快报-金融投资业务专属",
+   "name": "公司数量",
+   "text": "度量值：公司数量。DAX：DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[公司代码])。格式：—。分组：L2-01-03 快报-金融投资业务专属",
+   "keywords": [
+    "公司数量",
+    "L2-01-03 快报-金融投资业务专属"
+   ],
+   "route": "#/measures/%E5%85%AC%E5%8F%B8%E6%95%B0%E9%87%8F"
   },
   {
    "id": "page:L2-01-02",
@@ -692,7 +730,7 @@ window.L2_CHAT_INDEX = {
    "kind": "page",
    "code": "L2-03-02",
    "name": "L2-03-02 财务费用汇总表",
-   "text": "报表页：L2-03-02 财务费用汇总表（L2-03-02）。视觉对象：card、textbox、slicer、pivotTable。引用表：L2-03-02 财务费用汇总表、日期表",
+   "text": "报表页：L2-03-02 财务费用汇总表（L2-03-02）。视觉对象：card、slicer、textbox、pivotTable。引用表：L2-03-02 财务费用汇总表、日期表",
    "keywords": [
     "L2-03-02 财务费用汇总表",
     "L2-03-02",
@@ -710,7 +748,7 @@ window.L2_CHAT_INDEX = {
    "keywords": [
     "L2-03-06 矿石成本分析",
     "L2-03-06",
-    "L2-03-06指标值",
+    "L2-03-06运营指标",
     "当前月报期间"
    ],
    "route": "#/page/L2-03-06"
@@ -720,7 +758,7 @@ window.L2_CHAT_INDEX = {
    "kind": "page",
    "code": "L2-04-01",
    "name": "L2-04-01库存汇总表",
-   "text": "报表页：L2-04-01库存汇总表（L2-04-01）。视觉对象：slicer、pivotTable、textbox、card。引用表：L2-04-01 库存汇总表、日期表",
+   "text": "报表页：L2-04-01库存汇总表（L2-04-01）。视觉对象：slicer、textbox、card、pivotTable。引用表：L2-04-01 库存汇总表、日期表",
    "keywords": [
     "L2-04-01库存汇总表",
     "L2-04-01",
@@ -851,6 +889,18 @@ window.L2_CHAT_INDEX = {
    "text": "指标映射：L2-03-06 矿石成本分析指标映射（L2-03-06）。工作表：矿体排序、指标项排序、指标名称排序。文件：deliverables/mappings/L2-03-06 矿石成本分析指标映射.xlsx",
    "keywords": [
     "L2-03-06 矿石成本分析指标映射",
+    "L2-03-06"
+   ],
+   "route": "#/mappings/L2-03-06"
+  },
+  {
+   "id": "mapping:L2-03-06 矿石成本分析运营状态",
+   "kind": "mapping",
+   "code": "L2-03-06",
+   "name": "L2-03-06 矿石成本分析运营状态",
+   "text": "指标映射：L2-03-06 矿石成本分析运营状态（L2-03-06）。工作表：Sheet1、Sheet2。文件：deliverables/mappings/L2-03-06 矿石成本分析运营状态.xlsx",
+   "keywords": [
+    "L2-03-06 矿石成本分析运营状态",
     "L2-03-06"
    ],
    "route": "#/mappings/L2-03-06"

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-11 17:48",
+ "generatedAt": "2026-11-19 18:09",
  "workspaceId": "9d8fa59d-4673-4867-9640-b4fd3f4149e1",
  "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
  "tables": [
@@ -70,6 +70,10 @@
     {
      "name": "结构排序",
      "dataType": "double"
+    },
+    {
+     "name": "占位",
+     "dataType": ""
     }
    ]
   },
@@ -187,10 +191,6 @@
     },
     {
      "name": "指标名称排序",
-     "dataType": "double"
-    },
-    {
-     "name": "单位排序",
      "dataType": "double"
     },
     {
@@ -338,6 +338,10 @@
     {
      "name": "结构",
      "dataType": "string"
+    },
+    {
+     "name": "期间",
+     "dataType": "string"
     }
    ]
   },
@@ -424,12 +428,16 @@
      "dataType": "decimal"
     },
     {
-     "name": "口径",
+     "name": "百万人民币",
      "dataType": "string"
     },
     {
      "name": "口径排序",
      "dataType": "double"
+    },
+    {
+     "name": "分类ID",
+     "dataType": "string"
     }
    ]
   },
@@ -666,7 +674,7 @@
   },
   {
    "name": "金额(人民币)",
-   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(人民币)\")",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(人民币)\") /1000000",
    "folder": "L2-04-01 库存汇总表"
   },
   {
@@ -711,8 +719,23 @@
   },
   {
    "name": "金额(原币)",
-   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(原币)\")",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表'[指标值]), 'L2-04-01 库存汇总表'[指标名称] = \"金额(原币)\")/1000000",
    "folder": "L2-04-01 库存汇总表"
+  },
+  {
+   "name": "L2-03-06运营指标",
+   "expression": "```\nVAR SumOfMetricValue = SUM('L2-03-06 矿石成本分析'[指标值])\nVAR CurrentMetricItem = SELECTEDVALUE('L2-03-06 矿石成本分析'[指标项])\nVAR ResultText =\nSWITCH(\nTRUE(),\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 1,\n\"欠采欠剥\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 2,\n\"欠剥\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 3,\n\"欠采\",\nNOT ISBLANK(CurrentMetricItem) && CurrentMetricItem = \"运营状态\" && SumOfMetricValue = 4,\n\"\",\nFORMAT(SumOfMetricValue,\"#,0.00;(#,0.00);0.00\")\n)\nRETURN\nResultText\n```",
+   "folder": "L2-03-06 矿石成本分析"
+  },
+  {
+   "name": "持仓金融投资产品数量",
+   "expression": "DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[金融投资产品])",
+   "folder": "L2-01-03 快报-金融投资业务专属"
+  },
+  {
+   "name": "公司数量",
+   "expression": "DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[公司代码])",
+   "folder": "L2-01-03 快报-金融投资业务专属"
   }
  ],
  "relationships": [
@@ -852,13 +875,14 @@
   "公司代码货币",
   "公司代码货币 级别 01",
   "分类",
+  "分类ID",
   "分类排序",
   "加载日期",
   "区域排序",
   "单位",
   "单位排序",
+  "占位",
   "去年同期YTD",
-  "口径",
   "口径排序",
   "同比YTD",
   "大工序",
@@ -888,10 +912,12 @@
   "月份",
   "月份排序",
   "月排序",
+  "期间",
   "期间名称",
   "期间排序",
   "环比MTD",
   "生产阶段区域",
+  "百万人民币",
   "矿体",
   "矿体v",
   "矿体排序",
@@ -914,15 +940,18 @@
   "L2-01-25指标值",
   "L2-03-02指标值",
   "L2-03-06指标值",
+  "L2-03-06运营指标",
   "L2-05-01指标值",
   "L2-06-01指标值",
   "上月MTD",
+  "公司数量",
   "去年同期YTD",
   "同比YTD",
   "实际值",
   "当前月报期间",
   "当月MTD",
   "当月YTD",
+  "持仓金融投资产品数量",
   "环比MTD",
   "累计实际",
   "累计执行%",
