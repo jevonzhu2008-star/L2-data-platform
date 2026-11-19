@@ -6,5 +6,5 @@ window.L2_SSO = {
   authority: "https://login.microsoftonline.com/b2da9cb2-59ba-4d33-b075-1cb745ddde1c",
   redirectUri: location.origin + location.pathname.replace(/[^/]*$/, "login.html"),
   postLogoutRedirectUri: location.origin + location.pathname.replace(/[^/]*$/, "login.html"),
-  scopes: ["openid", "profile", "email"]
+  scopes: ["openid", "profile", "email", "https://analysis.windows.net/powerbi/api/Report.Read.All"]
 };

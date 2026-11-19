@@ -65,8 +65,22 @@
 
   if (note) note.textContent = "使用 xsyzz 租户的 Microsoft 账号登录；登录后嵌入报表会复用同一会话。";
 
+  function storePbiToken(res) {
+    if (!res || !res.accessToken) return;
+    try {
+      var exp = res.expiresOn ? new Date(res.expiresOn).getTime() : Date.now() + 3300000;
+      sessionStorage.setItem("l2_pbi_token", JSON.stringify({ token: res.accessToken, exp: exp }));
+    } catch (e) { /* ignore */ }
+  }
+
   app.handleRedirectPromise().then(function (resp) {
-    if (resp && resp.account) finish(resp.account);
+    if (!resp || !resp.account) return;
+    storePbiToken(resp);
+    if (resp.accessToken) { finish(resp.account); return; }
+    app.acquireTokenSilent({ scopes: cfg.scopes, account: resp.account }).then(function (r) {
+      storePbiToken(r);
+      finish(resp.account);
+    }).catch(function () { finish(resp.account); });
   }).catch(function (err) {
     showError("Microsoft 登录失败：" + (err && err.message ? err.message : "请重试"));
   });
