@@ -101,6 +101,7 @@ input[type=text]:focus, input[type=password]:focus {
 .sso-note.warn { color: #8A5A00; background: #FFF7E6; border: 1px solid #F5D9A6; border-radius: 7px; padding: 8px 10px; }
 .divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 14px; color: #9A95A8; font-size: 11px; }
 .divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.local-note { margin: -6px 0 12px; font-size: 10.5px; color: #9A95A8; line-height: 1.5; }
 .demo {
   margin-top: 18px; padding: 12px 14px; border-radius: 9px; background: #F4F1FA;
   border: 1px solid #E4DEF4; font-size: 11.5px; color: #4A4558; line-height: 1.8;
@@ -124,7 +125,8 @@ input[type=text]:focus, input[type=password]:focus {
 
     <button class="sso" id="ssoBtn" type="button">使用 Microsoft 账号登录</button>
     <p class="sso-note" id="ssoNote"></p>
-    <div class="divider"><span>或使用平台账号</span></div>
+    <div class="divider"><span>或使用平台账号（离线/应急）</span></div>
+    <p class="local-note">平台账号只用于离线浏览；在线报表请使用上面的 Microsoft 登录。</p>
 
     <form id="loginForm" novalidate>
       <label>账号
@@ -153,11 +155,11 @@ input[type=text]:focus, input[type=password]:focus {
   </section>
 </main>
 
-<script src="assets/vendor/msal-browser.min.js?v=20261120f"></script>
-<script src="assets/sso.config.js?v=20261120f"></script>
-<script src="assets/auth.config.js?v=20261120f"></script>
-<script src="assets/auth.js?v=20261120f"></script>
-<script src="assets/sso-login.js?v=20261120f"></script>
+<script src="assets/vendor/msal-browser.min.js?v=20261120g"></script>
+<script src="assets/sso.config.js?v=20261120g"></script>
+<script src="assets/auth.config.js?v=20261120g"></script>
+<script src="assets/auth.js?v=20261120g"></script>
+<script src="assets/sso-login.js?v=20261120g"></script>
 <script>
 (function () {
   "use strict";

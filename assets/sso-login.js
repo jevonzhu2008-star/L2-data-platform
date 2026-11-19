@@ -63,7 +63,7 @@
     cache: { cacheLocation: "localStorage" }
   });
 
-  if (note) note.textContent = "使用 xsyzz 租户的 Microsoft 账号登录；登录后嵌入报表会复用同一会话。";
+  if (note) note.textContent = "使用 xsyzz 租户的 Microsoft 账号登录；登录一次后，报表会直接用同一 Microsoft 令牌加载，无需再次登录。";
 
   function storePbiToken(res) {
     if (!res || !res.accessToken) return;
