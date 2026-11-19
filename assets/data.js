@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-20 06:36",
-  "generatedAt": "2026-11-20T06:36:43",
+  "updated": "2026-11-20 06:38",
+  "generatedAt": "2026-11-20T06:38:08",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -33,7 +33,7 @@ window.L2_DATA = {
  },
  "service": {
   "host": "https://app.powerbi.com",
-  "pbipReportId": "0fff0f57-7d66-48de-835a-be8ba7c4f1f9",
+  "pbipReportId": "4d9120c8-e967-4d33-a319-abfb1ff183b6",
   "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
   "workspaceId": "eb90e767-02ad-4dd7-9309-ec8e96cca923",
   "tenantId": "",
