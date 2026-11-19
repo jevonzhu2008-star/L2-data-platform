@@ -125,26 +125,11 @@ input[type=text]:focus, input[type=password]:focus {
 
     <button class="sso" id="ssoBtn" type="button">使用 Microsoft 账号登录</button>
     <p class="sso-note" id="ssoNote"></p>
-    <div class="divider"><span>或使用平台账号（离线/应急）</span></div>
-    <p class="local-note">平台账号只用于离线浏览；在线报表请使用上面的 Microsoft 登录。</p>
 
-    <form id="loginForm" novalidate>
-      <label>账号
-        <input id="username" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required autofocus>
-      </label>
-      <label>密码
-        <span class="pwd">
-          <input id="password" type="password" autocomplete="current-password" required>
-          <button type="button" id="togglePwd" aria-label="显示密码">显示</button>
-        </span>
-      </label>
-      <label class="remember"><input id="remember" type="checkbox"> 记住我（7 天）</label>
-      <p class="error" id="error" role="alert" hidden></p>
-      <button class="submit" id="submitBtn" type="submit">登 录</button>
-    </form>
 
     <div class="demo">
       <b>Power BI 演示账号 · 只读</b>
+      <div>在 Microsoft 登录页使用：</div>
       <div>账号：<code>visitor@xsyzz.onmicrosoft.com</code></div>
       <div>密码：<code>Tosa6659@2026</code></div>
       <p>仅用于演示只读浏览；请勿修改账号设置或用于真实业务操作。</p>
@@ -155,26 +140,14 @@ input[type=text]:focus, input[type=password]:focus {
   </section>
 </main>
 
-<script src="assets/vendor/msal-browser.min.js?v=20261120g"></script>
-<script src="assets/sso.config.js?v=20261120g"></script>
-<script src="assets/auth.config.js?v=20261120g"></script>
-<script src="assets/auth.js?v=20261120g"></script>
-<script src="assets/sso-login.js?v=20261120g"></script>
+<script src="assets/vendor/msal-browser.min.js?v=20261120h"></script>
+<script src="assets/sso.config.js?v=20261120h"></script>
+<script src="assets/auth.config.js?v=20261120h"></script>
+<script src="assets/auth.js?v=20261120h"></script>
+<script src="assets/sso-login.js?v=20261120h"></script>
 <script>
 (function () {
   "use strict";
-
-  var form = document.getElementById("loginForm");
-  var username = document.getElementById("username");
-  var password = document.getElementById("password");
-  var remember = document.getElementById("remember");
-  var error = document.getElementById("error");
-  var submitBtn = document.getElementById("submitBtn");
-  var toggle = document.getElementById("togglePwd");
-  var modeTip = document.getElementById("modeTip");
-
-  var isApi = !!(window.L2Auth && L2Auth.mode === "api");
-
   function nextUrl() {
     var next = new URLSearchParams(location.search).get("next") || "index.html";
     if (!/^[A-Za-z0-9._\/#?=&%-]+$/.test(next) || next.indexOf("//") >= 0 ||
@@ -183,96 +156,11 @@ input[type=text]:focus, input[type=password]:focus {
     }
     return next;
   }
-  function showError(msg) { error.textContent = msg; error.hidden = false; }
-  function clearError() { error.hidden = true; }
-  function setBusy(busy) {
-    submitBtn.disabled = busy;
-    submitBtn.textContent = busy ? "登录中…" : "登 录";
-  }
-
-  if (window.L2Auth && L2Auth.isAuthed()) {
-    location.replace(nextUrl());
-    return;
-  }
-
-  /* ---------- 模式提示 ---------- */
-  if (isApi) {
-    modeTip.textContent = "账号由平台管理员在后台创建；忘记密码请联系管理员重置。";
-    L2Auth.health().then(function (info) {
-      if (!info && L2Auth.serverOnly) {
-        modeTip.textContent = "当前无法连接账号服务，请确认访问地址正确或稍后重试；如持续失败请联系管理员。";
-        submitBtn.disabled = true;
-        submitBtn.textContent = "服务暂不可用";
-      }
-    });
-  } else if (L2Auth && L2Auth.serverOnly) {
-    modeTip.textContent = "当前无法连接账号服务，请确认内网地址或稍后重试。";
-    submitBtn.disabled = true;
-    submitBtn.textContent = "服务暂不可用";
-  } else {
-    modeTip.textContent = "账号由管理员分配：如需开通账号或重置密码，请联系平台管理员。";
-  }
-
-  toggle.addEventListener("click", function () {
-    var show = password.type === "password";
-    password.type = show ? "text" : "password";
-    toggle.textContent = show ? "隐藏" : "显示";
-    toggle.setAttribute("aria-label", show ? "隐藏密码" : "显示密码");
-  });
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    clearError();
-    var u = username.value.trim();
-    var p = password.value;
-    if (!u || !p) { showError("请输入账号和密码"); return; }
-    setBusy(true);
-
-    if (isApi) {
-      L2Auth.login(u, p, remember.checked).then(function () {
-        location.replace(nextUrl());
-      }).catch(function (err) {
-        showError(friendly(err, "账号或密码不正确"));
-        setBusy(false);
-        password.value = "";
-        password.focus();
-      });
-      return;
-    }
-
-    // 离线版：账号表在 GitHub Pages 上会被缓存 10 分钟，登录前强制取一次最新的
-    var fresh = L2Auth.reloadConfig ? L2Auth.reloadConfig() : Promise.resolve();
-    fresh.then(function () { return L2Auth.verify(u, p); }).then(function (user) {
-      if (!user) {
-        showError("账号或密码不正确");
-        setBusy(false);
-        password.value = "";
-        password.focus();
-        return;
-      }
-      L2Auth.saveToken(user, remember.checked, null,
-        L2Auth.roleOf ? L2Auth.roleOf(user) : "user",
-        L2Auth.displayNameOf ? L2Auth.displayNameOf(user) : user);
-      location.replace(nextUrl());
-    }).catch(function () {
-      showError("登录失败，请刷新页面后重试");
-      setBusy(false);
-    });
-  });
-
-  function friendly(err, fallback) {
-    if (!err) return fallback;
-    if (err.code === "invalid_credentials") return "账号或密码不正确";
-    if (err.code === "account_locked") return err.retryAfter ? ("登录失败次数过多，请 " + Math.ceil(err.retryAfter / 60) + " 分钟后再试") : "登录失败次数过多，请稍后再试";
-    if (err.code === "account_disabled") return "账号已被禁用，请联系管理员";
-    if (err.code === "rate_limited") return "操作过于频繁，请稍后再试";
-    if (err.message) return err.message;
-    return fallback;
-  }
-
-  [username, password].forEach(function (el) {
-    el.addEventListener("input", clearError);
-  });
+  if (window.L2Auth && L2Auth.isAuthed()) { location.replace(nextUrl()); return; }
+  var isLocalShell = (window.L2Auth && L2Auth.mode === "api") || location.protocol === "file:" ||
+    /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  var tip = document.getElementById("modeTip");
+  if (!isLocalShell && tip) tip.textContent = "使用 Microsoft 账号登录；演示账号仅用于只读浏览。";
 })();
 </script>
 </body>

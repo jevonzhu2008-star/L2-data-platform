@@ -7,7 +7,7 @@
   var cfg = window.L2_SSO || {};
   var btn = document.getElementById("ssoBtn");
   var note = document.getElementById("ssoNote");
-  var error = document.getElementById("error");
+  var error = document.getElementById("ssoError") || document.getElementById("error");
 
   function showError(msg) {
     if (!error) return;
