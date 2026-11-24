@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-24 18:47",
-  "generatedAt": "2026-11-24T18:47:53",
+  "updated": "2026-11-24 19:17",
+  "generatedAt": "2026-11-24T19:17:53",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -12,7 +12,7 @@ window.L2_DATA = {
  "stats": {
   "pages": 14,
   "contentPages": 13,
-  "measures": 31,
+  "measures": 32,
   "factTables": 13,
   "relationships": 20,
   "parameters": 10,
@@ -2964,7 +2964,8 @@ window.L2_DATA = {
     }
    ],
    "measureNames": [
-    "L2-01-04指标值"
+    "L2-01-04指标值",
+    "v_L2-01-04指标值"
    ]
   },
   {
@@ -5041,6 +5042,14 @@ window.L2_DATA = {
      "name": "L2-06-01指标值v2",
      "expression": "SUM('L2-06-01 主要产品价格波动汇总表v2'[指标值])",
      "folder": "L2-06-01 主要产品价格波动汇总表v2",
+     "format": "FormatAmount()",
+     "description": ""
+    },
+    {
+     "name": "v_L2-01-04指标值",
+     "expression": "IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)",
+     "folder": "L2-01-04 S3 C1成本变化步行图VS上月",
+     "format": "FormatAmount()",
      "description": ""
     }
    ],
@@ -5634,8 +5643,15 @@ window.L2_DATA = {
    "name": "L2-06-01指标值v2",
    "expression": "SUM('L2-06-01 主要产品价格波动汇总表v2'[指标值])",
    "description": "",
-   "format": "",
+   "format": "FormatAmount()",
    "folder": "L2-06-01 主要产品价格波动汇总表v2"
+  },
+  {
+   "name": "v_L2-01-04指标值",
+   "expression": "IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)",
+   "description": "",
+   "format": "FormatAmount()",
+   "folder": "L2-01-04 S3 C1成本变化步行图VS上月"
   }
  ],
  "relationships": [
