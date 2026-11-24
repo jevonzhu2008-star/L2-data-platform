@@ -2,8 +2,8 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-24 19:17",
-  "generatedAt": "2026-11-24T19:17:53",
+  "updated": "2026-11-24 19:48",
+  "generatedAt": "2026-11-24T19:48:00",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
@@ -2965,7 +2965,7 @@ window.L2_DATA = {
    ],
    "measureNames": [
     "L2-01-04指标值",
-    "v_L2-01-04指标值"
+    "vw_L2-01-04指标值"
    ]
   },
   {
@@ -5046,7 +5046,7 @@ window.L2_DATA = {
      "description": ""
     },
     {
-     "name": "v_L2-01-04指标值",
+     "name": "vw_L2-01-04指标值",
      "expression": "IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)",
      "folder": "L2-01-04 S3 C1成本变化步行图VS上月",
      "format": "FormatAmount()",
@@ -5647,7 +5647,7 @@ window.L2_DATA = {
    "folder": "L2-06-01 主要产品价格波动汇总表v2"
   },
   {
-   "name": "v_L2-01-04指标值",
+   "name": "vw_L2-01-04指标值",
    "expression": "IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)",
    "description": "",
    "format": "FormatAmount()",

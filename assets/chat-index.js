@@ -1,6 +1,6 @@
 window.L2_CHAT_INDEX = {
  "version": "1",
- "generatedAt": "2026-11-24 19:17",
+ "generatedAt": "2026-11-24 19:48",
  "summary": "CMOC L2 PBI 报表开发平台：13 个报表页，语义模型含 17 张表、32 个度量值、20 条关系；另有 14 个指标映射 Excel。可回答报表结构、表与字段、度量值 DAX、指标口径与映射来源；平台不提供业务数值查询。",
  "objects": [
   {
@@ -729,16 +729,16 @@ window.L2_CHAT_INDEX = {
    "route": "#/measures/L2-06-01%E6%8C%87%E6%A0%87%E5%80%BCv2"
   },
   {
-   "id": "measure:v_L2-01-04指标值",
+   "id": "measure:vw_L2-01-04指标值",
    "kind": "measure",
    "code": "L2-01-04 S3 C1成本变化步行图VS上月",
-   "name": "v_L2-01-04指标值",
-   "text": "度量值：v_L2-01-04指标值。DAX：IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)。格式：FormatAmount()。分组：L2-01-04 S3 C1成本变化步行图VS上月",
+   "name": "vw_L2-01-04指标值",
+   "text": "度量值：vw_L2-01-04指标值。DAX：IF(\nHASONEFILTER('L2-01-04 S3 C1成本变化步行图VS上月'[矿体]) ,\n[L2-01-04指标值],\n\"\"\n)。格式：FormatAmount()。分组：L2-01-04 S3 C1成本变化步行图VS上月",
    "keywords": [
-    "v_L2-01-04指标值",
+    "vw_L2-01-04指标值",
     "L2-01-04 S3 C1成本变化步行图VS上月"
    ],
-   "route": "#/measures/v_L2-01-04%E6%8C%87%E6%A0%87%E5%80%BC"
+   "route": "#/measures/vw_L2-01-04%E6%8C%87%E6%A0%87%E5%80%BC"
   },
   {
    "id": "page:L2-01-02",
