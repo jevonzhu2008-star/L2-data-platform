@@ -2,19 +2,19 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-24 18:17",
-  "generatedAt": "2026-11-24T18:17:52",
+  "updated": "2026-11-24 18:47",
+  "generatedAt": "2026-11-24T18:47:53",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
   ]
  },
  "stats": {
-  "pages": 13,
-  "contentPages": 12,
-  "measures": 30,
-  "factTables": 12,
-  "relationships": 19,
+  "pages": 14,
+  "contentPages": 13,
+  "measures": 31,
+  "factTables": 13,
+  "relationships": 20,
   "parameters": 10,
   "mappings": 14,
   "pbix": 10
@@ -197,6 +197,7 @@ window.L2_DATA = {
    "name": "销售",
    "desc": "主要产品价格波动",
    "codes": [
+    "L2-06-01",
     "L2-06-01"
    ]
   }
@@ -2190,6 +2191,156 @@ window.L2_DATA = {
     ],
     "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-06-01%20%E4%B8%BB%E8%A6%81%E4%BA%A7%E5%93%81%E4%BB%B7%E6%A0%BC%E6%B3%A2%E5%8A%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
    }
+  },
+  {
+   "id": "7e8ef9cd454c55577ec7",
+   "code": "L2-06-01",
+   "name": "L2-06-01 主要产品价格波动汇总表v2",
+   "displayName": "L2-06-01 主要产品价格波动汇总表v2",
+   "isCover": false,
+   "hidden": true,
+   "width": 1920,
+   "height": 1080,
+   "displayOption": "FitToPage",
+   "visuals": [
+    {
+     "type": "pivotTable",
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
+     "refs": [
+      "L2-06-01 主要产品价格波动汇总表v2.产品",
+      "L2-06-01 主要产品价格波动汇总表v2.指标口径",
+      "L2-06-01 主要产品价格波动汇总表v2.指标名称",
+      "Sum(L2-06-01 主要产品价格波动汇总表v2.指标值)"
+     ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    },
+    {
+     "type": "slicer",
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "日期表.年月筛选"
+     ]
+    },
+    {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
+    }
+   ],
+   "visualCount": 4,
+   "visualTypes": {
+    "pivotTable": 1,
+    "textbox": 1,
+    "slicer": 1,
+    "card": 1
+   },
+   "tables": [
+    "L2-06-01 主要产品价格波动汇总表v2",
+    "Sum(L2-06-01 主要产品价格波动汇总表v2",
+    "日期表"
+   ],
+   "measures": [
+    "当前月报期间"
+   ],
+   "sources": [
+    "SAP BW",
+    "SharePoint"
+   ],
+   "refs": [
+    "L2-06-01 主要产品价格波动汇总表v2.产品",
+    "L2-06-01 主要产品价格波动汇总表v2.指标口径",
+    "L2-06-01 主要产品价格波动汇总表v2.指标名称",
+    "Sum(L2-06-01 主要产品价格波动汇总表v2.指标值)",
+    "度量值.当前月报期间",
+    "日期表.年月筛选"
+   ],
+   "screenshot": "assets/screens/service/L2-06-01.png",
+   "thumb": "assets/screens/service/L2-06-01-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-05 12:25",
+   "mapping": {
+    "code": "L2-06-01",
+    "name": "L2-06-01 主要产品价格波动汇总表指标映射",
+    "file": "deliverables/mappings/L2-06-01 主要产品价格波动汇总表指标映射.xlsx",
+    "sheets": [
+     {
+      "name": "产品排序",
+      "rows": 6,
+      "cols": 2,
+      "samples": [
+       [
+        "产品排序",
+        "产品"
+       ],
+       [
+        "1",
+        "铜"
+       ],
+       [
+        "2",
+        "钴"
+       ]
+      ]
+     },
+     {
+      "name": "指标名称排序",
+      "rows": 14,
+      "cols": 2,
+      "samples": [
+       [
+        "指标名称排序",
+        "指标名称"
+       ],
+       [
+        "1",
+        "LME铜月均价（美元/吨）"
+       ],
+       [
+        "2",
+        "TFM+KFM临票价（美元/吨）"
+       ]
+      ]
+     },
+     {
+      "name": "指标口径排序",
+      "rows": 12,
+      "cols": 2,
+      "samples": [
+       [
+        "指标口径排序",
+        "指标口径"
+       ],
+       [
+        "1",
+        "FY（Y-2）"
+       ],
+       [
+        "2",
+        "FY（Y-1）"
+       ]
+      ]
+     }
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-06-01%20%E4%B8%BB%E8%A6%81%E4%BA%A7%E5%93%81%E4%BB%B7%E6%A0%BC%E6%B3%A2%E5%8A%A8%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
+   }
   }
  ],
  "tables": [
@@ -4086,7 +4237,11 @@ window.L2_DATA = {
      "toColumn": "日期"
     }
    ],
-   "measureNames": []
+   "measureNames": [
+    "量(吨)v2",
+    "金额(人民币)v2",
+    "金额(原币)v2"
+   ]
   },
   {
    "name": "L2-05-01 硫磺及硫酸价格分析月报",
@@ -4464,6 +4619,141 @@ window.L2_DATA = {
    ]
   },
   {
+   "name": "L2-06-01 主要产品价格波动汇总表v2",
+   "code": "L2-06-01",
+   "kind": "fact",
+   "file": "L2-06-01 主要产品价格波动汇总表v2.tmdl",
+   "columns": [
+    {
+     "name": "产品",
+     "dataType": "string",
+     "summarizeBy": "none",
+     "sortByColumn": "产品排序"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string",
+     "summarizeBy": "none",
+     "sortByColumn": "指标名称排序"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime",
+     "formatString": "Long Date",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "指标口径",
+     "dataType": "string",
+     "summarizeBy": "none",
+     "sortByColumn": "指标口径排序"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "Month",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "指标口径排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "指标名称排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "产品排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    }
+   ],
+   "measures": [],
+   "source": [
+    "SAP BW",
+    "SharePoint"
+   ],
+   "sourceNote": "SAP BW、SharePoint",
+   "process": {
+    "mode": "import",
+    "mcode": "let\n\t    /*\n\t    【查询名称】主要产品价格波动汇总表 BW 取数\n\t    【对应报表】L2-06-01 主要产品价格波动汇总表\n\t    【BW对象】Cube:ZRSD_CP001，Query:ZRSD_CP001/ZRSD_CP001_Q0001\n\t    【说明】\n\t        1、数据源：SAP BW QAS + SharePoint「L2-06-01 主要产品价格波动汇总表指标映射.xlsx」的 产品排序 / 指标名称排序 / 指标口径排序 三张 Sheet\n\t        2、维度：产品 [4ZRSD_CP001-ZCPFLMC]、指标名称 [4ZRSD_CP001-ZCPZMC]\n\t        3、指标：13 个 ——（M-1）/（M-2）/（M-3）月、Q1~Q4 季度、（当年）预算、FY（Y-1）/ FY（Y-2）、当月、季度环比% / 月度环比%\n\t        4、循环：p_月报起始日期 ~ p_月报终止日期 逐月取数后纵向合并，[ZMSDQNY] 传 YYYYMM 文本\n\t        5、清洗与长表化：13 个指标列 null → 0，逆透视成 [指标口径] / [指标值]\n\t        6、排序：依次左连接 指标口径排序 / 指标名称排序 / 产品排序\n\t        7、报表用法：矩阵行 = 产品 → 指标名称，列 = 指标口径，值 = 度量值「L2-06-01指标值」\n\t        8、风险：BW 返回的产品 / 指标名称必须与排序映射表一致，否则排序列为 null\n\t    */\n\t    // ========== 1. 读取 SharePoint 映射表 ==========\n\t    // 列出财经 SharePoint 站点文件\n\t    源 = SharePoint.Files(财经SharePoint站点, [ApiVersion = 15]),\n\t    // 筛出本表指标映射 xlsx 并取二进制内容\n\t    指标映射文件 = Table.SelectRows(源, each Text.Contains([Name], \"L2-06-01 主要产品价格波动汇总表指标映射\") and [Extension] = \".xlsx\"){0}[Content],\n\t    // 工作簿只解析一次，各 Sheet 共用\n\t    指标映射工作簿 = Excel.Workbook(指标映射文件, true),\n\t    // 按匹配键去重，保证左连接一对一\n\t    产品排序映射表 = Table.Distinct(指标映射工作簿{[Item = \"产品排序\", Kind = \"Sheet\"]}[Data], {\"产品\"}),\n\t    指标名称映射表 = Table.Distinct(指标映射工作簿{[Item = \"指标名称排序\", Kind = \"Sheet\"]}[Data], {\"指标名称\"}),\n\t    指标口径映射表 = Table.Distinct(指标映射工作簿{[Item = \"指标口径排序\", Kind = \"Sheet\"]}[Data], {\"指标口径\"}),\n\t    // ========== 2. 连接 BW QAS ==========\n\t    // 中文返回 + 开启内置结构 + 大批量拉取\n\t    数据源 = SapBusinessWarehouse.Cubes(QAS服务器, 系统编号, 客户端ID, [Implementation=\"2.0\", LanguageCode=\"ZH\", EnableStructures=true, BatchSize=500000000]),\n\t    // 定位 Cube，只在循环外实例化一次\n\t    立方体 = 数据源{[Name=\"ZRSD_CP001\"]}[Data],\n\t    // 定位 Query，作为逐月变换模板\n\t    基础查询 = 立方体{[Id=\"ZRSD_CP001/ZRSD_CP001_Q0001\"]}[Data],\n\t    // ========== 3. 生成月份序列 ==========\n\t    // 起止月份取自参数，跨月需后延 p_月报终止日期\n\t    起始月份 = p_月报起始日期,\n\t    结束月份 = p_月报终止日期,\n\t    月份序列 = List.Generate(() => 起始月份, each _ <= 结束月份, each Date.AddMonths(_, 1)),\n\t    // 转成 BW 要求的 YYYYMM 文本\n\t    月份文本列表 = List.Transform(月份序列, each Text.From(Date.Year(_) * 100 + Date.Month(_))),\n\t    // ========== 4. 单月取数函数 ==========\n\t    // 入参 month 为 YYYYMM 文本\n\t    查询单月 = (month as text) as table =>\n\t        let\n\t            // 应用 BW 变换：期间参数 → 展开 产品 / 指标名称 → 挂载 13 个度量\n\t            查询结果 = Cube.Transform(基础查询,\n\t                {\n\t                    {Cube.ApplyParameter, \"[ZMSDQNY]\", {month}},\n\t                    {Cube.AddAndExpandDimensionColumn, \"[4ZRSD_CP001-ZCPFLMC]\", {\"[4ZRSD_CP001-ZCPFLMC].[LEVEL01]\"}, {\"产品\"}},\n\t                    {Cube.AddAndExpandDimensionColumn, \"[4ZRSD_CP001-ZCPZMC]\", {\"[4ZRSD_CP001-ZCPZMC].[LEVEL01]\"}, {\"指标名称\"}},\n\t                    {Cube.AddMeasureColumn, \"（M-1）月\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8WA0MQ79932]\"},\n\t                    {Cube.AddMeasureColumn, \"（M-2）月\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PLXJEVKLS4IFW]\"},\n\t                    {Cube.AddMeasureColumn, \"（M-3）月\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PLXJHO3QTX3S2]\"},\n\t                    {Cube.AddMeasureColumn, \"Q1季度\",  \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PO7TY1Y70PDZU]\"},\n\t                    {Cube.AddMeasureColumn, \"Q2季度\",  \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PO7V2F7UZU84F]\"},\n\t                    {Cube.AddMeasureColumn, \"Q3季度\",  \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PO7V2F7UZUR33]\"},\n\t                    {Cube.AddMeasureColumn, \"Q4季度\",  \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PO7V2F7UZVA1R]\"},\n\t                    {Cube.AddMeasureColumn, \"（当年）预算\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8W5EFCBPFE4]\"},\n\t                    {Cube.AddMeasureColumn, \"FY（Y-1）\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8W5EFCBP92K]\"},\n\t                    {Cube.AddMeasureColumn, \"FY（Y-2）\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8W4FO18FRJE]\"},\n\t                    {Cube.AddMeasureColumn, \"当月\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8WA0MQ7A4OU]\"},\n\t                    {Cube.AddMeasureColumn, \"季度环比%\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8WADGXTKX1B]\"},\n\t                    {Cube.AddMeasureColumn, \"月度环比%\", \"[4VGQHR12MHZ1PHK1NB6E6C649].[4VGQHR12MHZ1PJ8WADGXTL3CV]\"}\n\t                }),\n\t            // 加载日期取该月 1 日，供日期表关系与切片器筛选\n\t            添加加载日期 = Table.AddColumn(查询结果, \"加载日期\", each #date(Number.From(Text.Start(month, 4)), Number.From(Text.End(month, 2)), 1), type date),\n\t            // 13 个指标列 null → 0\n\t            空值替换为0 = Table.ReplaceValue(\n\t                添加加载日期,\n\t                null,\n\t                0,\n\t                Replacer.ReplaceValue,\n\t                {\"FY（Y-2）\",\"FY（Y-1）\",\"（当年）预算\",\"Q1季度\",\"Q2季度\",\"Q3季度\",\"Q4季度\",\"季度环比%\",\"（M-3）月\",\"（M-2）月\",\"（M-1）月\",\"当月\",\"月度环比%\"}\n\t            ),\n\t            // 保留 产品 / 指标名称 / 加载日期，13 个指标列转为 [指标口径] / [指标值]\n\t            逆透视长表 = Table.UnpivotOtherColumns(\n\t                空值替换为0,\n\t                {\"产品\",\"指标名称\",\"加载日期\"},\n\t                \"指标口径\",\n\t                \"指标值\"\n\t            )\n\t        in\n\t            逆透视长表,\n\t    // ========== 5. 逐月取数并合并 ==========\n\t    // 各月结构一致，直接纵向拼接\n\t    各月结果 = List.Transform(月份文本列表, 查询单月),\n\t    合并结果 = Table.Combine(各月结果),\n\t  已筛选行 = Table.SelectRows(合并结果, each ([指标口径] <> \"FY（Y-2）\" and [指标口径] <> \"（M-2）月\" and [指标口径] <> \"（M-3）月\")),\n\t  已添加自定义 = Table.AddColumn(已筛选行, \"Month\", each Date.Month([加载日期])),\n\t  Q1 = Table.SelectRows(已添加自定义, each ([Month] = 1 or [Month] = 2 or [Month] = 3) and ([指标口径] <> \"Q1季度\" and [指标口径] <> \"Q2季度\" and [指标口径] <> \"Q3季度\" and [指标口径] <> \"Q4季度\")),\n\t  Q2 = Table.SelectRows(已添加自定义, each ([Month] = 4 or [Month] = 5 or [Month] = 6) and ([指标口径] <> \"Q2季度\" and [指标口径] <> \"Q3季度\" and [指标口径] <> \"Q4季度\")),\n\t  Q3 = Table.SelectRows(已添加自定义, each ([Month] = 7 or [Month] = 8 or [Month] = 9) and ([指标口径] <> \"Q3季度\" and [指标口径] <> \"Q4季度\")),\n\t  Q4 = Table.SelectRows(已添加自定义, each ([Month] = 10 or [Month] = 11 or [Month] = 12) and ([指标口径] <> \"Q4季度\")),\n\t  已追加查询 = Table.Combine({Q1,Q2,Q3,Q4}),\n\t    // ========== 6. 左连接三张排序映射表 ==========\n\t    // 按 指标口径 / 指标名称 / 产品 匹配，每步只展开对应排序字段\n\t    左连接口径排序 = Table.NestedJoin(已追加查询, {\"指标口径\"}, 指标口径映射表, {\"指标口径\"}, \"临时口径\", JoinKind.LeftOuter),\n\t    展开口径排序 = Table.ExpandTableColumn(左连接口径排序, \"临时口径\", {\"指标口径排序\"}, {\"指标口径排序\"}),\n\t    左连接指标名称排序 = Table.NestedJoin(展开口径排序, {\"指标名称\"}, 指标名称映射表, {\"指标名称\"}, \"临时指标名称\", JoinKind.LeftOuter),\n\t    展开指标名称排序 = Table.ExpandTableColumn(左连接指标名称排序, \"临时指标名称\", {\"指标名称排序\"}, {\"指标名称排序\"}),\n\t    左连接产品排序 = Table.NestedJoin(展开指标名称排序, {\"产品\"}, 产品排序映射表, {\"产品\"}, \"临时产品\", JoinKind.LeftOuter),\n\t    // 每步只展开对应排序字段\n\t    展开产品排序 = Table.ExpandTableColumn(左连接产品排序, \"临时产品\", {\"产品排序\"}, {\"产品排序\"})\n\tin\n\t    展开产品排序",
+    "lines": 105,
+    "meta": {
+     "查询名称": "主要产品价格波动汇总表 BW 取数",
+     "对应报表": "L2-06-01 主要产品价格波动汇总表",
+     "BW对象": "Cube:ZRSD_CP001，Query:ZRSD_CP001/ZRSD_CP001_Q0001"
+    },
+    "notes": [
+     "数据源：SAP BW QAS + SharePoint「L2-06-01 主要产品价格波动汇总表指标映射.xlsx」的 产品排序 / 指标名称排序 / 指标口径排序 三张 Sheet",
+     "维度：产品 [4ZRSD_CP001-ZCPFLMC]、指标名称 [4ZRSD_CP001-ZCPZMC]",
+     "指标：13 个 ——（M-1）/（M-2）/（M-3）月、Q1~Q4 季度、（当年）预算、FY（Y-1）/ FY（Y-2）、当月、季度环比% / 月度环比%",
+     "循环：p_月报起始日期 ~ p_月报终止日期 逐月取数后纵向合并，[ZMSDQNY] 传 YYYYMM 文本",
+     "清洗与长表化：13 个指标列 null → 0，逆透视成 [指标口径] / [指标值]",
+     "排序：依次左连接 指标口径排序 / 指标名称排序 / 产品排序",
+     "报表用法：矩阵行 = 产品 → 指标名称，列 = 指标口径，值 = 度量值「L2-06-01指标值」",
+     "风险：BW 返回的产品 / 指标名称必须与排序映射表一致，否则排序列为 null"
+    ],
+    "steps": [
+     {
+      "name": "已筛选行",
+      "comment": ""
+     },
+     {
+      "name": "已添加自定义",
+      "comment": ""
+     },
+     {
+      "name": "Q1",
+      "comment": ""
+     },
+     {
+      "name": "Q2",
+      "comment": ""
+     },
+     {
+      "name": "Q3",
+      "comment": ""
+     },
+     {
+      "name": "Q4",
+      "comment": ""
+     },
+     {
+      "name": "已追加查询",
+      "comment": ""
+     }
+    ],
+    "parameters": [
+     "p_月报起始日期",
+     "p_月报终止日期",
+     "系统编号",
+     "客户端ID",
+     "QAS服务器",
+     "财经SharePoint站点"
+    ]
+   },
+   "pages": [
+    "L2-06-01"
+   ],
+   "relationships": [
+    {
+     "fromTable": "L2-06-01 主要产品价格波动汇总表v2",
+     "fromColumn": "加载日期",
+     "toTable": "日期表",
+     "toColumn": "日期"
+    }
+   ],
+   "measureNames": [
+    "L2-06-01指标值v2"
+   ]
+  },
+  {
    "name": "Security_Ore_Permission",
    "code": "",
    "kind": "security",
@@ -4729,19 +5019,28 @@ window.L2_DATA = {
     {
      "name": "量(吨)v2",
      "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"量(吨)\")",
+     "folder": "L2-04-01 库存汇总表v2",
      "format": "FormatAmount()",
      "description": ""
     },
     {
      "name": "金额(人民币)v2",
      "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(人民币)\") /1000000",
+     "folder": "L2-04-01 库存汇总表v2",
      "format": "FormatAmount()",
      "description": ""
     },
     {
      "name": "金额(原币)v2",
      "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(原币)\")/1000000",
+     "folder": "L2-04-01 库存汇总表v2",
      "format": "FormatAmount()",
+     "description": ""
+    },
+    {
+     "name": "L2-06-01指标值v2",
+     "expression": "SUM('L2-06-01 主要产品价格波动汇总表v2'[指标值])",
+     "folder": "L2-06-01 主要产品价格波动汇总表v2",
      "description": ""
     }
    ],
@@ -4928,6 +5227,7 @@ window.L2_DATA = {
     "L2-04-01",
     "L2-04-01",
     "L2-05-01",
+    "L2-06-01",
     "L2-06-01"
    ],
    "relationships": [
@@ -4999,6 +5299,12 @@ window.L2_DATA = {
     },
     {
      "fromTable": "L2-04-01 库存汇总表v2",
+     "fromColumn": "加载日期",
+     "toTable": "日期表",
+     "toColumn": "日期"
+    },
+    {
+     "fromTable": "L2-06-01 主要产品价格波动汇总表v2",
      "fromColumn": "加载日期",
      "toTable": "日期表",
      "toColumn": "日期"
@@ -5308,21 +5614,28 @@ window.L2_DATA = {
    "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"量(吨)\")",
    "description": "",
    "format": "FormatAmount()",
-   "folder": ""
+   "folder": "L2-04-01 库存汇总表v2"
   },
   {
    "name": "金额(人民币)v2",
    "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(人民币)\") /1000000",
    "description": "",
    "format": "FormatAmount()",
-   "folder": ""
+   "folder": "L2-04-01 库存汇总表v2"
   },
   {
    "name": "金额(原币)v2",
    "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(原币)\")/1000000",
    "description": "",
    "format": "FormatAmount()",
-   "folder": ""
+   "folder": "L2-04-01 库存汇总表v2"
+  },
+  {
+   "name": "L2-06-01指标值v2",
+   "expression": "SUM('L2-06-01 主要产品价格波动汇总表v2'[指标值])",
+   "description": "",
+   "format": "",
+   "folder": "L2-06-01 主要产品价格波动汇总表v2"
   }
  ],
  "relationships": [
@@ -5436,6 +5749,12 @@ window.L2_DATA = {
   },
   {
    "fromTable": "L2-04-01 库存汇总表v2",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
+  },
+  {
+   "fromTable": "L2-06-01 主要产品价格波动汇总表v2",
    "fromColumn": "加载日期",
    "toTable": "日期表",
    "toColumn": "日期"
