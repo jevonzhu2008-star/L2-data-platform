@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24 16:47",
+ "generatedAt": "2026-11-24 18:17",
  "workspaceId": "eb90e767-02ad-4dd7-9309-ec8e96cca923",
  "datasetId": "002848fa-769b-4bef-bd21-9e5d33688b53",
  "tables": [
@@ -442,6 +442,64 @@
    ]
   },
   {
+   "name": "L2-04-01 库存汇总表v2",
+   "isFact": true,
+   "columns": [
+    {
+     "name": "分类",
+     "dataType": "string"
+    },
+    {
+     "name": "分类ID",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string"
+    },
+    {
+     "name": "结构",
+     "dataType": "string"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double"
+    },
+    {
+     "name": "百万人民币",
+     "dataType": "string"
+    },
+    {
+     "name": "矿体v",
+     "dataType": "string"
+    },
+    {
+     "name": "口径排序",
+     "dataType": "double"
+    },
+    {
+     "name": "分类排序",
+     "dataType": "double"
+    },
+    {
+     "name": "结构排序",
+     "dataType": "double"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double"
+    }
+   ]
+  },
+  {
    "name": "L2-05-01 硫磺及硫酸价格分析月报",
    "isFact": true,
    "columns": [
@@ -736,6 +794,21 @@
    "name": "公司数量",
    "expression": "DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[公司代码])",
    "folder": "L2-01-03 快报-金融投资业务专属"
+  },
+  {
+   "name": "量(吨)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"量(吨)\")",
+   "folder": ""
+  },
+  {
+   "name": "金额(人民币)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(人民币)\") /1000000",
+   "folder": ""
+  },
+  {
+   "name": "金额(原币)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(原币)\")/1000000",
+   "folder": ""
   }
  ],
  "relationships": [
@@ -840,6 +913,18 @@
    "fromColumn": "业务板块",
    "toTable": "矿体表",
    "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表v2",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表v2",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
   }
  ],
  "tableNames": [
@@ -852,6 +937,7 @@
   "L2-03-02 财务费用汇总表",
   "L2-03-06 矿石成本分析",
   "L2-04-01 库存汇总表",
+  "L2-04-01 库存汇总表v2",
   "L2-05-01 硫磺及硫酸价格分析月报",
   "L2-06-01 主要产品价格波动汇总表",
   "Security_Ore_Permission",
@@ -957,8 +1043,11 @@
   "累计执行%",
   "累计预算",
   "量(吨)",
+  "量(吨)v2",
   "金额(人民币)",
+  "金额(人民币)v2",
   "金额(原币)",
+  "金额(原币)v2",
   "预算YTD",
   "预算达成率"
  ]

@@ -2,19 +2,19 @@ window.L2_DATA = {
  "meta": {
   "title": "L2 PBI报表开发平台",
   "subtitle": "集团管理报表 · 报表页 / 语义模型 / 指标映射",
-  "updated": "2026-11-24 16:47",
-  "generatedAt": "2026-11-24T16:47:59",
+  "updated": "2026-11-24 18:17",
+  "generatedAt": "2026-11-24T18:17:52",
   "sources": [
    "02.PBIP 语义模型与报表",
    "03.项目映射文件"
   ]
  },
  "stats": {
-  "pages": 12,
-  "contentPages": 11,
-  "measures": 27,
-  "factTables": 11,
-  "relationships": 17,
+  "pages": 13,
+  "contentPages": 12,
+  "measures": 30,
+  "factTables": 12,
+  "relationships": 19,
   "parameters": 10,
   "mappings": 14,
   "pbix": 10
@@ -187,6 +187,7 @@ window.L2_DATA = {
    "name": "供应链",
    "desc": "库存与硫磺硫酸采购价格",
    "codes": [
+    "L2-04-01",
     "L2-04-01",
     "L2-05-01"
    ]
@@ -1673,6 +1674,178 @@ window.L2_DATA = {
     "度量值.量(吨)",
     "度量值.金额(人民币)",
     "度量值.金额(原币)",
+    "日期表.年月筛选"
+   ],
+   "screenshot": "assets/screens/service/L2-04-01.png",
+   "thumb": "assets/screens/service/L2-04-01-thumb.jpg",
+   "screenshotSource": "service",
+   "screenshotTime": "2026-11-05 12:24",
+   "tableScreenshot": "assets/screens/service/L2-04-01-table.png",
+   "tableThumb": "assets/screens/service/L2-04-01-table-thumb.jpg",
+   "tableScreenshotSource": "service",
+   "tableScreenshotTime": "2026-11-05 12:24",
+   "mapping": {
+    "code": "L2-04-01",
+    "name": "L2-04-01库存汇总表指标映射",
+    "file": "deliverables/mappings/L2-04-01库存汇总表指标映射.xlsx",
+    "sheets": [
+     {
+      "name": "分类排序",
+      "rows": 33,
+      "cols": 2,
+      "samples": [
+       [
+        "分类排序",
+        "分类"
+       ],
+       [
+        "1",
+        "原材料"
+       ],
+       [
+        "2",
+        "备品备件"
+       ]
+      ]
+     },
+     {
+      "name": "结构排序",
+      "rows": 7,
+      "cols": 2,
+      "samples": [
+       [
+        "结构排序",
+        "结构"
+       ],
+       [
+        "1",
+        "去年实际"
+       ],
+       [
+        "2",
+        "月-3实际"
+       ]
+      ]
+     },
+     {
+      "name": "矿体排序",
+      "rows": 6,
+      "cols": 2,
+      "samples": [
+       [
+        "矿体排序",
+        "矿体"
+       ],
+       [
+        "1",
+        "集团合计"
+       ],
+       [
+        "2",
+        "TFM"
+       ]
+      ]
+     }
+    ],
+    "webUrl": "https://xsyzz.sharepoint.com/sites/CMOCGroup/Shared Documents/05.345项目/03.项目映射文件/L2-04-01%E5%BA%93%E5%AD%98%E6%B1%87%E6%80%BB%E8%A1%A8%E6%8C%87%E6%A0%87%E6%98%A0%E5%B0%84.xlsx"
+   }
+  },
+  {
+   "id": "65b763acbfbdb1cd7f26",
+   "code": "L2-04-01",
+   "name": "L2-04-01库存汇总表v2",
+   "displayName": "L2-04-01库存汇总表v2",
+   "isCover": false,
+   "hidden": true,
+   "width": 1920,
+   "height": 1080,
+   "displayOption": "FitToPage",
+   "visuals": [
+    {
+     "type": "pivotTable",
+     "x": 24,
+     "y": 212,
+     "width": 1872,
+     "height": 844,
+     "refs": [
+      "L2-04-01 库存汇总表v2.分类",
+      "L2-04-01 库存汇总表v2.分类ID",
+      "L2-04-01 库存汇总表v2.百万人民币",
+      "L2-04-01 库存汇总表v2.矿体",
+      "度量值.量(吨)v2",
+      "度量值.金额(人民币)v2",
+      "度量值.金额(原币)v2"
+     ]
+    },
+    {
+     "type": "slicer",
+     "x": 24,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "日期表.年月筛选"
+     ]
+    },
+    {
+     "type": "card",
+     "x": 1436,
+     "y": 104,
+     "width": 460,
+     "height": 84,
+     "refs": [
+      "度量值.当前月报期间"
+     ]
+    },
+    {
+     "type": "slicer",
+     "x": 340,
+     "y": 104,
+     "width": 300,
+     "height": 84,
+     "refs": [
+      "L2-04-01 库存汇总表v2.矿体"
+     ]
+    },
+    {
+     "type": "textbox",
+     "x": 24,
+     "y": 28,
+     "width": 1000,
+     "height": 56,
+     "refs": []
+    }
+   ],
+   "visualCount": 5,
+   "visualTypes": {
+    "pivotTable": 1,
+    "slicer": 2,
+    "card": 1,
+    "textbox": 1
+   },
+   "tables": [
+    "L2-04-01 库存汇总表v2",
+    "日期表"
+   ],
+   "measures": [
+    "当前月报期间",
+    "量(吨)v2",
+    "金额(人民币)v2",
+    "金额(原币)v2"
+   ],
+   "sources": [
+    "SAP BW",
+    "SharePoint"
+   ],
+   "refs": [
+    "L2-04-01 库存汇总表v2.分类",
+    "L2-04-01 库存汇总表v2.分类ID",
+    "L2-04-01 库存汇总表v2.百万人民币",
+    "L2-04-01 库存汇总表v2.矿体",
+    "度量值.当前月报期间",
+    "度量值.量(吨)v2",
+    "度量值.金额(人民币)v2",
+    "度量值.金额(原币)v2",
     "日期表.年月筛选"
    ],
    "screenshot": "assets/screens/service/L2-04-01.png",
@@ -3781,6 +3954,141 @@ window.L2_DATA = {
    ]
   },
   {
+   "name": "L2-04-01 库存汇总表v2",
+   "code": "L2-04-01",
+   "kind": "fact",
+   "file": "L2-04-01 库存汇总表v2.tmdl",
+   "columns": [
+    {
+     "name": "分类",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "分类ID",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "矿体",
+     "dataType": "string",
+     "summarizeBy": "none",
+     "sortByColumn": "矿体排序"
+    },
+    {
+     "name": "加载日期",
+     "dataType": "dateTime",
+     "formatString": "Long Date",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "指标名称",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "结构",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "指标值",
+     "dataType": "double",
+     "formatString": "0.00",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "百万人民币",
+     "dataType": "string",
+     "summarizeBy": "none",
+     "sortByColumn": "口径排序"
+    },
+    {
+     "name": "矿体v",
+     "dataType": "string",
+     "summarizeBy": "none"
+    },
+    {
+     "name": "口径排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "分类排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "结构排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    },
+    {
+     "name": "矿体排序",
+     "dataType": "double",
+     "summarizeBy": "sum"
+    }
+   ],
+   "measures": [],
+   "source": [
+    "SAP BW",
+    "SharePoint"
+   ],
+   "sourceNote": "SAP BW、SharePoint",
+   "process": {
+    "mode": "import",
+    "mcode": "let\n\t    /*\n\t    【查询名称】库存汇总表 BW 取数\n\t    【对应报表】L2-04-01库存汇总表\n\t    【BW对象】Cube:ZRMM_CP002，Query:ZRMM_CP002/ZRMM_CP002_Q0001\n\t    【说明】\n\t        1、数据源：SAP BW QAS + SharePoint「L2-04-01库存汇总表指标映射.xlsx」的 分类排序 / 结构排序 / 矿体排序 / 口径排序 四张 Sheet\n\t        2、维度：分类 [4ZRMM_CP002-ZKL]、分类ID [4ZRMM_CP002-ZEJXMH]、矿体 [ZKT]\n\t        3、指标：21 个 —— 金额(人民币) / 金额(原币) / 量(吨) 三组，每组含 当月实际 / 本月vs上月环比 / 去年实际 / 月-1 / 月-2 / 月-3 实际 / 本月vs去年12月同比\n\t        4、循环：p_月报起始日期 ~ p_月报终止日期 逐月取数后纵向合并，[ZMSDQNY] 传 YYYYMM 文本\n\t        5、清洗与长表化：21 个指标列 null → 0，逆透视后按空格把 指标名称 拆成 指标名称 / 结构\n\t        6、汇总：每月按 分类 + 分类ID + 加载日期 + 指标名称 生成「矿体 = 集团合计」行（剔除 矿体 = 未分配）后追加回明细\n\t        7、排序：依次左连接 口径排序 / 分类排序 / 结构排序 / 矿体排序，口径 列最终重命名为 百万人民币\n\t        8、连接：只传 Implementation=2.0，未带 LanguageCode / EnableStructures / BatchSize\n\t    */\n\t    // ========== 1. 连接 BW QAS ==========\n\t    // 只传 Implementation=2.0；Cube 与 Query 都只在循环外实例化一次\n\t    数据源 = SapBusinessWarehouse.Cubes(QAS服务器, 系统编号, 客户端ID, [Implementation=\"2.0\"]),\n\t    // 定位 Cube ZRMM_CP002\n\t    立方体 = 数据源{[Name=\"ZRMM_CP002\"]}[Data],\n\t    // 定位 Query，作为逐月变换模板\n\t    基础查询 = 立方体{[Id=\"ZRMM_CP002/ZRMM_CP002_Q0001\"]}[Data],\n\t\n\t    // ========== 2. 读取 SharePoint 排序映射表 ==========\n\t    // 列出财经 SharePoint 站点文件\n\t    源 = SharePoint.Files(财经SharePoint站点, [ApiVersion = 15]),\n\t    // 筛出本表指标映射 xlsx 并取二进制内容\n\t    指标映射文件 = Table.SelectRows(源, each Text.Contains([Name], \"L2-04-01库存汇总表指标映射\") and [Extension] = \".xlsx\"){0}[Content],\n\t    // 工作簿只解析一次，各 Sheet 共用\n\t    指标映射工作簿 = Excel.Workbook(指标映射文件, true),\n\t\n\t    // 四张映射表：Trim + 转文本后去重\n\t    分类排序表 = Table.Distinct(Table.TransformColumns(指标映射工作簿{[Item = \"分类排序\", Kind = \"Sheet\"]}[Data], {{\"分类\", each try Text.Trim(Text.From(_)) otherwise _, type text}}), {\"分类\"}),\n\t    结构排序表 = Table.Distinct(Table.TransformColumns(指标映射工作簿{[Item = \"结构排序\", Kind = \"Sheet\"]}[Data], {{\"结构\", each try Text.Trim(Text.From(_)) otherwise _, type text}}), {\"结构\"}),\n\t    矿体排序表 = Table.Distinct(Table.TransformColumns(指标映射工作簿{[Item = \"矿体排序\", Kind = \"Sheet\"]}[Data], {{\"矿体\", each try Text.Trim(Text.From(_)) otherwise _, type text}}), {\"矿体\"}),\n\t    口径排序表 = Table.Distinct(Table.TransformColumns(指标映射工作簿{[Item = \"口径排序\", Kind = \"Sheet\"]}[Data], {{\"口径\", each try Text.Trim(Text.From(_)) otherwise _, type text}}), {\"口径\"}),\n\t\n\t    // ========== 3. 生成月份序列 ==========\n\t    // 起止月份取自参数，跨月需后延 p_月报终止日期\n\t    起始月份 = p_月报起始日期,\n\t    结束月份 = p_月报终止日期,\n\t    月份序列 = List.Generate(() => 起始月份, each _ <= 结束月份, each Date.AddMonths(_, 1)),\n\t    // 转成 BW 要求的 YYYYMM 文本\n\t    月份文本列表 = List.Transform(月份序列, each Text.From(Date.Year(_) * 100 + Date.Month(_))),\n\t\n\t    // ========== 4. 单月取数函数 ==========\n\t    // 返回当月「明细 + 集团合计」的长表\n\t    查询单月 = (month as text) as table =>\n\t        let\n\t            // 应用 BW 变换：期间参数 → 展开 分类 / 分类ID / 矿体 → 挂载 21 个度量\n\t            查询结果 = Cube.Transform(基础查询,\n\t                {\n\t                    {Cube.ApplyParameter, \"[ZMSDQNY]\", {month}},\n\t                    {Cube.AddAndExpandDimensionColumn, \"[4ZRMM_CP002-ZKL]\", {\"[4ZRMM_CP002-ZKL].[LEVEL01]\"}, {\"分类\"}},\n\t                    {Cube.AddAndExpandDimensionColumn, \"[4ZRMM_CP002-ZEJXMH]\",{\"[4ZRMM_CP002-ZEJXMH].[LEVEL01]\"}, {\"分类ID\"}},\n\t                    {Cube.AddAndExpandDimensionColumn, \"[ZKT]\", {\"[ZKT].[LEVEL01]\"}, {\"矿体\"}},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 当月实际\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ3FVOJ91YJ560S5]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 本月vs上月\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ1PLARX5QW4YR6E]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 去年实际\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ3FWDMUA1T7TA0G]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 月-1实际\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ1PLYB03BDBK19L]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 月-2实际\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ1PLYB03BDBJUY1]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(人民币) 月-3实际\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ1PLYB03BDBJOMH]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 当月实际\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ3FVOJ91YJ560S5]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 本月vs上月\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ1PLARX5QW4YR6E]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 去年实际\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ3FWDMUA1T7TA0G]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 月-1实际\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ1PLYB03BDBK19L]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 月-2实际\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ1PLYB03BDBJUY1]\"},\n\t                    {Cube.AddMeasureColumn, \"金额(原币) 月-3实际\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ1PLYB03BDBJOMH]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 当月实际\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ3FVOJ91YJ560S5]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 本月vs上月\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ1PLARX5QW4YR6E]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 去年实际\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ3FWDMUA1T7TA0G]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 月-1实际\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ1PLYB03BDBK19L]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 月-2实际\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ1PLYB03BDBJUY1]\"},\n\t                    {Cube.AddMeasureColumn, \"量(吨) 月-3实际\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ1PLYB03BDBJOMH]\"},\n\t                    { Cube.AddMeasureColumn, \"量(吨) 本月vs去年12月\", \"[Measures].[4VGQHR12MHZ1PLG0H34K5L1JG4VGQHR12MHZ1PNI6O8OX7K9Y6]\" },\n\t                    { Cube.AddMeasureColumn, \"金额(原币) 本月vs去年12月\", \"[Measures].[4VGQHR12MHZ3FWDSL9T0KCND84VGQHR12MHZ1PNI6O8OX7K9Y6]\" },\n\t                    { Cube.AddMeasureColumn, \"金额(人民币) 本月vs去年12月\", \"[Measures].[4VGQHR12MHZ3FWDMUA1T7TGC04VGQHR12MHZ1PNI6O8OX7K9Y6]\" }\n\t                }\n\t            ),\n\t            // 加载日期取该月 1 日，供日期表关系与切片器筛选\n\t            添加加载日期 = Table.AddColumn(查询结果, \"加载日期\", each #date(Number.From(Text.Start(month, 4)), Number.From(Text.End(month, 2)), 1), type date),\n\t            // 21 个指标列 null → 0\n\t            空值替换为0 = Table.ReplaceValue(添加加载日期, null, 0, Replacer.ReplaceValue,\n\t                {\n\t                    \"金额(人民币) 当月实际\", \"金额(人民币) 本月vs上月\", \"金额(人民币) 去年实际\",\n\t                    \"金额(人民币) 月-1实际\", \"金额(人民币) 月-2实际\", \"金额(人民币) 月-3实际\",\n\t                    \"金额(原币) 当月实际\", \"金额(原币) 本月vs上月\", \"金额(原币) 去年实际\",\n\t                    \"金额(原币) 月-1实际\", \"金额(原币) 月-2实际\", \"金额(原币) 月-3实际\",\n\t                    \"量(吨) 当月实际\", \"量(吨) 本月vs上月\", \"量(吨) 去年实际\",\n\t                    \"量(吨) 月-1实际\", \"量(吨) 月-2实际\", \"量(吨) 月-3实际\",\n\t                    \"量(吨) 本月vs去年12月\",\"金额(原币) 本月vs去年12月\",\"金额(人民币) 本月vs去年12月\"\n\t                }\n\t            ),\n\t            // 保留 分类 / 分类ID / 矿体 / 加载日期，指标列转 [指标名称] / [指标值]\n\t            逆透视长表 = Table.UnpivotOtherColumns(空值替换为0, {\"分类\",\"分类ID\", \"矿体\", \"加载日期\"}, \"指标名称\", \"指标值\"),\n\t            // 汇总口径剔除 矿体 = 未分配\n\t            剔除未分配 = Table.SelectRows(逆透视长表, each ([矿体] <> \"未分配\")),\n\t            // 按 分类 + 分类ID + 加载日期 + 指标名称 求和\n\t            汇总集团合计 = Table.Group(剔除未分配, {\"分类\",\"分类ID\", \"加载日期\", \"指标名称\"}, {{\"指标值\", each List.Sum([指标值]), type any}}),\n\t            添加集团合计标签 = Table.AddColumn(汇总集团合计, \"矿体\", each \"集团合计\"),\n\t            重排列顺序 = Table.ReorderColumns(添加集团合计标签, {\"分类\", \"分类ID\", \"矿体\", \"加载日期\", \"指标名称\", \"指标值\"}),\n\t            追加明细合计 = Table.Combine({重排列顺序, 逆透视长表})\n\t        in\n\t            追加明细合计,\n\t\n\t    // ========== 5. 逐月取数并合并 ==========\n\t    // 各月结构一致，直接纵向拼接\n\t    合并结果 = Table.Combine(List.Transform(月份文本列表, 查询单月)),\n\t\n\t    // ========== 6. 拆分指标名称为 指标名称 / 结构 ==========\n\t    // 指标名称形如「金额(人民币) 当月实际」，按第一个空格拆成 指标名称 / 结构\n\t    拆分指标名称 = Table.SplitColumn(合并结果, \"指标名称\", Splitter.SplitTextByDelimiter(\" \"), {\"指标名称\", \"结构\"}),\n\t  已筛选行 = Table.SelectRows(拆分指标名称, each ([结构] <> \"月-1实际\" and [结构] <> \"月-2实际\" and [结构] <> \"月-3实际\") and ([矿体] <> \"集团合计\")),\n\t\n\t    // ========== 7. 派生 [口径] 列 ==========\n\t    // 结构 → 口径：当月实际 / 月-N实际 / 去年实际 转成「yyyy年MM月」，其余原样\n\t    添加口径 = Table.AddColumn(已筛选行, \"口径\", each\n\t        let\n\t            _date = [加载日期],\n\t            s = [结构]\n\t        in\n\t            if s = \"月-1实际\" then Date.ToText(Date.AddMonths(_date, -1), \"yyyy年MM月\")\n\t            else if s = \"月-2实际\" then Date.ToText(Date.AddMonths(_date, -2), \"yyyy年MM月\")\n\t            else if s = \"月-3实际\" then Date.ToText(Date.AddMonths(_date, -3), \"yyyy年MM月\")\n\t            else if s = \"去年实际\" then Date.ToText(Date.AddMonths(_date, -12), \"yyyy年12月\")\n\t            else if s = \"当月实际\" then Date.ToText(_date, \"yyyy年MM月\")\n\t            else s\n\t        , type text\n\t    ),\n\t    // 复制矿体列，生成 矿体v 临时副本\n\t    添加矿体v = Table.AddColumn(添加口径, \"矿体v\", each [矿体]),\n\t\n\t    // ========== 8. 依次左连接四张排序映射表 ==========\n\t    // 依次左连接 口径 → 分类 → 结构 → 矿体，每步只展开对应排序字段\n\t    左连接口径排序 = Table.NestedJoin(添加矿体v, {\"口径\"}, 口径排序表, {\"口径\"}, \"口径映射临时\", JoinKind.LeftOuter),\n\t    展开口径排序 = Table.ExpandTableColumn(左连接口径排序, \"口径映射临时\", {\"口径排序\"}, {\"口径排序\"}),\n\t\n\t    左连接分类排序 = Table.NestedJoin(展开口径排序, {\"分类\"}, 分类排序表, {\"分类\"}, \"分类映射临时\", JoinKind.LeftOuter),\n\t    展开分类排序 = Table.ExpandTableColumn(左连接分类排序, \"分类映射临时\", {\"分类排序\"}, {\"分类排序\"}),\n\t\n\t    左连接结构排序 = Table.NestedJoin(展开分类排序, {\"结构\"}, 结构排序表, {\"结构\"}, \"结构映射临时\", JoinKind.LeftOuter),\n\t    展开结构排序 = Table.ExpandTableColumn(左连接结构排序, \"结构映射临时\", {\"结构排序\"}, {\"结构排序\"}),\n\t\n\t    左连接矿体排序 = Table.NestedJoin(展开结构排序, {\"矿体\"}, 矿体排序表, {\"矿体\"}, \"矿体映射临时\", JoinKind.LeftOuter),\n\t    展开矿体排序 = Table.ExpandTableColumn(左连接矿体排序, \"矿体映射临时\", {\"矿体排序\"}, {\"矿体排序\"}),\n\t    // 口径 列最终对外显示为「百万人民币」\n\t    重命名口径 = Table.RenameColumns(展开矿体排序,{{\"口径\", \"百万人民币\"}})\n\tin\n\t    重命名口径",
+    "lines": 149,
+    "meta": {
+     "查询名称": "库存汇总表 BW 取数",
+     "对应报表": "L2-04-01库存汇总表",
+     "BW对象": "Cube:ZRMM_CP002，Query:ZRMM_CP002/ZRMM_CP002_Q0001"
+    },
+    "notes": [
+     "数据源：SAP BW QAS + SharePoint「L2-04-01库存汇总表指标映射.xlsx」的 分类排序 / 结构排序 / 矿体排序 / 口径排序 四张 Sheet",
+     "维度：分类 [4ZRMM_CP002-ZKL]、分类ID [4ZRMM_CP002-ZEJXMH]、矿体 [ZKT]",
+     "指标：21 个 —— 金额(人民币) / 金额(原币) / 量(吨) 三组，每组含 当月实际 / 本月vs上月环比 / 去年实际 / 月-1 / 月-2 / 月-3 实际 / 本月vs去年12月同比",
+     "循环：p_月报起始日期 ~ p_月报终止日期 逐月取数后纵向合并，[ZMSDQNY] 传 YYYYMM 文本",
+     "清洗与长表化：21 个指标列 null → 0，逆透视后按空格把 指标名称 拆成 指标名称 / 结构",
+     "汇总：每月按 分类 + 分类ID + 加载日期 + 指标名称 生成「矿体 = 集团合计」行（剔除 矿体 = 未分配）后追加回明细",
+     "排序：依次左连接 口径排序 / 分类排序 / 结构排序 / 矿体排序，口径 列最终重命名为 百万人民币",
+     "连接：只传 Implementation=2.0，未带 LanguageCode / EnableStructures / BatchSize"
+    ],
+    "steps": [
+     {
+      "name": "已筛选行",
+      "comment": ""
+     }
+    ],
+    "parameters": [
+     "p_月报起始日期",
+     "p_月报终止日期",
+     "系统编号",
+     "客户端ID",
+     "QAS服务器",
+     "财经SharePoint站点"
+    ]
+   },
+   "pages": [
+    "L2-04-01"
+   ],
+   "relationships": [
+    {
+     "fromTable": "L2-04-01 库存汇总表v2",
+     "fromColumn": "矿体",
+     "toTable": "矿体表",
+     "toColumn": "矿体"
+    },
+    {
+     "fromTable": "L2-04-01 库存汇总表v2",
+     "fromColumn": "加载日期",
+     "toTable": "日期表",
+     "toColumn": "日期"
+    }
+   ],
+   "measureNames": []
+  },
+  {
    "name": "L2-05-01 硫磺及硫酸价格分析月报",
    "code": "L2-05-01",
    "kind": "fact",
@@ -4417,6 +4725,24 @@ window.L2_DATA = {
      "expression": "DISTINCTCOUNT('L2-01-03 快报-金融投资业务专属'[公司代码])",
      "folder": "L2-01-03 快报-金融投资业务专属",
      "description": ""
+    },
+    {
+     "name": "量(吨)v2",
+     "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"量(吨)\")",
+     "format": "FormatAmount()",
+     "description": ""
+    },
+    {
+     "name": "金额(人民币)v2",
+     "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(人民币)\") /1000000",
+     "format": "FormatAmount()",
+     "description": ""
+    },
+    {
+     "name": "金额(原币)v2",
+     "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(原币)\")/1000000",
+     "format": "FormatAmount()",
+     "description": ""
     }
    ],
    "source": [
@@ -4600,6 +4926,7 @@ window.L2_DATA = {
     "L2-03-02",
     "L2-03-06",
     "L2-04-01",
+    "L2-04-01",
     "L2-05-01",
     "L2-06-01"
    ],
@@ -4666,6 +4993,12 @@ window.L2_DATA = {
     },
     {
      "fromTable": "L2-01-25 工序成本完成情况",
+     "fromColumn": "加载日期",
+     "toTable": "日期表",
+     "toColumn": "日期"
+    },
+    {
+     "fromTable": "L2-04-01 库存汇总表v2",
      "fromColumn": "加载日期",
      "toTable": "日期表",
      "toColumn": "日期"
@@ -4768,6 +5101,12 @@ window.L2_DATA = {
     {
      "fromTable": "L2-03-01 销售管理费用预算执行汇总表",
      "fromColumn": "业务板块",
+     "toTable": "矿体表",
+     "toColumn": "矿体"
+    },
+    {
+     "fromTable": "L2-04-01 库存汇总表v2",
+     "fromColumn": "矿体",
      "toTable": "矿体表",
      "toColumn": "矿体"
     }
@@ -4963,6 +5302,27 @@ window.L2_DATA = {
    "description": "",
    "format": "",
    "folder": "L2-01-03 快报-金融投资业务专属"
+  },
+  {
+   "name": "量(吨)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"量(吨)\")",
+   "description": "",
+   "format": "FormatAmount()",
+   "folder": ""
+  },
+  {
+   "name": "金额(人民币)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(人民币)\") /1000000",
+   "description": "",
+   "format": "FormatAmount()",
+   "folder": ""
+  },
+  {
+   "name": "金额(原币)v2",
+   "expression": "CALCULATE(SUM('L2-04-01 库存汇总表v2'[指标值]), 'L2-04-01 库存汇总表v2'[指标名称] = \"金额(原币)\")/1000000",
+   "description": "",
+   "format": "FormatAmount()",
+   "folder": ""
   }
  ],
  "relationships": [
@@ -5067,6 +5427,18 @@ window.L2_DATA = {
    "fromColumn": "业务板块",
    "toTable": "矿体表",
    "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表v2",
+   "fromColumn": "矿体",
+   "toTable": "矿体表",
+   "toColumn": "矿体"
+  },
+  {
+   "fromTable": "L2-04-01 库存汇总表v2",
+   "fromColumn": "加载日期",
+   "toTable": "日期表",
+   "toColumn": "日期"
   }
  ],
  "parameters": [
